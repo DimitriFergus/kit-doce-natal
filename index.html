@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kit Doce Natal | Transforme sua cozinha em uma confeitaria de Natal</title>
+  <meta name="description" content="Receitas natalinas, cardápios editáveis, planilha de preços e divulgação pronta para você vender doces neste Natal.">
+  <meta name="theme-color" content="#7a0f1c">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('has-js')</script>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <canvas id="neve" aria-hidden="true"></canvas>
+
+  <!-- FAIXA ROLANTE -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>🎄 AS ENCOMENDAS DE NATAL JÁ COMEÇARAM &nbsp;•&nbsp; GARANTA SEU KIT E SAIA NA FRENTE &nbsp;•&nbsp;</span>
+      <span>🎄 AS ENCOMENDAS DE NATAL JÁ COMEÇARAM &nbsp;•&nbsp; GARANTA SEU KIT E SAIA NA FRENTE &nbsp;•&nbsp;</span>
+      <span>🎄 AS ENCOMENDAS DE NATAL JÁ COMEÇARAM &nbsp;•&nbsp; GARANTA SEU KIT E SAIA NA FRENTE &nbsp;•&nbsp;</span>
+      <span>🎄 AS ENCOMENDAS DE NATAL JÁ COMEÇARAM &nbsp;•&nbsp; GARANTA SEU KIT E SAIA NA FRENTE &nbsp;•&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- CABEÇALHO -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#topo" class="logo"><span class="logo__icon">🍪</span><span class="logo__txt">Doce<b>NATAL</b></span></a>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <a href="#o-que-e">O kit</a>
+        <a href="#conteudo-kit">Conteúdo</a>
+        <a href="#bonus">Bônus</a>
+        <a href="#depoimentos">Resultados</a>
+        <a href="#faq">Perguntas</a>
+      </nav>
+      <a href="#oferta" class="btn btn--sm js-checkout">Garantir o kit</a>
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- HERO -->
+    <section class="hero" id="topo">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="floaties" aria-hidden="true">
+        <span style="--x:8%;--y:20%;--d:0s">🍬</span>
+        <span style="--x:85%;--y:15%;--d:1.2s">🎁</span>
+        <span style="--x:12%;--y:75%;--d:.6s">⭐</span>
+        <span style="--x:90%;--y:70%;--d:1.8s">🍭</span>
+        <span style="--x:50%;--y:8%;--d:2.4s">❄️</span>
+      </div>
+      <div class="container hero__content">
+        <p class="eyebrow reveal">RECEITAS + PREÇOS + DIVULGAÇÃO EM UM SÓ LUGAR</p>
+        <h1 class="hero__title reveal">Transforme sua cozinha em uma <em>confeitaria de Natal</em> que fatura até <span class="money" data-count="500" data-prefix="R$">R$0</span> por dia</h1>
+        <p class="hero__sub reveal">Para quem nunca vendeu e para quem já vende: você sabe o que produzir, quanto cobrar e como chamar clientes, tudo pronto em poucos cliques.</p>
+        <a href="#o-que-e" class="btn btn--lg reveal pulse">QUERO VER O KIT <span class="arrow">↓</span></a>
+        <ul class="hero__pills reveal">
+          <li><span>🧾</span>Preço calculado</li>
+          <li><span>📲</span>Posts prontos</li>
+          <li><span>🛍️</span>Agenda cheia</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- MARQUEE DE BENEFÍCIOS -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>🎄 Cardápios natalinos</span><span>🧾 Precificação automática</span><span>📲 Textos para WhatsApp</span><span>🍫 +80 receitas</span><span>🎨 100% editável no Canva</span><span>🎁 5 bônus</span><span>📒 Controle de pedidos</span>
+        <span>🎄 Cardápios natalinos</span><span>🧾 Precificação automática</span><span>📲 Textos para WhatsApp</span><span>🍫 +80 receitas</span><span>🎨 100% editável no Canva</span><span>🎁 5 bônus</span><span>📒 Controle de pedidos</span>
+      </div>
+    </div>
+
+    <!-- O QUE É -->
+    <section class="section" id="o-que-e">
+      <div class="container split">
+        <div class="split__text">
+          <p class="eyebrow reveal">SEU NATAL, PLANEJADO</p>
+          <h2 class="title reveal">Pare de começar dezembro <em>do zero</em></h2>
+          <p class="lead reveal">O Kit Doce Natal resolve as três perguntas que travam quem quer vender: <strong>o que fazer</strong>, <strong>quanto cobrar</strong> e <strong>onde anunciar</strong>. Você coloca sua logo, ajusta as cores e já pode publicar o cardápio no mesmo dia.</p>
+          <div class="chips reveal">
+            <div class="chip"><span>⏱️</span>Horas de trabalho economizadas</div>
+            <div class="chip"><span>🧾</span>Margem de lucro garantida</div>
+            <div class="chip"><span>📣</span>Divulgação sem esforço</div>
+            <div class="chip"><span>📦</span>Pedidos organizados</div>
+          </div>
+        </div>
+        <div class="split__media reveal tilt">
+          <div class="ph ph--tall" data-label="Mockup do seu kit (sua imagem)"><span>🎁</span></div>
+          <div class="badge-float">EDITE NO<br><b>CANVA</b><small>gratuito</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECEITAS (CARROSSEL) -->
+    <section class="section section--cream">
+      <div class="container center">
+        <p class="eyebrow reveal">+80 RECEITAS NATALINAS</p>
+        <h2 class="title reveal">Doces que o cliente <em>já procura</em> em dezembro</h2>
+        <p class="lead reveal">Panetones, trufas, biscoitos decorados e muito mais, com rendimento e custo de cada receita.</p>
+      </div>
+      <div class="carousel reveal" data-carousel>
+        <div class="carousel__track">
+          <div class="ph ph--card" data-label="Panetone trufado"><span>🍞</span></div>
+          <div class="ph ph--card" data-label="Biscoito decorado"><span>🍪</span></div>
+          <div class="ph ph--card" data-label="Trufa de Natal"><span>🍫</span></div>
+          <div class="ph ph--card" data-label="Pavê na taça"><span>🍮</span></div>
+          <div class="ph ph--card" data-label="Bombom de pote"><span>🥄</span></div>
+          <div class="ph ph--card" data-label="Casinha de gengibre"><span>🏠</span></div>
+          <div class="ph ph--card" data-label="Brownie natalino"><span>🟫</span></div>
+          <div class="ph ph--card" data-label="Pirulito de chocolate"><span>🍭</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- O QUE VOCÊ RECEBE -->
+    <section class="section" id="conteudo-kit">
+      <div class="container center">
+        <p class="eyebrow reveal">CONTEÚDO DO KIT</p>
+        <h2 class="title reveal">Tudo que você precisa, <em>em uma pasta só</em></h2>
+      </div>
+      <div class="carousel reveal" data-carousel>
+        <div class="carousel__track">
+          <article class="item"><div class="ph ph--item" data-label="Imagem"><span>📋</span></div><h3>Cardápios editáveis</h3><p>Mais de 15 modelos prontos para Canva</p></article>
+          <article class="item"><div class="ph ph--item" data-label="Imagem"><span>🧮</span></div><h3>Planilha de preços</h3><p>Coloque o custo e veja o lucro na hora</p></article>
+          <article class="item"><div class="ph ph--item" data-label="Imagem"><span>📖</span></div><h3>Livro de receitas</h3><p>+80 receitas com ficha técnica</p></article>
+          <article class="item"><div class="ph ph--item" data-label="Imagem"><span>📸</span></div><h3>Posts e stories</h3><p>Artes para o seu Instagram</p></article>
+          <article class="item"><div class="ph ph--item" data-label="Imagem"><span>🏷️</span></div><h3>Tags e etiquetas</h3><p>É só imprimir e colar</p></article>
+          <article class="item"><div class="ph ph--item" data-label="Imagem"><span>💬</span></div><h3>Roteiros de WhatsApp</h3><p>Do primeiro “oi” ao pedido fechado</p></article>
+          <article class="item"><div class="ph ph--item" data-label="Imagem"><span>📒</span></div><h3>Agenda de encomendas</h3><p>Nenhum pedido esquecido</p></article>
+        </div>
+        <p class="hint">← arraste para o lado →</p>
+      </div>
+    </section>
+
+    <!-- VÍDEO (EM BRANCO) -->
+    <section class="section section--dark">
+      <div class="container center">
+        <p class="eyebrow eyebrow--gold reveal">POR DENTRO DO KIT</p>
+        <h2 class="title title--light reveal">Veja como é <em>simples de usar</em></h2>
+        <div class="video reveal" id="video">
+          <!-- Cole aqui o embed do seu vídeo -->
+        </div>
+        <p class="lead lead--light reveal">Um passo a passo mostrando a planilha, o cardápio no Canva e as mensagens prontas. Dá para acompanhar mesmo sem experiência.</p>
+      </div>
+    </section>
+
+    <!-- OPORTUNIDADE -->
+    <section class="section">
+      <div class="container center">
+        <p class="eyebrow reveal">POR QUE AGORA?</p>
+        <h2 class="title reveal">Dezembro é o <em>mês de ouro</em> dos doces</h2>
+        <p class="lead reveal">Na época de festas, as pessoas compram presentes, sobremesa para a ceia e mimos para a família. Quem já tem cardápio pronto recebe esses pedidos primeiro.</p>
+        <div class="stats">
+          <div class="stat reveal"><b data-count="80" data-suffix="+">0</b><span>receitas para escolher</span></div>
+          <div class="stat reveal"><b data-count="15" data-suffix="+">0</b><span>cardápios editáveis</span></div>
+          <div class="stat reveal"><b data-count="5">0</b><span>bônus inclusos</span></div>
+        </div>
+        <div class="countdown reveal" aria-live="polite">
+          <p>Faltam para o Natal:</p>
+          <div class="countdown__grid">
+            <div><b id="cd-d">00</b><span>dias</span></div>
+            <div><b id="cd-h">00</b><span>horas</span></div>
+            <div><b id="cd-m">00</b><span>min</span></div>
+            <div><b id="cd-s">00</b><span>seg</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARA QUEM -->
+    <section class="section section--cream">
+      <div class="container center">
+        <p class="eyebrow reveal">FOI FEITO PARA VOCÊ?</p>
+        <h2 class="title reveal">Este kit é ideal para quem…</h2>
+        <div class="grid grid--3">
+          <div class="card reveal"><span class="card__ico">🧁</span><h3>Já é confeiteira</h3><p>E quer parar de trabalhar muito e lucrar pouco em dezembro.</p></div>
+          <div class="card reveal"><span class="card__ico">🌱</span><h3>Está começando</h3><p>E precisa de um caminho claro para fazer as primeiras vendas.</p></div>
+          <div class="card reveal"><span class="card__ico">🏡</span><h3>Quer renda extra</h3><p>Sem sair de casa, nos horários que couberem na sua rotina.</p></div>
+          <div class="card reveal"><span class="card__ico">🧾</span><h3>Não sabe precificar</h3><p>E quer saber exatamente quanto ganha em cada doce.</p></div>
+          <div class="card reveal"><span class="card__ico">📲</span><h3>Trava na divulgação</h3><p>E precisa de artes e textos que chamam atenção.</p></div>
+          <div class="card reveal"><span class="card__ico">⏳</span><h3>Tem pouco tempo</h3><p>E quer abrir o arquivo, editar e começar a vender.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BÔNUS -->
+    <section class="section" id="bonus">
+      <div class="container center">
+        <p class="eyebrow reveal">🎁 PRESENTES PARA VOCÊ</p>
+        <h2 class="title reveal">5 bônus para <em>vender ainda mais</em></h2>
+        <p class="lead reveal">Conteúdos extras para planejar a produção e manter o perfil ativo até a véspera de Natal.</p>
+        <div class="grid grid--bonus">
+          <div class="bonus reveal"><div class="ph ph--bonus" data-label="Capa do bônus"><span>🎨</span></div><h3>Mapa de Sabores</h3><p>Combinações de recheios que valorizam o produto.</p><div class="bonus__price"><s>R$ 37</s><b>GRÁTIS</b></div></div>
+          <div class="bonus reveal"><div class="ph ph--bonus" data-label="Capa do bônus"><span>✅</span></div><h3>Roteiro de Produção</h3><p>Etapas para produzir em lote sem correria.</p><div class="bonus__price"><s>R$ 27</s><b>GRÁTIS</b></div></div>
+          <div class="bonus reveal"><div class="ph ph--bonus" data-label="Capa do bônus"><span>🗓️</span></div><h3>Agenda de Postagens</h3><p>O que publicar em cada semana de dezembro.</p><div class="bonus__price"><s>R$ 27</s><b>GRÁTIS</b></div></div>
+          <div class="bonus reveal"><div class="ph ph--bonus" data-label="Capa do bônus"><span>💌</span></div><h3>Cartões de Boas Festas</h3><p>Artes para enviar junto com as encomendas.</p><div class="bonus__price"><s>R$ 37</s><b>GRÁTIS</b></div></div>
+          <div class="bonus reveal"><div class="ph ph--bonus" data-label="Capa do bônus"><span>🎓</span></div><h3>Aula de Vendas</h3><p>Como cobrar o valor justo sem perder cliente.</p><div class="bonus__price"><s>R$ 67</s><b>GRÁTIS</b></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPOIMENTOS (PLACEHOLDERS) -->
+    <section class="section section--cream" id="depoimentos">
+      <div class="container center">
+        <p class="eyebrow reveal">QUEM USOU, APROVOU</p>
+        <h2 class="title reveal">Resultados de quem <em>colocou em prática</em></h2>
+        <p class="lead reveal">Prints reais das nossas alunas.</p>
+      </div>
+      <div class="carousel reveal" data-carousel data-autoplay>
+        <div class="carousel__track">
+          <!-- Substitua cada bloco por <img src="assets/depoimento-1.webp" alt="..."> com prints REAIS das suas clientes -->
+          <div class="ph ph--print" data-label="Print de cliente 1"><span>💬</span></div>
+          <div class="ph ph--print" data-label="Print de cliente 2"><span>💬</span></div>
+          <div class="ph ph--print" data-label="Print de cliente 3"><span>💬</span></div>
+          <div class="ph ph--print" data-label="Print de cliente 4"><span>💬</span></div>
+          <div class="ph ph--print" data-label="Print de cliente 5"><span>💬</span></div>
+          <div class="ph ph--print" data-label="Print de cliente 6"><span>💬</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GARANTIA -->
+    <section class="section">
+      <div class="container guarantee reveal">
+        <div class="seal"><b>7</b><span>DIAS</span><small>de garantia</small></div>
+        <div>
+          <p class="eyebrow">RISCO ZERO</p>
+          <h2 class="title">Experimente por <em>7 dias</em></h2>
+          <p class="lead">Acesse tudo, teste a planilha e edite os cardápios. Se achar que não vale a pena, é só pedir e devolvemos todo o valor, sem precisar justificar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OFERTA -->
+    <section class="section section--dark" id="oferta">
+      <div class="container">
+        <div class="offer reveal">
+          <h2 class="title title--light center">Monte sua <em>confeitaria de Natal</em> hoje</h2>
+          <ul class="offer__list">
+            <li><span>✓ Cardápios natalinos editáveis</span><b>R$ 57</b></li>
+            <li><span>✓ +80 receitas com ficha técnica</span><b>R$ 47</b></li>
+            <li><span>✓ Planilha automática de preços</span><b>R$ 37</b></li>
+            <li><span>✓ Posts, tags e roteiros de WhatsApp</span><b>R$ 37</b></li>
+            <li><span>✓ Agenda de encomendas</span><b>R$ 19</b></li>
+            <li class="hl"><span>🎁 5 bônus exclusivos</span><b>GRÁTIS</b></li>
+            <li><span>✓ Acesso vitalício</span><b>incluso</b></li>
+          </ul>
+          <p class="offer__from">Valor total: <s>R$ 197</s></p>
+          <p class="offer__price"><small>hoje por</small>R$ 47<sup>,00</sup></p>
+          <a href="#" class="btn btn--lg btn--gold pulse js-checkout">QUERO MEU KIT DOCE NATAL <span class="arrow">→</span></a>
+          <p class="offer__safe">🔒 Pagamento seguro · Acesso na hora · Edite no Canva</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container narrow">
+        <p class="eyebrow center reveal">PERGUNTAS FREQUENTES</p>
+        <h2 class="title center reveal">Ficou alguma dúvida?</h2>
+        <div class="faq">
+          <details class="reveal"><summary>Como vou receber o material?</summary><p>Logo após a confirmação do pagamento, você recebe um e-mail com o link de acesso a todos os arquivos.</p></details>
+          <details class="reveal"><summary>Preciso entender de Canva?</summary><p>Não. Os modelos abrem no Canva gratuito e basta clicar no texto ou na foto para trocar pelos seus.</p></details>
+          <details class="reveal"><summary>Nunca vendi doces. Vou conseguir?</summary><p>Sim. O kit traz o passo a passo completo, desde a escolha das receitas até a forma de divulgar.</p></details>
+          <details class="reveal"><summary>O acesso expira?</summary><p>Não. O acesso é vitalício, e você pode usar o material em todos os próximos Natais.</p></details>
+          <details class="reveal"><summary>Já tenho receitas. O que o kit acrescenta?</summary><p>A integração: cardápio, preço, divulgação e controle de pedidos funcionando juntos, como uma campanha de vendas completa.</p></details>
+          <details class="reveal"><summary>E se eu me arrepender?</summary><p>Você tem 7 dias de garantia. Basta pedir o reembolso para receber o valor de volta.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="section section--red">
+      <div class="container center">
+        <p class="eyebrow eyebrow--gold reveal">⏰ NÃO DEIXE PARA DEPOIS</p>
+        <h2 class="title title--light reveal">Os clientes vão comprar doces neste Natal. <em>Que seja de você.</em></h2>
+        <p class="lead lead--light reveal">O preço promocional pode acabar a qualquer momento.</p>
+        <a href="#" class="btn btn--lg btn--gold pulse reveal js-checkout">GARANTIR MINHA VAGA <span class="arrow">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <a href="#topo" class="logo"><span class="logo__icon">🍪</span><span class="logo__txt">Doce<b>NATAL</b></span></a>
+      <p>Ajudando quem ama confeitar a lucrar nas festas.</p>
+      <p class="footer__copy">© <span id="ano"></span> Kit Doce Natal. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <a href="#oferta" class="sticky-cta js-checkout" id="stickyCta">🎄 Garantir o kit por R$ 47</a>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
