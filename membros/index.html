@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2a0908">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Área de Membros | Kit Doce Natal</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500;1,600;1,700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="../assets/js/kit.js"></script>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="membros.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script defer src="data/receitas.js"></script>
+  <script defer src="data/conteudo.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <!-- ================= LOGIN ================= -->
+  <div class="login" id="login" hidden>
+    <div class="login-card">
+      <a class="logo" href="../"><span class="logo-spark" aria-hidden="true">🍪</span><span class="logo-word"><em>Doce</em><strong>NATAL</strong></span></a>
+      <h1>Área de <em>Membros</em></h1>
+      <p>Entre com o e-mail da compra e o código de acesso que você recebeu.</p>
+      <form id="login-form" novalidate>
+        <label class="field">E-mail da compra<input id="lg-email" type="email" autocomplete="email" required placeholder="voce@email.com"></label>
+        <label class="field" id="lg-codigo-wrap">Código de acesso<input id="lg-codigo" autocomplete="one-time-code" placeholder="Está no e-mail de boas-vindas"></label>
+        <p class="lg-erro" id="lg-erro" role="alert"></p>
+        <button class="btn btn-block btn-lg" type="submit">ENTRAR NO KIT →</button>
+      </form>
+      <p class="hint">Não encontrou o e-mail? Olhe na caixa de spam ou promoções.</p>
+    </div>
+  </div>
+
+  <!-- ================= APP ================= -->
+  <div class="app" id="app" hidden>
+    <aside class="side" aria-label="Menu da área de membros">
+      <a class="logo" href="#/inicio"><span class="logo-spark" aria-hidden="true">🍪</span><span class="logo-word"><em>Doce</em><strong>NATAL</strong></span></a>
+      <nav id="side-nav"></nav>
+      <p class="side-foot">Kit Doce Natal · acesso vitalício</p>
+    </aside>
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <div class="main">
+      <header class="topnav">
+        <a class="logo" href="#/inicio"><span class="logo-spark" aria-hidden="true">🍪</span><span class="logo-word"><em>Doce</em><strong>NATAL</strong></span></a>
+        <a class="top-user" href="#/perfil">👤 <span id="top-user">Meu perfil</span></a>
+      </header>
+      <main class="view" id="view" tabindex="-1"></main>
+    </div>
+    <nav class="bottomnav" id="bottomnav" aria-label="Atalhos"></nav>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

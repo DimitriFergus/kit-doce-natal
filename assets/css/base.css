@@ -1,0 +1,145 @@
+/* ===========================================================
+   KIT DOCE NATAL — tema compartilhado (ofertas + área de membros)
+   Paleta vinho / creme / dourado · Playfair Display + Poppins + Caveat
+   =========================================================== */
+:root{
+  --wine-950:#1f0605;
+  --wine-900:#2a0908;
+  --wine-800:#3a0d0b;
+  --wine-700:#4a1210;
+  --wine-600:#6a1a16;
+  --wine-500:#8b2420;
+  --red:#b02a24;
+  --cream-50:#faf4ea;
+  --cream-100:#f5ebe0;
+  --cream-200:#ecdcc8;
+  --cream-300:#e0c9ad;
+  --gold-300:#ecd49a;
+  --gold-400:#d4af6a;
+  --gold-500:#c9a24b;
+  --gold-600:#b08536;
+  --ink:#2a1512;
+  --ink-soft:#6b4b43;
+  --green:#2f7d4f;
+  --radius:18px;
+  --radius-lg:26px;
+  --maxw:1180px;
+  --shadow-sm:0 10px 26px rgba(42,9,8,.10);
+  --shadow:0 20px 48px rgba(42,9,8,.16);
+  --shadow-lg:0 30px 70px rgba(42,9,8,.28);
+  --font-serif:"Playfair Display",Georgia,serif;
+  --font-sans:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-hand:"Caveat","Playfair Display",cursive;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px;-webkit-text-size-adjust:100%;overflow-x:hidden}
+body{margin:0;font-family:var(--font-sans);color:var(--ink);background:var(--cream-100);line-height:1.6;overflow-x:hidden;width:100%}
+img{max-width:100%;display:block;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+h1,h2,h3,h4{font-family:var(--font-sans);font-weight:800;line-height:1.2;margin:0 0 .5em;letter-spacing:-.02em}
+h1 em,h2 em,h3 em,h1 span,h2 span{font-family:var(--font-serif);font-style:italic;font-weight:600;letter-spacing:-.01em}
+.container{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:20px}
+.skip{position:absolute;left:-9999px;top:0;background:#fff;color:var(--wine-700);padding:10px 16px;z-index:300}
+.skip:focus{left:0}
+:focus-visible{outline:3px solid var(--gold-400);outline-offset:3px}
+
+/* ============ BOTÕES ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+  font-family:var(--font-sans);font-weight:800;font-size:15px;letter-spacing:.02em;line-height:1.2;
+  color:var(--wine-900);background:linear-gradient(135deg,var(--gold-300),var(--gold-400) 40%,var(--gold-600));
+  padding:15px 28px;border:none;border-radius:999px;cursor:pointer;text-align:center;
+  box-shadow:0 12px 26px rgba(176,133,54,.38),inset 0 1px 1px rgba(255,255,255,.6);
+  position:relative;overflow:hidden;isolation:isolate;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.btn::after{ /* reflexo que passa pelo botão */
+  content:"";position:absolute;inset:-50% auto -50% -60%;width:40%;z-index:-1;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);
+  transform:skewX(-20deg);animation:shine 3.6s ease-in-out infinite;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(176,133,54,.5),inset 0 1px 1px rgba(255,255,255,.6)}
+.btn-lg{font-size:17px;padding:19px 34px}
+.btn-block{display:flex;width:100%}
+.btn-sm{font-size:13px;padding:10px 18px}
+.btn-ghost{background:transparent;color:var(--wine-700);box-shadow:inset 0 0 0 2px var(--wine-600)}
+.btn-ghost::after{display:none}
+.btn-wine{background:linear-gradient(135deg,var(--wine-500),var(--wine-700));color:var(--cream-50);box-shadow:0 12px 26px rgba(74,18,16,.3)}
+.btn-pulse{animation:pulse 2.4s ease-in-out infinite}
+@keyframes shine{0%,55%{left:-60%}100%{left:130%}}
+@keyframes pulse{0%,100%{box-shadow:0 12px 26px rgba(176,133,54,.38),0 0 0 0 rgba(212,175,106,.55)}50%{box-shadow:0 12px 26px rgba(176,133,54,.38),0 0 0 14px rgba(212,175,106,0)}}
+
+/* ============ TIPOGRAFIA DE SEÇÃO ============ */
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--wine-500);
+  background:rgba(139,36,32,.08);padding:7px 14px;border-radius:999px;margin-bottom:14px}
+.eyebrow.gold{color:var(--gold-400);background:rgba(212,175,106,.12)}
+.eyebrow.light{color:var(--gold-300);background:rgba(236,212,154,.1);border:1px solid rgba(236,212,154,.25)}
+.hand{font-family:var(--font-hand);font-weight:700;color:var(--gold-500);font-size:1.4em;line-height:1}
+.section-head{max-width:760px;margin:0 auto 42px}
+.section-head.centered{text-align:center}
+.section-head h2,.section-title{font-size:clamp(28px,4.4vw,44px)}
+.section-head p{color:var(--ink-soft);font-size:17px;margin:0}
+.section-dark .section-head p{color:var(--cream-200)}
+
+/* ============ SEÇÕES ============ */
+section{position:relative;padding:84px 0;overflow:hidden}
+.section-cream{background:var(--cream-100)}
+.section-light{background:var(--cream-50)}
+.section-dark{background:radial-gradient(120% 80% at 50% 0%,var(--wine-600),var(--wine-800) 55%,var(--wine-900));color:var(--cream-50)}
+.section-dark h2,.section-dark h3{color:#fff}
+.section-dark h2 em,.section-dark h2 span{color:var(--gold-400)}
+.section-cream h2 em,.section-light h2 em,.section-cream h2 span,.section-light h2 span{color:var(--wine-500)}
+
+/* ============ BARRA SUPERIOR + FAIXAS ============ */
+.topbar{background:var(--wine-950);color:var(--gold-300);font-size:12px;font-weight:700;letter-spacing:.12em;overflow:hidden;white-space:nowrap;padding:9px 0}
+.topbar-track,.ribbon-track{display:inline-flex;animation:marquee 32s linear infinite;will-change:transform}
+.topbar-track span{padding-right:0}
+.ribbon{background:var(--wine-700);color:var(--cream-50);overflow:hidden;white-space:nowrap;padding:16px 0;transform:rotate(-1.2deg);margin:-8px -10px;position:relative;z-index:3;box-shadow:var(--shadow-sm)}
+.ribbon b{font-weight:700;font-size:15px;padding:0 26px;letter-spacing:.02em}
+.ribbon--gold{background:linear-gradient(90deg,var(--gold-500),var(--gold-300),var(--gold-500));color:var(--wine-900);transform:rotate(1deg)}
+.ribbon-track--rev{animation-direction:reverse}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============ HEADER ============ */
+.header{position:sticky;top:0;z-index:100;background:rgba(42,9,8,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(212,175,106,.18)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;height:70px}
+.logo{display:inline-flex;align-items:center;gap:10px;color:#fff}
+.logo-spark{font-size:26px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3))}
+.logo-word{display:flex;flex-direction:column;line-height:.95}
+.logo-word em{font-family:var(--font-hand);font-size:24px;color:var(--gold-400);font-style:normal;font-weight:700}
+.logo-word strong{font-size:17px;letter-spacing:.2em;font-weight:800}
+.nav{display:flex;gap:24px}
+.nav a{color:var(--cream-200);font-size:14px;font-weight:500;transition:color .2s}
+.nav a:hover{color:var(--gold-400)}
+@media (max-width:960px){.nav{display:none}}
+@media (max-width:420px){.header .btn{font-size:12px;padding:10px 14px}}
+
+/* ============ IMAGENS PENDENTES (placeholder automático) ============ */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;
+  width:100%;height:100%;min-height:120px;padding:14px;border-radius:inherit;
+  background:repeating-linear-gradient(45deg,var(--cream-200),var(--cream-200) 12px,var(--cream-100) 12px,var(--cream-100) 24px);
+  color:var(--wine-600);font-size:12px;font-weight:600;border:2px dashed var(--cream-300)}
+.ph b{font-size:22px}
+.ph code{font-size:11px;background:rgba(255,255,255,.7);padding:2px 6px;border-radius:6px;word-break:break-all}
+.section-dark .ph{background:repeating-linear-gradient(45deg,var(--wine-700),var(--wine-700) 12px,var(--wine-800) 12px,var(--wine-800) 24px);color:var(--gold-300);border-color:rgba(212,175,106,.3)}
+.section-dark .ph code{background:rgba(0,0,0,.25)}
+
+/* ============ NEVE ============ */
+.snow{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.snow i{position:absolute;top:-12px;color:#fff;opacity:.75;font-style:normal;animation:fall linear infinite;text-shadow:0 0 6px rgba(255,255,255,.6)}
+@keyframes fall{to{transform:translate3d(var(--drift,30px),110vh,0) rotate(360deg)}}
+
+/* ============ REVELAÇÃO ============ */
+.has-js .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease var(--delay,0s),transform .7s ease var(--delay,0s)}
+.has-js .reveal.visible{opacity:1;transform:none}
+
+/* brilho que atravessa o título */
+.shimmer{background:linear-gradient(100deg,#fff 30%,var(--gold-300) 50%,#fff 70%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .snow{display:none}
+}

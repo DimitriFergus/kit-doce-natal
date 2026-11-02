@@ -1,24 +1,38 @@
-# Kit Doce Natal — Landing Page
+# Kit Doce Natal
 
-Landing page de vendas com HTML, CSS e TypeScript separados.
+Três sites no mesmo design (vinho, creme e dourado):
 
-## Estrutura
-- `index.html`: marcação da página
-- `css/style.css`: estilos e animações CSS
-- `src/main.ts`: código-fonte TypeScript (interações)
-- `js/main.js`: JavaScript compilado a partir do TS (`npm run build`)
-- `assets/`: imagens
+| Site | Pasta | Para quê |
+|---|---|---|
+| Oferta 1 | `/` (`index.html`) | Página de venda direta, ângulo "cardápio pronto" |
+| Oferta 2 | `/oferta-2/` | Página de venda direta, ângulo "renda extra começando do zero" (teste A/B) |
+| Área de membros | `/membros/` | Onde a cliente recebe tudo, sem PDF |
 
-## Personalizar
-1. **Checkout:** edite `CHECKOUT_URL` em `src/main.ts` e rode `npm run build`.
-2. **Vídeo:** cole o embed dentro de `<div class="video" id="video">` no `index.html`.
-3. **Imagens:** troque cada `<div class="ph ...">` por `<div class="ph ..."><img src="assets/sua-imagem.webp" alt="..."></div>`.
-4. **Depoimentos:** use somente prints reais das suas clientes, com autorização delas.
+## Configurar (um arquivo só)
+Edite `assets/js/kit.js`:
+- `checkoutOferta1` / `checkoutOferta2`: links do checkout (as UTMs da visita são repassadas).
+- `preco`, `precoCompleto`, `precoDe`, `parcelas`.
+- `videoEmbed`: URL de embed do vídeo de demonstração.
+- `emailSuporte`, `whatsappSuporte`, `linkGrupoComunidade`.
+- `codigoAcesso`: código que vai no e-mail de boas-vindas da plataforma de pagamento.
 
-## Desenvolvimento
-```bash
-npm install
-npm run watch
-```
+**E-mail pós-compra sugerido:** link `https://SEU-SITE/membros/?email={email}&codigo=NATAL2026` (o login já vem preenchido).
 
-O deploy no GitHub Pages é feito automaticamente pelo GitHub Actions a cada push na branch `main`.
+> O login da área de membros é uma trava simples no navegador (e-mail + código). Serve para organizar o acesso, mas não é proteção forte: quem tiver o código entra. Troque o código a cada campanha. Para proteção real, hospede a área dentro da plataforma (Kiwify/Hotmart) ou atrás de um login com servidor.
+
+## Imagens
+A planilha `PROMPTS-IMAGENS-Kit-Doce-Natal.xlsx` lista todas as 107 imagens com nome exato, pasta, tamanho e prompt.
+Enquanto uma imagem não existe, o site mostra um quadro tracejado com o nome do arquivo esperado.
+- `assets/img/` → páginas de oferta
+- `assets/img/membros/` → área de membros (capas, fundos de cardápio, artes)
+- `assets/img/membros/receitas/` → foto de cada receita (`<id-da-receita>.webp`)
+
+Prova social (`prova-01` a `prova-06`): use **somente fotos/prints reais de clientes**, com autorização.
+
+## Conteúdo da área de membros
+- `membros/data/receitas.js`: 37 receitas (ingredientes numéricos, para a calculadora).
+- `membros/data/conteudo.js`: mensagens, legendas, aulas, sabores, checklist, calendário, cardápios, artes e etiquetas.
+- Os dados que a aluna digita (perfil, encomendas, preços, progresso) ficam salvos no navegador dela.
+
+## Publicação
+GitHub Pages via Actions (`.github/workflows/deploy.yml`) a cada push na `main`. Site 100% estático, sem build.
