@@ -14,11 +14,16 @@ Edite `assets/js/kit.js`:
 - `preco`, `precoCompleto`, `precoDe`, `parcelas`.
 - `videoEmbed`: URL de embed do vídeo de demonstração.
 - `emailSuporte`, `whatsappSuporte`, `linkGrupoComunidade`.
-- `codigoAcesso`: código que vai no e-mail de boas-vindas da plataforma de pagamento.
+- `codigoAcessoHash`: hash do código que vai no e-mail de boas-vindas (o código em si não fica no site). O comando para gerar o hash de um código novo está no próprio `kit.js`.
+- `checkoutQuiz`: checkout usado pelo quiz (`/quiz/`); vazio = usa o da Oferta 1.
 
 **E-mail pós-compra sugerido:** link `https://SEU-SITE/membros/?email={email}&codigo=NATAL2026` (o login já vem preenchido).
 
-> O login da área de membros é uma trava simples no navegador (e-mail + código). Serve para organizar o acesso, mas não é proteção forte: quem tiver o código entra. Troque o código a cada campanha. Para proteção real, hospede a área dentro da plataforma (Kiwify/Hotmart) ou atrás de um login com servidor.
+> Segurança atual (sem servidor): código guardado só como hash SHA-256, bloqueio progressivo após 5 tentativas erradas, sessão invalidada ao trocar o código, CSP restritiva, proteção contra o site ser embutido em outro e código removido da barra de endereço. Isso dificulta o acesso casual, mas **os arquivos de conteúdo continuam públicos para quem souber o endereço**. A proteção completa (login por comprador, liberação via webhook da plataforma, conteúdo servido só para quem pagou) entra na etapa do banco de dados.
+
+## App (PWA)
+A área de membros é um app instalável (`membros/manifest.webmanifest` + `membros/sw.js`): abre offline, guarda as imagens no celular e mostra o botão "Instalar o app" no Início (no iPhone, a instrução de "Adicionar à Tela de Início").
+**Sempre que publicar mudanças na área de membros, troque `VERSAO` no topo de `membros/sw.js`** para os celulares baixarem a versão nova.
 
 ## Imagens
 A planilha `PROMPTS-IMAGENS-Kit-Doce-Natal.xlsx` lista todas as 107 imagens com nome exato, pasta, tamanho e prompt.

@@ -15,6 +15,7 @@ window.KIT = {
   // Link do checkout (Kiwify, Hotmart, PerfectPay, Eduzz...). As UTMs da visita são repassadas automaticamente.
   checkoutOferta1: "",
   checkoutOferta2: "",
+  checkoutQuiz: "",          // se ficar vazio, o quiz usa o checkout da Oferta 1
 
   // Vídeo de demonstração: cole a URL de embed (ex.: https://www.youtube.com/embed/ID ou player do VTurb/Panda)
   videoEmbed: "",
@@ -24,8 +25,11 @@ window.KIT = {
   whatsappSuporte: "",        // só números com DDI, ex.: 5511999999999
   linkGrupoComunidade: "",    // link de convite do grupo/comunidade de alunos
 
-  // Área de membros: código de acesso enviado no e-mail pós-compra (deixe "" para liberar só com e-mail)
-  codigoAcesso: "NATAL2026",
+  // Área de membros: o código de acesso (enviado no e-mail pós-compra) NÃO fica escrito aqui, só o hash dele.
+  // Para trocar o código, gere o novo hash e cole abaixo (isso desconecta quem já entrou):
+  //   node -e "console.log(require('crypto').createHash('sha256').update('kdn:' + 'NOVOCODIGO'.toUpperCase()).digest('hex'))"
+  // Deixe "" para liberar a entrada só com o e-mail.
+  codigoAcessoHash: "bb679b88f1fb6c3d1c2d8d79fbf0bac5d978080c1fb20dd358eaab7dd3109990",
   urlAreaMembros: "membros/"
 };
 

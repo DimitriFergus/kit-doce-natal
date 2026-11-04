@@ -4,6 +4,8 @@
    =========================================================== */
 (function () {
   "use strict";
+  /* impede que a área de membros seja aberta dentro de outro site (clickjacking) */
+  if (window.top !== window.self) { try { window.top.location = window.self.location.href; } catch (e) { document.documentElement.innerHTML = ""; return; } }
   var KIT = window.KIT || {};
   var RECEITAS = window.RECEITAS || [];
   var C = window.CONTEUDO || {};
@@ -60,23 +62,81 @@
   }
 
   /* ---------------- login ---------------- */
-  function logado() { return !!store.get("usuario", null); }
+  /* O código de acesso não fica escrito no site: só o hash SHA-256 de "kdn:" + CÓDIGO (KIT.codigoAcessoHash).
+     A sessão guarda um pedaço desse hash; trocar o código em kit.js desconecta todo mundo. */
+  var HASH = String(KIT.codigoAcessoHash || "").toLowerCase();
+  function sha256(txt) {
+    var bytes = new TextEncoder().encode(txt);
+    if (window.crypto && crypto.subtle && window.isSecureContext) {
+      return crypto.subtle.digest("SHA-256", bytes).then(function (b) { return hex(new Uint8Array(b)); });
+    }
+    return Promise.resolve(hex(sha256js(bytes)));
+  }
+  function hex(a) { return Array.prototype.map.call(a, function (b) { return ("0" + b.toString(16)).slice(-2); }).join(""); }
+  function sha256js(m) { // reserva para navegadores antigos ou sem HTTPS
+    var K = [], H = [], i, j, p = 0;
+    function frac(x) { return (x - Math.floor(x)) * 4294967296 | 0; }
+    for (var c = 2; p < 64; c++) { for (i = 2; i * i <= c && c % i; i++); if (i * i > c) { if (p < 8) H[p] = frac(Math.pow(c, 1 / 2)); K[p++] = frac(Math.pow(c, 1 / 3)); } }
+    var l = m.length, n = ((l + 9 + 63) >> 6) << 6, b = new Uint8Array(n); b.set(m); b[l] = 128;
+    var dv = new DataView(b.buffer); dv.setUint32(n - 4, l * 8); var W = new Array(64);
+    for (var o = 0; o < n; o += 64) {
+      var h = H.slice(0);
+      for (j = 0; j < 64; j++) {
+        if (j < 16) W[j] = dv.getUint32(o + j * 4);
+        else { var x = W[j - 15], y = W[j - 2]; W[j] = (((x >>> 7 | x << 25) ^ (x >>> 18 | x << 14) ^ x >>> 3) + W[j - 7] + ((y >>> 17 | y << 15) ^ (y >>> 19 | y << 13) ^ y >>> 10) + W[j - 16]) | 0; }
+        var e = h[4], a = h[0];
+        var t1 = (h[7] + ((e >>> 6 | e << 26) ^ (e >>> 11 | e << 21) ^ (e >>> 25 | e << 7)) + ((e & h[5]) ^ (~e & h[6])) + K[j] + W[j]) | 0;
+        var t2 = (((a >>> 2 | a << 30) ^ (a >>> 13 | a << 19) ^ (a >>> 22 | a << 10)) + ((a & h[1]) ^ (a & h[2]) ^ (h[1] & h[2]))) | 0;
+        h = [(t1 + t2) | 0, h[0], h[1], h[2], (h[3] + t1) | 0, h[4], h[5], h[6]];
+      }
+      for (j = 0; j < 8; j++) H[j] = (H[j] + h[j]) | 0;
+    }
+    var out = new Uint8Array(32); for (j = 0; j < 8; j++) { out[j * 4] = H[j] >>> 24; out[j * 4 + 1] = H[j] >>> 16 & 255; out[j * 4 + 2] = H[j] >>> 8 & 255; out[j * 4 + 3] = H[j] & 255; }
+    return out;
+  }
+  function logado() {
+    var u = store.get("usuario", null);
+    if (!u || !u.email) return false;
+    if (HASH && u.k !== HASH.slice(0, 16)) { store.del("usuario"); return false; }
+    return true;
+  }
+  /* trava contra tentativas repetidas: 5 erros bloqueiam por 1 min, e o tempo dobra a cada novo bloqueio */
+  function bloqueio() { var t = store.get("tentativas", { n: 0, ate: 0, nivel: 0 }); return t; }
+  function registraErro() {
+    var t = bloqueio(); t.n++;
+    if (t.n >= 5) { t.nivel++; t.ate = Date.now() + 60000 * Math.pow(2, t.nivel - 1); t.n = 0; }
+    store.set("tentativas", t); return t;
+  }
   function telaLogin() {
     $("#app").hidden = true; $("#login").hidden = false;
     var q = new URLSearchParams(location.search);
     if (q.get("email")) $("#lg-email").value = q.get("email");
     if (q.get("codigo")) $("#lg-codigo").value = q.get("codigo");
-    if (!KIT.codigoAcesso) $("#lg-codigo-wrap").hidden = true;
+    if (q.has("codigo") || q.has("email")) history.replaceState(null, "", location.pathname + location.hash); // tira o código da barra de endereço e do histórico
+    if (!HASH) $("#lg-codigo-wrap").hidden = true;
   }
   $("#login-form").addEventListener("submit", function (e) {
     e.preventDefault();
-    var email = $("#lg-email").value.trim(), cod = $("#lg-codigo").value.trim();
-    var err = $("#lg-erro");
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = "Digite um e-mail válido."; return; }
-    if (KIT.codigoAcesso && cod.toUpperCase() !== String(KIT.codigoAcesso).toUpperCase()) { err.textContent = "Código de acesso incorreto. Confira o e-mail da compra."; return; }
-    store.set("usuario", { email: email, desde: hoje() });
-    history.replaceState(null, "", location.pathname + "#/inicio");
-    iniciar();
+    var email = $("#lg-email").value.trim().toLowerCase(), cod = $("#lg-codigo").value.trim().toUpperCase();
+    var err = $("#lg-erro"), btn = e.target.querySelector("button[type=submit]");
+    var t = bloqueio();
+    if (t.ate > Date.now()) { err.textContent = "Muitas tentativas. Aguarde " + Math.ceil((t.ate - Date.now()) / 60000) + " min e tente de novo."; return; }
+    if (email.length > 120 || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = "Digite um e-mail válido."; return; }
+    if (HASH && (!cod || cod.length > 40)) { err.textContent = "Digite o código de acesso."; return; }
+    btn.disabled = true;
+    (HASH ? sha256("kdn:" + cod) : Promise.resolve("")).then(function (h) {
+      btn.disabled = false;
+      if (HASH && h !== HASH) {
+        var tt = registraErro();
+        err.textContent = tt.ate > Date.now() ? "Muitas tentativas. Aguarde alguns minutos e tente de novo." : "Código de acesso incorreto. Confira o e-mail da compra.";
+        return;
+      }
+      store.del("tentativas");
+      store.set("usuario", { email: email, desde: hoje(), k: HASH.slice(0, 16) });
+      err.textContent = "";
+      history.replaceState(null, "", location.pathname + "#/inicio");
+      iniciar();
+    });
   });
 
   /* ---------------- navegação ---------------- */
@@ -109,6 +169,7 @@
     // contêiner novo a cada tela: descarta os ouvintes de eventos da tela anterior
     var old = $("#view"), v = old.cloneNode(false); old.replaceWith(v); v.className = "view view--" + r.nome;
     fn(v, r);
+    if (r.nome === "inicio") mostraInstalar();
     window.scrollTo(0, 0);
     v.focus({ preventScroll: true });
   }
@@ -159,7 +220,7 @@
       step(4, "Monte o cardápio e divulgue", "Baixe a imagem e use as mensagens prontas.", "#/cardapios") +
       '</div><h2 class="sec-title">Seu kit</h2><div class="modules">' +
       modulos.map(function (m) {
-        return '<a class="module" href="#/' + m[0] + '"><div class="module-img"><img src="' + IMG + "modulo-" + m[0] + '.webp" alt="' + esc(m[1]) + '" loading="lazy"></div><div class="module-txt"><strong>' + m[1] + "</strong><span>" + m[2] + "</span></div></a>";
+        return '<a class="module" href="#/' + m[0] + '"><div class="module-img"><img src="' + IMG + "modulo-" + m[0] + '.webp" alt="' + esc(m[1]) + '" width="800" height="450" loading="lazy" decoding="async"></div><div class="module-txt"><strong>' + m[1] + "</strong><span>" + m[2] + "</span></div></a>";
       }).join("") + "</div>" +
       '<div class="stats"><div><b>' + pr.feitas + "</b>receitas feitas</div><div><b>" + pr.aulas + "/" + pr.totalAulas + "</b>aulas concluídas</div><div><b>" + pr.check + "/" + pr.totalCheck + "</b>itens do checklist</div><div><b>" + store.get("encomendas", []).length + "</b>encomendas anotadas</div></div>";
     function step(n, t, d, href) { return '<a class="step" href="' + href + '"><b>' + n + "</b><div><strong>" + t + "</strong><span>" + d + "</span></div><i>→</i></a>"; }
@@ -183,7 +244,7 @@
         return true;
       });
       $("#rgrid").innerHTML = res.length ? res.map(function (r) {
-        return '<a class="rcard" href="#/receita/' + r.id + '"><div class="rcard-img"><img src="' + IMG + "receitas/" + r.id + '.webp" alt="' + esc(r.nome) + '" loading="lazy">' +
+        return '<a class="rcard" href="#/receita/' + r.id + '"><div class="rcard-img"><img src="' + IMG + "receitas/mini/" + r.id + '.webp" alt="' + esc(r.nome) + '" width="480" height="360" loading="lazy" decoding="async">' +
           (favs.indexOf(r.id) > -1 ? '<span class="rfav">♥</span>' : "") + (feitas.indexOf(r.id) > -1 ? '<span class="rdone">✓ feita</span>' : "") + "</div>" +
           '<div class="rcard-body"><small>' + esc(r.categoria) + "</small><strong>" + esc(r.nome) + '</strong><div class="rmeta"><span>⏱ ' + esc(r.tempo) + "</span><span>🍽 " + esc(r.rendimento.qtd + " " + r.rendimento.unidade) + "</span><span>" + esc(r.dificuldade) + "</span></div></div></a>";
       }).join("") : '<p class="empty">Nenhuma receita encontrada. ' + (filtroRec.fav ? "Toque no ♥ dentro de uma receita para favoritar." : "Tente outra busca.") + "</p>";
@@ -202,10 +263,10 @@
     if (!rec) { v.innerHTML = head("RECEITAS", "Receita não encontrada", "", "#/receitas"); return; }
     var mult = 1;
     v.innerHTML = '<a class="back" href="#/receitas">← Todas as receitas</a>' +
-      '<article class="recipe"><div class="recipe-hero"><img src="' + IMG + "receitas/" + rec.id + '.webp" alt="' + esc(rec.nome) + '"></div>' +
+      '<article class="recipe"><div class="recipe-hero"><img src="' + IMG + "receitas/" + rec.id + '.webp" alt="' + esc(rec.nome) + '" width="960" height="720" decoding="async"></div>' +
       '<div class="recipe-head"><span class="eyebrow">' + esc(rec.categoria.toUpperCase()) + "</span><h1>" + esc(rec.nome) + "</h1><p>" + esc(rec.resumo) + "</p>" +
       '<div class="rmeta big"><span>⏱ ' + esc(rec.tempo) + "</span><span>📊 " + esc(rec.dificuldade) + "</span><span>🗓 " + esc(rec.validade) + "</span></div>" +
-      '<div class="recipe-actions"><button type="button" class="btn btn-sm" id="r-calc">🧮 Calcular o preço</button><button type="button" class="btn btn-sm btn-ghost" id="r-fav"></button><button type="button" class="btn btn-sm btn-ghost" id="r-done"></button><button type="button" class="btn btn-sm btn-ghost" onclick="window.print()">🖨 Imprimir</button></div></div>' +
+      '<div class="recipe-actions"><button type="button" class="btn btn-sm" id="r-calc">🧮 Calcular o preço</button><button type="button" class="btn btn-sm btn-ghost" id="r-fav"></button><button type="button" class="btn btn-sm btn-ghost" id="r-done"></button><button type="button" class="btn btn-sm btn-ghost" id="r-print">🖨 Imprimir</button></div></div>' +
       '<div class="recipe-grid"><section class="card"><div class="card-head"><h2>Ingredientes</h2><label class="mult">Fazer <select id="r-mult"><option value="0.5">½ receita</option><option value="1" selected>1 receita</option><option value="2">2 receitas</option><option value="3">3 receitas</option><option value="4">4 receitas</option><option value="5">5 receitas</option></select></label></div>' +
       '<p class="yield" id="r-yield"></p><ul class="ingr" id="r-ingr"></ul></section>' +
       '<section class="card"><h2>Modo de preparo</h2><ol class="steps-list">' + rec.preparo.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ol><p class=\"hint\">Toque em um passo para marcar como feito.</p></section></div>" +
@@ -230,6 +291,7 @@
     $("#r-mult").addEventListener("change", function (e) { mult = num(e.target.value); ingr(); });
     $("#r-fav").addEventListener("click", function () { alterna("favs", "Adicionada às favoritas ♥"); });
     $("#r-done").addEventListener("click", function () { alterna("feitas", "Receita marcada como feita ✓"); });
+    $("#r-print").addEventListener("click", function () { window.print(); });
     $("#r-calc").addEventListener("click", function () { location.hash = "#/calculadora?r=" + rec.id + "&m=" + mult; });
     $$(".steps-list li", v).forEach(function (li) { li.addEventListener("click", function () { li.classList.toggle("done"); }); });
     ingr(); botoes();
@@ -328,16 +390,35 @@
     ajusta();
     if ("ResizeObserver" in window) new ResizeObserver(ajusta).observe(stage); else addEventListener("resize", ajusta);
   }
+  /* o gerador de imagem (200 KB) só é baixado quando a pessoa pede a primeira imagem */
+  var h2cPromessa;
+  function carregaH2C() {
+    if (window.html2canvas) return Promise.resolve();
+    return h2cPromessa || (h2cPromessa = new Promise(function (ok, falha) {
+      var s = document.createElement("script"); s.src = "vendor/html2canvas.min.js";
+      s.onload = ok; s.onerror = function () { h2cPromessa = null; falha(); }; document.head.appendChild(s);
+    }));
+  }
   function baixarPNG(node, nome, btn) {
-    if (!window.html2canvas) { toast("Carregando o gerador de imagem… tente de novo em instantes"); return; }
     var txt = btn.textContent; btn.textContent = "Gerando imagem…"; btn.disabled = true;
-    window.html2canvas(node, {
-      scale: 1, useCORS: true, backgroundColor: null, width: node.offsetWidth, height: node.offsetHeight,
-      onclone: function (doc) { var n = doc.getElementById(node.id); n.style.transform = "none"; }
+    carregaH2C().then(function () {
+      return window.html2canvas(node, {
+        scale: 1, useCORS: true, backgroundColor: null, width: node.offsetWidth, height: node.offsetHeight,
+        onclone: function (doc) { var n = doc.getElementById(node.id); n.style.transform = "none"; }
+      });
     }).then(function (cv) {
-      var a = document.createElement("a"); a.download = nome + ".png"; a.href = cv.toDataURL("image/png"); document.body.appendChild(a); a.click(); a.remove();
+      return new Promise(function (ok) { cv.toBlob(ok, "image/png"); });
+    }).then(function (blob) {
+      var arq = window.File ? new File([blob], nome + ".png", { type: "image/png" }) : null;
+      // no celular abre a janela de compartilhar (salvar na galeria, WhatsApp, Instagram...)
+      if (arq && navigator.canShare && navigator.canShare({ files: [arq] })) {
+        return navigator.share({ files: [arq], title: nome }).catch(function () {});
+      }
+      var url = URL.createObjectURL(blob), a = document.createElement("a");
+      a.download = nome + ".png"; a.href = url; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
       toast("Imagem baixada! Confira seus downloads 📥");
-    }).catch(function () { toast("Não foi possível gerar a imagem. Tente no computador ou faça um print da tela."); })
+    }).catch(function () { toast(navigator.onLine === false ? "Conecte-se à internet uma vez para liberar o gerador de imagem." : "Não foi possível gerar a imagem. Tente de novo ou faça um print da tela."); })
       .then(function () { btn.textContent = txt; btn.disabled = false; });
   }
 
@@ -603,7 +684,7 @@
     ];
     v.innerHTML = head("BÔNUS EXCLUSIVOS", "Seus <em>5 bônus</em>", "Ferramentas extras para vender mais e se organizar melhor.") +
       '<div class="modules">' + b.map(function (m) {
-        return '<a class="module" href="#/' + m[0] + '"><div class="module-img"><img src="' + IMG + "modulo-bonus-" + m[0] + '.webp" alt="' + esc(m[1]) + '" loading="lazy"></div><div class="module-txt"><small class="tag">BÔNUS</small><strong>' + m[1] + "</strong><span>" + m[2] + "</span></div></a>";
+        return '<a class="module" href="#/' + m[0] + '"><div class="module-img"><img src="' + IMG + "modulo-bonus-" + m[0] + '.webp" alt="' + esc(m[1]) + '" width="800" height="450" loading="lazy" decoding="async"></div><div class="module-txt"><small class="tag">BÔNUS</small><strong>' + m[1] + "</strong><span>" + m[2] + "</span></div></a>";
       }).join("") + "</div>";
   };
   VIEWS.treinamento = function (v) {
@@ -693,10 +774,67 @@
   function atualizaTopo() { var p = perfil(); $("#top-user").textContent = p.nome ? p.nome.split(" ")[0] : "Meu perfil"; }
   var montado = false;
   function iniciar() {
+    var sp = $("#splash"); if (sp) sp.remove();
     if (!logado()) { telaLogin(); return; }
     $("#login").hidden = true; $("#app").hidden = false;
     if (!montado) { montarNav(); addEventListener("hashchange", render); montado = true; }
     atualizaTopo(); render();
+    aquecerCache();
   }
+
+  /* ---------------- app instalável (PWA) ---------------- */
+  var sw = "serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1");
+  if (sw) {
+    addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(function (e) { console.warn("[Kit] service worker", e); });
+    });
+  }
+  /* depois que a pessoa entra, guarda o resto das imagens para usar offline — só no Wi-Fi/4G e sem "economia de dados" */
+  function aquecerCache() {
+    if (!sw || store.get("aquecido", "") === "v1") return;
+    var con = navigator.connection || {};
+    if (con.saveData || /2g/.test(con.effectiveType || "")) return;
+    setTimeout(function () {
+      navigator.serviceWorker.ready.then(function (reg) {
+        if (!reg.active) return;
+        var urls = [];
+        RECEITAS.forEach(function (r) { urls.push(IMG + "receitas/mini/" + r.id + ".webp", IMG + "receitas/" + r.id + ".webp"); });
+        ["receitas", "calculadora", "cardapios", "mensagens", "legendas", "etiquetas", "encomendas", "bonus"].forEach(function (m) { urls.push(IMG + "modulo-" + m + ".webp"); });
+        BONUS_ROTAS.forEach(function (m) { urls.push(IMG + "modulo-bonus-" + m + ".webp"); });
+        (C.cardapios || []).forEach(function (t) { urls.push(IMG + "fundo-cardapio-" + t.id + ".webp"); });
+        (C.artes || []).forEach(function (a) { urls.push(IMG + "arte-" + a.id + ".webp"); });
+        reg.active.postMessage({ tipo: "aquecer", urls: urls });
+        store.set("aquecido", "v1");
+      });
+    }, 6000);
+  }
+
+  var pedidoInstalar = null;
+  function standalone() { return matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; }
+  function ehIOS() { return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); }
+  addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); pedidoInstalar = e; mostraInstalar(); });
+  addEventListener("appinstalled", function () { pedidoInstalar = null; store.set("instalado", true); var b = $("#instalar"); if (b) b.remove(); toast("App instalado! Procure o ícone Doce Natal na tela inicial 🎄"); });
+  /* cartão "Instalar o app" no topo do Início */
+  function cartaoInstalar() {
+    if (standalone() || store.get("instalado", false) || store.get("instalarFechado", 0) > Date.now()) return "";
+    if (pedidoInstalar) return '<section class="install" id="instalar"><span class="install-ic">📲</span><div><strong>Instale o app no seu celular</strong><span>Abre direto da tela inicial, mais rápido e funciona até sem internet.</span></div><button type="button" class="btn btn-sm" data-instalar>Instalar</button><button type="button" class="x" data-fechar-inst aria-label="Fechar">×</button></section>';
+    if (ehIOS()) return '<section class="install" id="instalar"><span class="install-ic">📲</span><div><strong>Coloque o app na tela inicial</strong><span>No Safari, toque em <b>Compartilhar</b> <span aria-hidden="true">⎋</span> e depois em <b>Adicionar à Tela de Início</b>.</span></div><button type="button" class="x" data-fechar-inst aria-label="Fechar">×</button></section>';
+    return "";
+  }
+  function mostraInstalar() {
+    if ($("#instalar") || rota().nome !== "inicio" || !logado()) return;
+    var html = cartaoInstalar(); if (!html) return;
+    var v = $("#view"); v.insertAdjacentHTML("afterbegin", html);
+  }
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-instalar]") && pedidoInstalar) {
+      pedidoInstalar.prompt();
+      pedidoInstalar.userChoice.then(function () { pedidoInstalar = null; var b = $("#instalar"); if (b) b.remove(); });
+    } else if (e.target.closest("[data-fechar-inst]")) {
+      store.set("instalarFechado", Date.now() + 7 * 864e5); var b = $("#instalar"); if (b) b.remove();
+    }
+  });
+  addEventListener("offline", function () { toast("Você está sem internet. O kit continua funcionando 💛"); });
+
   iniciar();
 })();

@@ -358,6 +358,49 @@ body{background:var(--cream-100)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 /* ============ IMPRESSÃO ============ */
+/* ============ APP NO CELULAR (PWA) ============ */
+.splash{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:radial-gradient(110% 80% at 50% 0%,var(--wine-600),var(--wine-900))}
+.splash .logo-spark{font-size:54px}
+.splash-dots{display:flex;gap:8px}
+.splash-dots i{width:9px;height:9px;border-radius:50%;background:var(--gold-400);animation:dot 1s ease-in-out infinite}
+.splash-dots i:nth-child(2){animation-delay:.15s}.splash-dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:none}}
+.nojs{margin:40px 20px;text-align:center;font-weight:600}
+.install{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--wine-700),var(--wine-900));color:var(--cream-100);border-radius:var(--radius);padding:14px 14px 14px 16px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
+.install-ic{font-size:28px;flex:none}
+.install div{flex:1;min-width:0}
+.install strong{display:block;color:#fff;font-size:15px}
+.install div>span{display:block;font-size:12.5px;color:var(--cream-200);line-height:1.4}
+.install b{color:var(--gold-300)}
+.install .x{background:rgba(255,255,255,.12);color:#fff}
+@media (max-width:520px){.install{display:grid;grid-template-columns:auto 1fr auto;align-items:start}.install .btn{grid-column:1/-1;width:100%}.install .x{grid-row:1;grid-column:3}}
+/* toque: sem atraso, sem destaque azul, alvos de pelo menos 44 px */
+html{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+body{overscroll-behavior-y:none}
+@media (max-width:900px){
+  /* 16 px nos campos evita o zoom automático do iPhone ao digitar */
+  .field input,.field select,.field textarea,.search,.crow input,.item-edit input,.sec-name,.mult select{font-size:16px}
+  .topnav{padding-top:calc(12px + env(safe-area-inset-top));background:var(--cream-100);backdrop-filter:none}
+  .login{padding-top:calc(24px + env(safe-area-inset-top))}
+  .side{padding-top:calc(22px + env(safe-area-inset-top))}
+  .bottomnav a,.bottomnav button{min-height:48px}
+  .chip,.btn-sm{min-height:40px}
+  .x{width:36px;height:36px}
+  .view{animation:none}
+  .login-card{box-shadow:0 20px 40px rgba(0,0,0,.35),0 0 0 4px rgba(212,175,106,.3)}
+}
+/* celulares bem pequenos (320 px) */
+@media (max-width:360px){
+  .view{padding:16px 12px 104px}
+  .page-head h1{font-size:24px}
+  .bottomnav a,.bottomnav button{font-size:9.5px}
+  .login-card{padding:28px 18px}
+}
+/* listas longas: o navegador só desenha o que aparece na tela */
+.rcard,.msg,.flavor,.order{content-visibility:auto;contain-intrinsic-size:auto 320px}
+/* app instalado: sem o link de voltar para a página de vendas */
+@media (display-mode:standalone){.login-card .logo{pointer-events:none}}
+
 @media print{
   body{background:#fff}
   .side,.topnav,.bottomnav,.toast,.back,.recipe-actions,.studio-form,.page-head,.notice,.hint{display:none!important}
