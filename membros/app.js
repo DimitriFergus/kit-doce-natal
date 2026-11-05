@@ -431,7 +431,7 @@
       '</div><h2>2. Textos</h2><label class="field">Título<input data-k="titulo"></label><label class="field">Subtítulo<input data-k="subtitulo"></label>' +
       '<div id="m-secoes"></div><button type="button" class="btn btn-sm btn-ghost" id="m-addsec">+ Adicionar categoria</button>' +
       '<label class="field">Rodapé<input data-k="rodape"></label><div class="studio-actions"><button type="button" class="btn btn-block" id="m-baixar">⬇ Baixar imagem do cardápio</button><button type="button" class="btn btn-sm btn-ghost" id="m-reset">Restaurar modelo</button></div></section>' +
-      '<section class="studio-preview"><div class="stage" id="m-stage"><div class="mc" id="m-canvas"></div></div></section></div>';
+      '<section class="studio-preview"><div class="stage stage--story" id="m-stage"><div class="mc" id="m-canvas"></div></div></section></div>';
     function form() {
       $$("[data-k]", v).forEach(function (i) { i.value = d[i.dataset.k] || ""; });
       $$("#m-temas [data-tema]").forEach(function (b) { b.classList.toggle("on", b.dataset.tema === d.tema); });
@@ -479,10 +479,17 @@
     var lista = C.artes || [];
     var sel = lista.filter(function (a) { return a.id === r.arg; })[0];
     if (!sel) {
-      v.innerHTML = head("BÔNUS · ARTES DE DATAS", "Artes prontas <em>para postar</em>", "Escolha uma arte, coloque o nome da sua loja e baixe para o feed ou para os stories.", "#/bonus") +
-        '<div class="art-grid">' + lista.map(function (a) {
-          return '<a class="art-card" href="#/artes/' + a.id + '"><div class="art-thumb ' + a.formato + '"><img src="' + IMG + "arte-" + a.id + '.webp" alt="' + esc(a.titulo) + '" loading="lazy"></div><strong>' + esc(a.titulo) + "</strong><small>" + (a.formato === "story" ? "Stories 9:16" : "Feed 4:5") + "</small></a>";
+      var grupo = function (fmt, titulo, sub) {
+        var itens = lista.filter(function (a) { return a.formato === fmt; });
+        if (!itens.length) return "";
+        return '<h2 class="art-sec">' + titulo + " <small>" + sub + '</small></h2><div class="art-grid art-grid--' + fmt + '">' + itens.map(function (a) {
+          var sv = store.get("arte:" + a.id, {});
+          return '<a class="art-card" href="#/artes/' + a.id + '"><div class="art-thumb ' + fmt + '"><img src="' + IMG + "artes-mini/" + a.id + '.webp" alt="" width="' + (fmt === "story" ? 300 : 360) + '" height="' + (fmt === "story" ? 532 : 450) + '" loading="lazy" decoding="async">' +
+            '<span class="art-mini"><i>' + esc(sv.linha1 || a.linha1) + "</i><b>" + esc(sv.linha2 || a.linha2) + "</b></span></div><strong>" + esc(a.titulo) + "</strong><small>Toque para editar ›</small></a>";
         }).join("") + "</div>";
+      };
+      v.innerHTML = head("BÔNUS · ARTES DE DATAS", "Artes prontas <em>para postar</em>", "Escolha uma arte, coloque o nome da sua loja e baixe para o feed ou para os stories.", "#/bonus") +
+        grupo("story", "Para os stories", "1080×1920") + grupo("feed", "Para o feed", "1080×1350");
       return;
     }
     var salvo = store.get("arte:" + sel.id, {});
@@ -491,7 +498,7 @@
     v.innerHTML = head("BÔNUS · ARTES DE DATAS", esc(sel.titulo), "Edite os textos e baixe a arte em 1080×" + h + ".", "#/artes") +
       '<div class="studio"><section class="card studio-form"><label class="field">Linha 1<input data-k="linha1"></label><label class="field">Destaque<input data-k="linha2"></label><label class="field">Linha final<input data-k="linha3"></label>' +
       '<div class="studio-actions"><button type="button" class="btn btn-block" id="a-baixar">⬇ Baixar arte</button></div><p class="hint">O nome da loja e o WhatsApp vêm do Meu perfil.</p></section>' +
-      '<section class="studio-preview"><div class="stage" id="a-stage"><div class="ac ac--' + sel.formato + '" id="a-canvas"></div></div></section></div>';
+      '<section class="studio-preview"><div class="stage stage--' + sel.formato + '" id="a-stage"><div class="ac ac--' + sel.formato + '" id="a-canvas"></div></div></section></div>';
     function canvas() {
       var p = perfil(), el = $("#a-canvas");
       el.style.setProperty("--img", "url(" + IMG + "arte-" + sel.id + ".webp)");
@@ -704,16 +711,48 @@
       if (on) { toast("Aula concluída 🎉"); var nx = d.nextElementSibling; if (nx) { d.open = false; nx.open = true; } }
     });
   };
+  /* ilustração do sabor desenhada no próprio app (0 KB de download): copo em camadas com a cor da base e do par */
+  function copoSabor(s, i) {
+    var c1 = s.cores[0], c2 = s.cores[1], id = "fc" + i;
+    return '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="' + id + '"><path d="M33 46h54l-7 58H40z"/></clipPath></defs>' +
+      '<g fill="#e7c67e" opacity=".75"><circle cx="16" cy="22" r="1.6"/><circle cx="104" cy="30" r="1.3"/><circle cx="98" cy="96" r="1.6"/><circle cx="20" cy="88" r="1.2"/><path d="M100 12l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z"/><path d="M14 52l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z"/></g>' +
+      '<ellipse cx="60" cy="106" rx="30" ry="4" fill="#000" opacity=".25"/>' +
+      '<g clip-path="url(#' + id + ')"><rect x="20" y="40" width="80" height="70" fill="' + c1 + '"/><rect x="20" y="64" width="80" height="16" fill="' + c2 + '"/><rect x="20" y="92" width="80" height="14" fill="' + c2 + '" opacity=".85"/>' +
+      '<path d="M20 64q10-5 20 0t20 0 20 0 20 0v3H20z" fill="' + c2 + '"/><path d="M20 92q10-4 20 0t20 0 20 0 20 0v3H20z" fill="' + c2 + '"/></g>' +
+      '<path d="M33 46h54l-7 58H40z" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2.2" stroke-linejoin="round"/><path d="M39 52l5 46" stroke="#fff" stroke-opacity=".45" stroke-width="2.4" stroke-linecap="round"/>' +
+      '<path d="M36 47q6-9 12-3 6-9 12-2 6-8 12-1 6-7 12 0" fill="' + c1 + '" stroke="' + c2 + '" stroke-opacity=".5" stroke-width="1.2"/>' +
+      '<text x="60" y="42" font-size="24" text-anchor="middle">' + s.top + "</text></svg>";
+  }
   VIEWS.sabores = function (v) {
-    v.innerHTML = head("BÔNUS · GUIA DE SABORES", "Combinações <em>que vendem</em>", "Use como recheio, cobertura ou para criar versões novas das receitas do kit.", "#/bonus") +
-      '<input class="search" type="search" id="s-q" placeholder="Buscar sabor ou produto…"><div class="flavors" id="s-lista"></div>';
+    v.innerHTML = head("BÔNUS · GUIA DE SABORES", "Combinações <em>que vendem</em>", "Toque em uma combinação para ver o passo a passo e em quais doces usar.", "#/bonus") +
+      '<input class="search" type="search" id="s-q" placeholder="Buscar sabor, ingrediente ou doce…"><div class="fl-grid" id="s-lista"></div>';
     function lista(q) {
       q = slug(q || "");
-      $("#s-lista").innerHTML = C.sabores.filter(function (s) { return !q || slug(s.nome + s.base + s.par + s.uso).indexOf(q) > -1; }).map(function (s) {
-        return '<article class="flavor"><strong>' + esc(s.nome) + "</strong><p><span>Base</span>" + esc(s.base) + "</p><p><span>Combina com</span>" + esc(s.par) + "</p><p><span>Use em</span>" + esc(s.uso) + "</p></article>";
-      }).join("");
+      var achados = C.sabores.map(function (s, i) { return [s, i]; }).filter(function (p) { var s = p[0]; return !q || slug(s.nome + " " + s.base + " " + s.par + " " + s.uso + " " + s.passos.join(" ")).indexOf(q) > -1; });
+      $("#s-lista").innerHTML = achados.length ? achados.map(function (p) {
+        var s = p[0], i = p[1];
+        return '<button type="button" class="fl" data-i="' + i + '"><span class="fl-img">' + copoSabor(s, i) + '</span><span class="fl-txt"><strong>' + esc(s.nome) + "</strong><small>" + esc(s.base) + " + " + esc(s.par.toLowerCase()) + '</small></span><span class="fl-btn">Como fazer ›</span></button>';
+      }).join("") : '<p class="hint">Nenhuma combinação encontrada.</p>';
+    }
+    function abrir(i) {
+      var s = C.sabores[i];
+      var bg = document.createElement("div"); bg.className = "fsheet-bg";
+      bg.innerHTML = '<div class="fsheet" role="dialog" aria-modal="true" aria-label="' + esc(s.nome) + '"><div class="fsheet-head"><span class="fl-img">' + copoSabor(s, "s" + i) + '</span><div><span class="tag">Combinação</span><h2>' + esc(s.nome) + '</h2></div><button type="button" class="x" data-fechar aria-label="Fechar">×</button></div>' +
+        '<div class="fsheet-body"><div class="fl-pair"><p><b>Base</b>' + esc(s.base) + "</p><p><b>Combina com</b>" + esc(s.par) + "</p></div>" +
+        '<h3>Como fazer</h3><ol class="fl-steps">' + s.passos.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ol>" +
+        '<p class="fl-uso"><b>Fica ótimo em:</b> ' + esc(s.uso) + "</p>" +
+        (s.dica ? '<p class="fl-dica">💡 ' + esc(s.dica) + "</p>" : "") +
+        (s.receita ? '<a class="btn btn-block" href="#/receita/' + s.receita + '">Ver a receita completa no kit</a>' : "") +
+        '<button type="button" class="btn btn-ghost btn-block" data-fechar>Voltar para as combinações</button></div></div>';
+      document.body.appendChild(bg); document.body.style.overflow = "hidden";
+      requestAnimationFrame(function () { bg.classList.add("on"); });
+      function fechar() { removeEventListener("hashchange", fechar); removeEventListener("keydown", tecla); document.body.style.overflow = ""; bg.remove(); }
+      function tecla(e) { if (e.key === "Escape") fechar(); }
+      bg.addEventListener("click", function (e) { if (e.target === bg || e.target.closest("[data-fechar]")) fechar(); });
+      addEventListener("hashchange", fechar); addEventListener("keydown", tecla);
     }
     $("#s-q").addEventListener("input", function (e) { lista(e.target.value); });
+    $("#s-lista").addEventListener("click", function (e) { var b = e.target.closest(".fl"); if (b) abrir(+b.dataset.i); });
     lista();
   };
   function listaMarcavel(v, cfg) {
@@ -791,7 +830,7 @@
   }
   /* depois que a pessoa entra, guarda o resto das imagens para usar offline — só no Wi-Fi/4G e sem "economia de dados" */
   function aquecerCache() {
-    if (!sw || store.get("aquecido", "") === "v1") return;
+    if (!sw || store.get("aquecido", "") === "v2") return;
     var con = navigator.connection || {};
     if (con.saveData || /2g/.test(con.effectiveType || "")) return;
     setTimeout(function () {
@@ -802,9 +841,9 @@
         ["receitas", "calculadora", "cardapios", "mensagens", "legendas", "etiquetas", "encomendas", "bonus"].forEach(function (m) { urls.push(IMG + "modulo-" + m + ".webp"); });
         BONUS_ROTAS.forEach(function (m) { urls.push(IMG + "modulo-bonus-" + m + ".webp"); });
         (C.cardapios || []).forEach(function (t) { urls.push(IMG + "fundo-cardapio-" + t.id + ".webp"); });
-        (C.artes || []).forEach(function (a) { urls.push(IMG + "arte-" + a.id + ".webp"); });
+        (C.artes || []).forEach(function (a) { urls.push(IMG + "artes-mini/" + a.id + ".webp", IMG + "arte-" + a.id + ".webp"); });
         reg.active.postMessage({ tipo: "aquecer", urls: urls });
-        store.set("aquecido", "v1");
+        store.set("aquecido", "v2");
       });
     }, 6000);
   }
