@@ -227,10 +227,27 @@
   };
 
   /* ---------- RECEITAS ---------- */
-  var filtroRec = { q: "", cat: "Todas", fav: false };
+  var ICONE_CAT = { "Pratos da Ceia": "🍗", "Salgados de Festa": "🥟", "Pães & Tortas Salgadas": "🥖", "Entradas & Petiscos": "🧀", "Brigadeiros & Docinhos": "🍫", "Chocotones & Panetones": "🎄", "Copos & Potes": "🍨", "Bolos & Tortas": "🎂", "Biscoitos & Cookies": "🍪", "Presenteáveis": "🎁", "Sobremesas de Travessa": "🍮" };
+  function ehSalgado(r) { return r.tipo === "salgado"; }
+  /* receita sem foto: capa desenhada (sem download). Quando a foto chegar, basta tirar "foto: false" da receita. */
+  function capaReceita(r, grande) {
+    return '<div class="rcapa' + (grande ? " rcapa--g" : "") + (ehSalgado(r) ? " rcapa--sal" : "") + '" role="img" aria-label="' + esc(r.nome) + '"><div class="rcapa-in"><span class="rcapa-ic" aria-hidden="true">' + (ICONE_CAT[r.categoria] || "🎄") + '</span><small>' + esc(r.categoria) + "</small><strong>" + esc(r.nome) + '</strong><i aria-hidden="true">✦ ❄ ✦</i></div></div>';
+  }
+  function fotoCard(r) {
+    if (r.foto === false) return capaReceita(r);
+    return '<img src="' + IMG + "receitas/mini/" + r.id + '.webp" alt="' + esc(r.nome) + '" width="720" height="540" loading="lazy" decoding="async">';
+  }
+  var filtroRec = { q: "", cat: "Todas", fav: false, tipo: "todos" };
   VIEWS.receitas = function (v) {
-    var cats = ["Todas"]; RECEITAS.forEach(function (r) { if (cats.indexOf(r.categoria) < 0) cats.push(r.categoria); });
-    v.innerHTML = head("RECEITAS NATALINAS", "Receitas que <em>vendem no Natal</em>", RECEITAS.length + " receitas com rendimento, validade, embalagem e custo calculado com um clique.") +
+    var nSal = RECEITAS.filter(ehSalgado).length;
+    function catsDoTipo() {
+      var cs = ["Todas"]; RECEITAS.forEach(function (r) { if (filtroRec.tipo !== "todos" && (filtroRec.tipo === "salgados") !== ehSalgado(r)) return; if (cs.indexOf(r.categoria) < 0) cs.push(r.categoria); });
+      return cs;
+    }
+    var cats = catsDoTipo();
+    if (cats.indexOf(filtroRec.cat) < 0) filtroRec.cat = "Todas";
+    v.innerHTML = head("RECEITAS NATALINAS", "Receitas que <em>vendem no Natal</em>", RECEITAS.length + " receitas, doces e salgadas, com rendimento, validade, embalagem e custo calculado com um clique.") +
+      (nSal ? '<div class="seg" id="rtipo" role="tablist">' + [["todos", "Tudo", RECEITAS.length], ["doces", "🍫 Doces", RECEITAS.length - nSal], ["salgados", "🍗 Salgados", nSal]].map(function (t) { return '<button type="button" role="tab" data-tipo="' + t[0] + '" aria-selected="' + (filtroRec.tipo === t[0]) + '"' + (filtroRec.tipo === t[0] ? ' class="on"' : "") + ">" + t[1] + " <small>" + t[2] + "</small></button>"; }).join("") + "</div>" : "") +
       '<div class="toolbar"><input class="search" type="search" id="rq" placeholder="Buscar receita ou ingrediente…" value="' + esc(filtroRec.q) + '">' +
       '<button type="button" class="chip' + (filtroRec.fav ? " on" : "") + '" id="rfav">♥ Favoritas</button></div>' +
       '<div class="chips" id="rcats">' + cats.map(function (c) { return '<button type="button" class="chip' + (c === filtroRec.cat ? " on" : "") + '" data-cat="' + esc(c) + '">' + esc(c) + "</button>"; }).join("") + "</div>" +
@@ -238,19 +255,28 @@
     function lista() {
       var favs = store.get("favs", []), feitas = store.get("feitas", []), q = slug(filtroRec.q);
       var res = RECEITAS.filter(function (r) {
+        if (filtroRec.tipo !== "todos" && (filtroRec.tipo === "salgados") !== ehSalgado(r)) return false;
         if (filtroRec.cat !== "Todas" && r.categoria !== filtroRec.cat) return false;
         if (filtroRec.fav && favs.indexOf(r.id) < 0) return false;
         if (q) { var hay = slug(r.nome + " " + r.categoria + " " + r.ingredientes.map(function (i) { return i.item; }).join(" ")); if (hay.indexOf(q) < 0) return false; }
         return true;
       });
       $("#rgrid").innerHTML = res.length ? res.map(function (r) {
-        return '<a class="rcard" href="#/receita/' + r.id + '"><div class="rcard-img"><img src="' + IMG + "receitas/mini/" + r.id + '.webp" alt="' + esc(r.nome) + '" width="480" height="360" loading="lazy" decoding="async">' +
+        return '<a class="rcard" href="#/receita/' + r.id + '"><div class="rcard-img">' + fotoCard(r) +
           (favs.indexOf(r.id) > -1 ? '<span class="rfav">♥</span>' : "") + (feitas.indexOf(r.id) > -1 ? '<span class="rdone">✓ feita</span>' : "") + "</div>" +
           '<div class="rcard-body"><small>' + esc(r.categoria) + "</small><strong>" + esc(r.nome) + '</strong><div class="rmeta"><span>⏱ ' + esc(r.tempo) + "</span><span>🍽 " + esc(r.rendimento.qtd + " " + r.rendimento.unidade) + "</span><span>" + esc(r.dificuldade) + "</span></div></div></a>";
       }).join("") : '<p class="empty">Nenhuma receita encontrada. ' + (filtroRec.fav ? "Toque no ♥ dentro de uma receita para favoritar." : "Tente outra busca.") + "</p>";
     }
     $("#rq").addEventListener("input", function (e) { filtroRec.q = e.target.value; lista(); });
     $("#rfav").addEventListener("click", function (e) { filtroRec.fav = !filtroRec.fav; e.currentTarget.classList.toggle("on", filtroRec.fav); lista(); });
+    var seg = $("#rtipo");
+    if (seg) seg.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-tipo]"); if (!b) return;
+      filtroRec.tipo = b.dataset.tipo; filtroRec.cat = "Todas";
+      $$("#rtipo button").forEach(function (x) { var on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-selected", on); });
+      $("#rcats").innerHTML = catsDoTipo().map(function (c) { return '<button type="button" class="chip' + (c === "Todas" ? " on" : "") + '" data-cat="' + esc(c) + '">' + esc(c) + "</button>"; }).join("");
+      lista();
+    });
     $("#rcats").addEventListener("click", function (e) {
       var b = e.target.closest("[data-cat]"); if (!b) return;
       filtroRec.cat = b.dataset.cat; $$("#rcats .chip").forEach(function (c) { c.classList.toggle("on", c === b); }); lista();
@@ -263,7 +289,7 @@
     if (!rec) { v.innerHTML = head("RECEITAS", "Receita não encontrada", "", "#/receitas"); return; }
     var mult = 1;
     v.innerHTML = '<a class="back" href="#/receitas">← Todas as receitas</a>' +
-      '<article class="recipe"><div class="recipe-hero"><img src="' + IMG + "receitas/" + rec.id + '.webp" alt="' + esc(rec.nome) + '" width="960" height="720" decoding="async"></div>' +
+      '<article class="recipe"><div class="recipe-hero">' + (rec.foto === false ? capaReceita(rec, true) : '<img src="' + IMG + "receitas/" + rec.id + '.webp" srcset="' + IMG + "receitas/mini/" + rec.id + '.webp 720w, ' + IMG + "receitas/" + rec.id + '.webp 1200w" sizes="(max-width:860px) 100vw, 900px" alt="' + esc(rec.nome) + '" width="1200" height="900" decoding="async">') + "</div>" +
       '<div class="recipe-head"><span class="eyebrow">' + esc(rec.categoria.toUpperCase()) + "</span><h1>" + esc(rec.nome) + "</h1><p>" + esc(rec.resumo) + "</p>" +
       '<div class="rmeta big"><span>⏱ ' + esc(rec.tempo) + "</span><span>📊 " + esc(rec.dificuldade) + "</span><span>🗓 " + esc(rec.validade) + "</span></div>" +
       '<div class="recipe-actions"><button type="button" class="btn btn-sm" id="r-calc">🧮 Calcular o preço</button><button type="button" class="btn btn-sm btn-ghost" id="r-fav"></button><button type="button" class="btn btn-sm btn-ghost" id="r-done"></button><button type="button" class="btn btn-sm btn-ghost" id="r-print">🖨 Imprimir</button></div></div>' +
@@ -315,7 +341,7 @@
         history.replaceState(null, "", location.pathname + "#/calculadora");
       }
     }
-    v.innerHTML = head("CALCULADORA DE PREÇOS", "Quanto cobrar <em>em cada doce</em>", "Preencha o preço e o tamanho do pacote de cada ingrediente. Os valores ficam salvos e são reaproveitados nas próximas receitas.") +
+    v.innerHTML = head("CALCULADORA DE PREÇOS", "Quanto cobrar <em>em cada receita</em>", "Preencha o preço e o tamanho do pacote de cada ingrediente. Os valores ficam salvos e são reaproveitados nas próximas receitas.") +
       '<div class="calc"><section class="card"><div class="grid2"><label class="field">Produto<input id="c-nome" placeholder="Ex.: Brigadeiro gourmet"></label><label class="field">Rendimento (unidades)<input id="c-rend" type="number" min="0" step="any" inputmode="decimal"></label></div>' +
       '<h2>Ingredientes</h2><p class="hint">Use a mesma unidade no "usado" e no "pacote" (g com g, ml com ml). Para itens como "pitada", deixe o pacote vazio e digite direto o custo.</p>' +
       '<div class="ctable" id="c-itens"></div><button type="button" class="btn btn-sm btn-ghost" id="c-add">+ Adicionar ingrediente</button>' +
@@ -830,20 +856,20 @@
   }
   /* depois que a pessoa entra, guarda o resto das imagens para usar offline — só no Wi-Fi/4G e sem "economia de dados" */
   function aquecerCache() {
-    if (!sw || store.get("aquecido", "") === "v2") return;
+    if (!sw || store.get("aquecido", "") === "v3") return;
     var con = navigator.connection || {};
     if (con.saveData || /2g/.test(con.effectiveType || "")) return;
     setTimeout(function () {
       navigator.serviceWorker.ready.then(function (reg) {
         if (!reg.active) return;
         var urls = [];
-        RECEITAS.forEach(function (r) { urls.push(IMG + "receitas/mini/" + r.id + ".webp", IMG + "receitas/" + r.id + ".webp"); });
+        RECEITAS.forEach(function (r) { if (r.foto !== false) urls.push(IMG + "receitas/mini/" + r.id + ".webp"); });
         ["receitas", "calculadora", "cardapios", "mensagens", "legendas", "etiquetas", "encomendas", "bonus"].forEach(function (m) { urls.push(IMG + "modulo-" + m + ".webp"); });
         BONUS_ROTAS.forEach(function (m) { urls.push(IMG + "modulo-bonus-" + m + ".webp"); });
         (C.cardapios || []).forEach(function (t) { urls.push(IMG + "fundo-cardapio-" + t.id + ".webp"); });
-        (C.artes || []).forEach(function (a) { urls.push(IMG + "artes-mini/" + a.id + ".webp", IMG + "arte-" + a.id + ".webp"); });
+        (C.artes || []).forEach(function (a) { urls.push(IMG + "artes-mini/" + a.id + ".webp"); });
         reg.active.postMessage({ tipo: "aquecer", urls: urls });
-        store.set("aquecido", "v2");
+        store.set("aquecido", "v3");
       });
     }, 6000);
   }

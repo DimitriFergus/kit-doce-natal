@@ -110,7 +110,7 @@ body{background:var(--cream-100)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
 .stats div{background:var(--wine-800);color:var(--cream-200);border-radius:var(--radius);padding:16px;font-size:13px;text-align:center}
 .stats b{display:block;font-size:26px;color:var(--gold-400)}
-@media (max-width:700px){.steps{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.welcome{padding:30px 22px}}
+@media (max-width:700px){.steps{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.welcome{padding:0 0 24px}.welcome-bg{position:relative;inset:auto;display:block;height:auto;aspect-ratio:16/5;opacity:1;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}.welcome-copy{padding:4px 22px 0}}
 
 /* ============ RECEITAS ============ */
 .toolbar{display:flex;gap:10px;margin-bottom:12px}
@@ -125,6 +125,22 @@ body{background:var(--cream-100)}
 .rcard:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
 .rcard-img{position:relative;aspect-ratio:4/3;background:var(--cream-200);overflow:hidden}
 .rcard-img img{width:100%;height:100%;object-fit:cover}
+/* capa desenhada (receita sem foto) */
+.rcapa{position:relative;width:100%;height:100%;display:flex;padding:10px;background:radial-gradient(120% 90% at 50% 0%,var(--wine-500),var(--wine-800) 60%,var(--wine-950));color:#fff;text-align:center;overflow:hidden}
+.rcapa--sal{background:radial-gradient(120% 90% at 50% 0%,#2f5a3e,#173826 60%,#0c2016)}
+.rcapa::before{content:"";position:absolute;inset:0;background:radial-gradient(2px 2px at 18% 22%,rgba(231,198,126,.8),transparent),radial-gradient(1.5px 1.5px at 82% 30%,rgba(231,198,126,.7),transparent),radial-gradient(2px 2px at 70% 80%,rgba(255,255,255,.5),transparent),radial-gradient(1.5px 1.5px at 25% 75%,rgba(255,255,255,.45),transparent)}
+.rcapa-in{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1.5px solid rgba(231,198,126,.75);border-radius:14px;outline:1px solid rgba(231,198,126,.35);outline-offset:-6px;padding:10px 12px}
+.rcapa-ic{font-size:30px;line-height:1;margin-bottom:4px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.35))}
+.rcapa small{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-300)}
+.rcapa strong{font-family:var(--font-serif);font-style:italic;font-weight:600;font-size:19px;line-height:1.15;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.35);max-width:15em}
+.rcapa i{font-style:normal;font-size:10px;letter-spacing:.4em;color:var(--gold-400);margin-top:6px}
+.rcapa--g{padding:16px}.rcapa--g .rcapa-in{border-radius:22px;outline-offset:-9px}
+.rcapa--g .rcapa-ic{font-size:52px}.rcapa--g small{font-size:12px}.rcapa--g strong{font-size:clamp(26px,5vw,40px)}.rcapa--g i{font-size:13px}
+/* Tudo / Doces / Salgados */
+.seg{display:flex;gap:4px;padding:4px;margin-bottom:12px;background:var(--cream-200);border-radius:999px;max-width:440px}
+.seg button{flex:1;min-height:40px;border:0;border-radius:999px;background:transparent;color:var(--wine-700);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.seg button small{font-size:11px;font-weight:600;opacity:.65}
+.seg button.on{background:#fff;box-shadow:var(--shadow-sm);color:var(--wine-600)}
 .rfav{position:absolute;top:10px;right:10px;background:#fff;color:var(--red);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
 .rdone{position:absolute;top:10px;left:10px;background:var(--green);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
 .rcard-body{padding:14px 16px 16px}
@@ -132,8 +148,8 @@ body{background:var(--cream-100)}
 .rcard-body strong{display:block;font-size:16px;line-height:1.3;margin:2px 0 8px}
 .rmeta{display:flex;flex-wrap:wrap;gap:6px}
 .rmeta span{font-size:11.5px;background:var(--cream-100);color:var(--ink-soft);padding:3px 9px;border-radius:999px}
-.rmeta.big span{font-size:13px;padding:5px 12px;background:#fff}
-.recipe-hero{border-radius:30px;overflow:hidden;aspect-ratio:21/9;background:var(--cream-200);box-shadow:var(--shadow);margin-bottom:22px}
+.rmeta.big span{font-size:13px;padding:5px 12px;background:#fff;border-radius:14px;line-height:1.45}
+.recipe-hero{border-radius:30px;overflow:hidden;aspect-ratio:16/9;max-height:560px;background:var(--cream-200);box-shadow:var(--shadow);margin-bottom:22px}
 .recipe-hero img{width:100%;height:100%;object-fit:cover}
 .recipe-head{margin-bottom:22px}
 .recipe-head h1{font-size:clamp(28px,4.4vw,42px)}
@@ -458,3 +474,5 @@ body{overscroll-behavior-y:none}
   .lbl{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .recipe-hero{aspect-ratio:auto;max-height:8cm;box-shadow:none}
 }
+
+@media (max-width:400px){.seg button small{display:none}}

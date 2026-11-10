@@ -30,12 +30,18 @@ A planilha `PROMPTS-IMAGENS-Kit-Doce-Natal.xlsx` lista todas as 107 imagens com 
 Enquanto uma imagem não existe, o site mostra um quadro tracejado com o nome do arquivo esperado.
 - `assets/img/` → páginas de oferta
 - `assets/img/membros/` → área de membros (capas, fundos de cardápio, artes)
-- `assets/img/membros/receitas/` → foto de cada receita (`<id-da-receita>.webp`)
+- `assets/img/membros/receitas/` → foto de cada receita (`<id-da-receita>.webp`, 1200×900) e `receitas/mini/` (720×540, usada nos cards)
+
+**Como converter imagens sem perder qualidade** (o ffmpeg ignora `-quality`; use `-q:v`):
+`ffmpeg -i original.png -vf "scale=1200:900:flags=lanczos,format=yuv420p" -c:v libwebp -q:v 82 -compression_level 6 saida.webp`
+Nunca amplie além do tamanho do original. Ao trocar imagens da área de membros, troque também `CACHE_IMG` em `membros/sw.js` (senão o celular continua mostrando a versão antiga).
+
+**Fotos das 50 receitas novas:** os prompts estão em `PROMPTS-FOTOS-50-RECEITAS-NOVAS.csv`. Enquanto a foto não existe, a receita tem `foto: false` e mostra uma capa desenhada. Para ativar uma foto: gere a imagem (4:3), converta para `receitas/<id>.webp` (1200×900) e `receitas/mini/<id>.webp` (720×540) e apague o `foto: false` da receita.
 
 Prova social (`prova-01` a `prova-06`): use **somente fotos/prints reais de clientes**, com autorização.
 
 ## Conteúdo da área de membros
-- `membros/data/receitas.js`: 37 receitas (ingredientes numéricos, para a calculadora).
+- `membros/data/receitas.js`: 87 receitas, 57 doces e 30 salgadas (`tipo: "salgado"`), com ingredientes numéricos para a calculadora.
 - `membros/data/conteudo.js`: mensagens, legendas, aulas, sabores, checklist, calendário, cardápios, artes e etiquetas.
 - Os dados que a aluna digita (perfil, encomendas, preços, progresso) ficam salvos no navegador dela.
 
