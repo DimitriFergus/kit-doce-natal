@@ -1,5 +1,5 @@
 /* ===========================================================
-   KIT DOCE NATAL — conteúdo da área de membros
+   NATALÊ — conteúdo da área de membros
    {loja}, {whats}, {instagram}, {cidade} e {pix} são trocados pelos dados do "Meu perfil".
    Trechos entre [COLCHETES] o aluno completa na hora de enviar.
    =========================================================== */

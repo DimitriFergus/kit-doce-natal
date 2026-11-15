@@ -1,4 +1,4 @@
-# Kit Doce Natal
+# Natalê
 
 Três sites no mesmo design (vinho, creme e dourado):
 
@@ -28,6 +28,7 @@ A área de membros é um app instalável (`membros/manifest.webmanifest` + `memb
 ## Imagens
 A planilha `PROMPTS-IMAGENS-Kit-Doce-Natal.xlsx` lista todas as 107 imagens com nome exato, pasta, tamanho e prompt.
 Enquanto uma imagem não existe, o site mostra um quadro tracejado com o nome do arquivo esperado.
+- Logo: `assets/img/logo-natale.webp` (fundo transparente, para fundos escuros) e `assets/img/icone-natale.webp` (o "N", usado em fundos claros). Ícones do app em `membros/icons/` e favicon em `assets/img/favicon-natale.png`.
 - `assets/img/` → páginas de oferta
 - `assets/img/membros/` → área de membros (capas, fundos de cardápio, artes)
 - `assets/img/membros/receitas/` → foto de cada receita (`<id-da-receita>.webp`, 1200×900) e `receitas/mini/` (720×540, usada nos cards)
@@ -36,7 +37,7 @@ Enquanto uma imagem não existe, o site mostra um quadro tracejado com o nome do
 `ffmpeg -i original.png -vf "scale=1200:900:flags=lanczos,format=yuv420p" -c:v libwebp -q:v 82 -compression_level 6 saida.webp`
 Nunca amplie além do tamanho do original. Ao trocar imagens da área de membros, troque também `CACHE_IMG` em `membros/sw.js` (senão o celular continua mostrando a versão antiga).
 
-**Fotos das 50 receitas novas:** os prompts estão em `PROMPTS-FOTOS-50-RECEITAS-NOVAS.csv`. Enquanto a foto não existe, a receita tem `foto: false` e mostra uma capa desenhada. Para ativar uma foto: gere a imagem (4:3), converta para `receitas/<id>.webp` (1200×900) e `receitas/mini/<id>.webp` (720×540) e apague o `foto: false` da receita.
+**Fotos das 50 receitas novas:** os prompts estão em `PROMPTS-FOTOS-50-RECEITAS-NOVAS.xlsx` (clique no prompt, Ctrl+C e cole na geradora). Enquanto a foto não existe, a receita tem `foto: false` e mostra uma capa desenhada. Para ativar uma foto: gere a imagem (4:3), converta para `receitas/<id>.webp` (1200×900) e `receitas/mini/<id>.webp` (720×540) e apague o `foto: false` da receita.
 
 Prova social (`prova-01` a `prova-06`): use **somente fotos/prints reais de clientes**, com autorização.
 

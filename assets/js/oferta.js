@@ -1,5 +1,5 @@
 /* ===========================================================
-   KIT DOCE NATAL — interações das páginas de oferta
+   NATALÊ — interações das páginas de oferta
    =========================================================== */
 (function () {
   var KIT = window.KIT || {};
@@ -32,7 +32,7 @@
   /* vídeo */
   var frame = document.querySelector("[data-video]");
   if (frame && KIT.videoEmbed) {
-    frame.innerHTML = '<iframe src="' + KIT.videoEmbed + '" title="Demonstração do Kit Doce Natal" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+    frame.innerHTML = '<iframe src="' + KIT.videoEmbed + '" title="Demonstração do Natalê" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
   }
 
   /* carrosséis: duplica os cards para o loop infinito */

@@ -1,10 +1,10 @@
 /* ===========================================================
-   KIT DOCE NATAL — CONFIGURAÇÃO GERAL
+   NATALÊ — CONFIGURAÇÃO GERAL
    Edite SÓ este bloco para trocar preço, checkout, vídeo e contatos.
    Vale para as duas páginas de oferta e para a área de membros.
    =========================================================== */
 window.KIT = {
-  nome: "Kit Doce Natal",
+  nome: "Natalê",
 
   // Preços exibidos nas páginas
   preco: "R$ 47",

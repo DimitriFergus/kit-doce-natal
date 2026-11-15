@@ -1,5 +1,5 @@
 /* ===========================================================
-   KIT DOCE NATAL — área de membros (app de página única)
+   NATALÊ — área de membros (app de página única)
    Tudo o que o aluno digita fica salvo no navegador (localStorage).
    =========================================================== */
 (function () {
@@ -210,7 +210,7 @@
     v.innerHTML =
       '<section class="welcome"><img class="welcome-bg" src="' + IMG + 'banner-boas-vindas.webp" alt="" aria-hidden="true">' +
       '<div class="welcome-copy"><span class="hand">Que bom ter você aqui!</span><h1>Olá' + (p.nome ? ", " + esc(p.nome.split(" ")[0]) : "") + '! <em>Vamos adoçar este Natal?</em></h1>' +
-      "<p>Tudo do Kit Doce Natal está aqui dentro. Siga os 4 passos abaixo e comece a vender.</p>" +
+      "<p>Tudo do Natalê está aqui dentro. Siga os 4 passos abaixo e comece a vender.</p>" +
       '<div class="progress-wrap"><div class="progress-bar"><i style="width:' + pct + '%"></i></div><span>' + pct + "% do kit explorado</span></div></div></section>" +
       avisoPerfil() +
       '<h2 class="sec-title">Comece por aqui</h2><div class="steps">' +
@@ -804,7 +804,7 @@
 
   /* ---------- COMUNIDADE ---------- */
   VIEWS.comunidade = function (v) {
-    var wpp = KIT.whatsappSuporte ? "https://wa.me/" + KIT.whatsappSuporte + "?text=" + encodeURIComponent("Olá! Sou aluna do Kit Doce Natal e preciso de ajuda.") : "";
+    var wpp = KIT.whatsappSuporte ? "https://wa.me/" + KIT.whatsappSuporte + "?text=" + encodeURIComponent("Olá! Sou aluna do Natalê e preciso de ajuda.") : "";
     v.innerHTML = head("COMUNIDADE E SUPORTE", "Você não está <em>sozinha</em>", "Troque dicas com outras alunas e fale com o nosso suporte.") +
       '<div class="support"><section class="card"><span class="big-emoji">🤝</span><h2>Comunidade de alunas</h2><p>Grupo exclusivo para compartilhar fotos, tirar dúvidas e celebrar as vendas.</p>' +
       (KIT.linkGrupoComunidade ? '<a class="btn" target="_blank" rel="noopener" href="' + esc(KIT.linkGrupoComunidade) + '">Entrar no grupo</a>' : '<p class="hint">O link do grupo será liberado em breve.</p>') + "</section>" +
@@ -856,7 +856,7 @@
   }
   /* depois que a pessoa entra, guarda o resto das imagens para usar offline — só no Wi-Fi/4G e sem "economia de dados" */
   function aquecerCache() {
-    if (!sw || store.get("aquecido", "") === "v3") return;
+    if (!sw || store.get("aquecido", "") === "v4") return;
     var con = navigator.connection || {};
     if (con.saveData || /2g/.test(con.effectiveType || "")) return;
     setTimeout(function () {
@@ -869,7 +869,7 @@
         (C.cardapios || []).forEach(function (t) { urls.push(IMG + "fundo-cardapio-" + t.id + ".webp"); });
         (C.artes || []).forEach(function (a) { urls.push(IMG + "artes-mini/" + a.id + ".webp"); });
         reg.active.postMessage({ tipo: "aquecer", urls: urls });
-        store.set("aquecido", "v3");
+        store.set("aquecido", "v4");
       });
     }, 6000);
   }
@@ -878,7 +878,7 @@
   function standalone() { return matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; }
   function ehIOS() { return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); }
   addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); pedidoInstalar = e; mostraInstalar(); });
-  addEventListener("appinstalled", function () { pedidoInstalar = null; store.set("instalado", true); var b = $("#instalar"); if (b) b.remove(); toast("App instalado! Procure o ícone Doce Natal na tela inicial 🎄"); });
+  addEventListener("appinstalled", function () { pedidoInstalar = null; store.set("instalado", true); var b = $("#instalar"); if (b) b.remove(); toast("App instalado! Procure o ícone Natalê na tela inicial 🎄"); });
   /* cartão "Instalar o app" no topo do Início */
   function cartaoInstalar() {
     if (standalone() || store.get("instalado", false) || store.get("instalarFechado", 0) > Date.now()) return "";

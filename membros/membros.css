@@ -1,5 +1,5 @@
 /* ===========================================================
-   KIT DOCE NATAL — área de membros
+   NATALÊ — área de membros
    =========================================================== */
 body{background:var(--cream-100)}
 [hidden]{display:none!important}
@@ -30,6 +30,10 @@ body{background:var(--cream-100)}
 .login-card h1{font-size:30px}
 .login-card h1 em{color:var(--wine-500)}
 .login-card form{text-align:left;margin-top:18px}
+.logo--login{display:flex;margin-bottom:6px}.logo--login .logo-ic{width:84px;height:84px;filter:drop-shadow(0 8px 16px rgba(90,3,6,.3))}
+.logo-ic{display:block;width:36px;height:36px}
+.logo--claro{gap:8px}.logo-nome{font-family:var(--font-serif);font-style:italic;font-weight:600;font-size:23px;color:var(--wine-700);line-height:1}
+.side .logo-img{height:64px}
 .lg-erro{color:var(--red);font-size:14px;font-weight:600;min-height:1em;margin:0 0 10px}
 
 /* ============ LAYOUT ============ */
@@ -423,7 +427,7 @@ body{background:var(--cream-100)}
 /* ============ IMPRESSÃO ============ */
 /* ============ APP NO CELULAR (PWA) ============ */
 .splash{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:radial-gradient(110% 80% at 50% 0%,var(--wine-600),var(--wine-900))}
-.splash .logo-spark{font-size:54px}
+.splash-ic{width:92px;height:92px;filter:drop-shadow(0 10px 24px rgba(0,0,0,.4))}
 .splash-dots{display:flex;gap:8px}
 .splash-dots i{width:9px;height:9px;border-radius:50%;background:var(--gold-400);animation:dot 1s ease-in-out infinite}
 .splash-dots i:nth-child(2){animation-delay:.15s}.splash-dots i:nth-child(3){animation-delay:.3s}

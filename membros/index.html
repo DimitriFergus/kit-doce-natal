@@ -12,10 +12,10 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Doce Natal">
-  <meta name="application-name" content="Doce Natal">
-  <title>Área de Membros | Kit Doce Natal</title>
-  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <meta name="apple-mobile-web-app-title" content="Natalê">
+  <meta name="application-name" content="Natalê">
+  <title>Área de Membros | Natalê</title>
+  <link rel="icon" href="../assets/img/favicon-natale.png" type="image/png">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="preload" href="../assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -28,12 +28,12 @@
   <script defer src="app.js"></script>
 </head>
 <body>
-  <div class="splash" id="splash" aria-hidden="true"><span class="logo-spark">🍪</span><span class="splash-dots"><i></i><i></i><i></i></span></div>
+  <div class="splash" id="splash" aria-hidden="true"><img class="splash-ic" src="../assets/img/icone-natale.webp" alt="" width="256" height="256"><span class="splash-dots"><i></i><i></i><i></i></span></div>
   <noscript><p class="nojs">Ative o JavaScript do navegador para usar a área de membros.</p></noscript>
   <!-- ================= LOGIN ================= -->
   <div class="login" id="login" hidden>
     <div class="login-card">
-      <a class="logo" href="../"><span class="logo-spark" aria-hidden="true">🍪</span><span class="logo-word"><em>Doce</em><strong>NATAL</strong></span></a>
+      <a class="logo logo--login" href="../"><img class="logo-ic" src="../assets/img/icone-natale.webp" alt="Natalê" width="256" height="256"></a>
       <h1>Área de <em>Membros</em></h1>
       <p>Entre com o e-mail da compra e o código de acesso que você recebeu.</p>
       <form id="login-form" novalidate>
@@ -49,14 +49,14 @@
   <!-- ================= APP ================= -->
   <div class="app" id="app" hidden>
     <aside class="side" aria-label="Menu da área de membros">
-      <a class="logo" href="#/inicio"><span class="logo-spark" aria-hidden="true">🍪</span><span class="logo-word"><em>Doce</em><strong>NATAL</strong></span></a>
+      <a class="logo" href="#/inicio"><img class="logo-img" src="../assets/img/logo-natale.webp" alt="Natalê" width="720" height="401"></a>
       <nav id="side-nav"></nav>
-      <p class="side-foot">Kit Doce Natal · acesso vitalício</p>
+      <p class="side-foot">Natalê · acesso vitalício</p>
     </aside>
     <div class="side-backdrop" id="side-backdrop"></div>
     <div class="main">
       <header class="topnav">
-        <a class="logo" href="#/inicio"><span class="logo-spark" aria-hidden="true">🍪</span><span class="logo-word"><em>Doce</em><strong>NATAL</strong></span></a>
+        <a class="logo logo--claro" href="#/inicio"><img class="logo-ic" src="../assets/img/icone-natale.webp" alt="" width="256" height="256"><span class="logo-nome">Natalê</span></a>
         <a class="top-user" href="#/perfil">👤 <span id="top-user">Meu perfil</span></a>
       </header>
       <main class="view" id="view" tabindex="-1"></main>

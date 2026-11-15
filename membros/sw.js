@@ -1,10 +1,10 @@
 /* ===========================================================
-   KIT DOCE NATAL — service worker do app (PWA)
+   NATALÊ — service worker do app (PWA)
    Troque VERSAO sempre que publicar mudanças na área de membros:
    o celular baixa os arquivos novos e apaga o cache antigo.
    =========================================================== */
-var VERSAO = "kdn-2026-11-09a";
-var CACHE = VERSAO + "-app", CACHE_IMG = "kdn-img-v2";
+var VERSAO = "kdn-2026-11-15a";
+var CACHE = VERSAO + "-app", CACHE_IMG = "kdn-img-v3";
 
 /* o mínimo para o app abrir offline (cerca de 300 KB) */
 var ESSENCIAL = [
@@ -15,7 +15,7 @@ var ESSENCIAL = [
   "../assets/fonts/poppins-400.woff2", "../assets/fonts/poppins-500.woff2", "../assets/fonts/poppins-600.woff2",
   "../assets/fonts/poppins-700.woff2", "../assets/fonts/poppins-800.woff2",
   "../assets/fonts/playfairdisplay-i600.woff2", "../assets/fonts/caveat-700.woff2",
-  "../assets/img/membros/banner-boas-vindas.webp"
+  "../assets/img/membros/banner-boas-vindas.webp", "../assets/img/logo-natale.webp", "../assets/img/icone-natale.webp"
 ];
 
 self.addEventListener("install", function (e) {
