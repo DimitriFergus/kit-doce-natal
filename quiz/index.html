@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2a0908">
+  <title>Quiz Natalê | Quanto você pode faturar com doces neste Natal?</title>
+  <meta name="description" content="Responda 6 perguntas rápidas e descubra quanto você pode faturar vendendo doces neste Natal, com um plano feito para o seu momento.">
+  <meta property="og:title" content="Quanto você pode faturar com doces neste Natal?">
+  <meta property="og:description" content="Responda 6 perguntas rápidas e receba o seu diagnóstico de renda extra no Natal.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:image" content="../assets/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../assets/img/favicon-natale.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500;1,600;1,700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="../assets/js/kit.js"></script>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="quiz.css">
+  <script>
+    /* escolhe o funil pelo link: ?f=ferias abre quiz/funis/ferias.js (sem ?f= abre o "natal") */
+    (function () {
+      var f = (new URLSearchParams(location.search).get("f") || "natal").toLowerCase();
+      if (!/^[a-z0-9][a-z0-9-]{0,39}$/.test(f)) f = "natal";
+      function carrega(src, ok, erro) { var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = erro; document.head.appendChild(s); }
+      function motor() { carrega("quiz.js?v=2"); }
+      carrega("funis/" + f + ".js?v=2", motor, function () { if (f !== "natal") carrega("funis/natal.js?v=2", motor); });
+    })();
+  </script>
+</head>
+<body>
+  <div class="snow" id="snow" aria-hidden="true"></div>
+
+  <header class="qz-header">
+    <a href="./" class="logo" aria-label="Natalê">
+      <img class="logo-img" src="../assets/img/logo-natale.webp" alt="Natalê" width="720" height="401">
+    </a>
+  </header>
+
+  <main class="qz" id="quiz" aria-live="polite">
+    <noscript><p class="qz-card">Ative o JavaScript do navegador para responder o quiz.</p></noscript>
+  </main>
+
+  <footer class="qz-footer">
+    <p>© <span id="ano"></span> <span data-marca>Natalê</span> · <a href="../privacidade.html">Privacidade</a> · <a href="../termos.html">Termos</a></p>
+    <p>Os resultados variam de pessoa para pessoa e dependem da dedicação, da região e do trabalho de cada um.</p>
+  </footer>
+</body>
+</html>
