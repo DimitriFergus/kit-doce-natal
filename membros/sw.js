@@ -3,7 +3,7 @@
    Troque VERSAO sempre que publicar mudanças na área de membros:
    o celular baixa os arquivos novos e apaga o cache antigo.
    =========================================================== */
-var VERSAO = "kdn-2026-11-16a";
+var VERSAO = "kdn-2026-11-16b";
 var CACHE = VERSAO + "-app", CACHE_IMG = "kdn-img-v4";
 
 /* o mínimo para o app abrir offline (cerca de 300 KB) */
@@ -70,12 +70,20 @@ self.addEventListener("fetch", function (e) {
     return;
   }
 
-  // JS, CSS e dados: responde do cache na hora e atualiza em segundo plano
+  // JS, CSS e dados: sempre a versão mais nova da rede; o cache só entra sem internet (ou se a rede passar de 4 s)
   e.respondWith(caches.open(CACHE).then(function (c) {
-    return c.match(req, { ignoreSearch: true }).then(function (hit) {
-      var rede = fetch(req).then(function (r) { if (r.ok) c.put(req, r.clone()); return r; }).catch(function () { return hit; });
-      if (hit) { e.waitUntil(rede); return hit; }
-      return rede;
+    return new Promise(function (ok) {
+      var feito = false;
+      function doCache() { return c.match(req, { ignoreSearch: true }); }
+      var t = setTimeout(function () { doCache().then(function (hit) { if (hit && !feito) { feito = true; ok(hit); } }); }, 4000);
+      fetch(req, { cache: "no-cache" }).then(function (r) {
+        clearTimeout(t);
+        if (r.ok) c.put(req, r.clone());
+        if (!feito) { feito = true; ok(r); }
+      }).catch(function () {
+        clearTimeout(t);
+        doCache().then(function (hit) { if (!feito) { feito = true; ok(hit || new Response("", { status: 504 })); } });
+      });
     });
   }));
 });

@@ -893,7 +893,13 @@
   var sw = "serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1");
   if (sw) {
     addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(function (e) { console.warn("[Kit] service worker", e); });
+      navigator.serviceWorker.register("sw.js", { scope: "./", updateViaCache: "none" }).then(function (reg) { reg.update(); }).catch(function (e) { console.warn("[Kit] service worker", e); });
+    });
+    /* quando sai uma versão nova, recarrega uma vez para mostrar na hora (fotos, receitas e textos novos) */
+    var tinhaControle = !!navigator.serviceWorker.controller, recarregou = false;
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      if (!tinhaControle || recarregou) return;
+      recarregou = true; location.reload();
     });
   }
   /* depois que a pessoa entra, guarda o resto das imagens para usar offline — só no Wi-Fi/4G e sem "economia de dados" */

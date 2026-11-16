@@ -15,6 +15,16 @@
     el.textContent = KIT.emailSuporte; el.href = "mailto:" + KIT.emailSuporte;
   });
 
+  /* contagem real de dias até o Natal (24/12). Depois do Natal, as frases com a contagem somem. */
+  (function () {
+    var hoje = new Date(), natal = new Date(hoje.getFullYear(), 11, 24);
+    var dias = Math.ceil((natal - new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate())) / 864e5);
+    document.querySelectorAll("[data-dias]").forEach(function (el) {
+      if (dias >= 1) el.textContent = dias;
+      else { var bloco = el.closest(".finaloffer-urgency,.angle-urgency,.scarcity-days"); if (bloco) bloco.remove(); else el.textContent = "poucos"; }
+    });
+  })();
+
   /* checkout com repasse de UTMs */
   var checkout = page === "2" ? KIT.checkoutOferta2 || KIT.checkoutOferta1 : KIT.checkoutOferta1;
   if (checkout) {

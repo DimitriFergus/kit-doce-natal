@@ -204,3 +204,21 @@
 .legal{max-width:780px;margin:0 auto;padding:60px 20px}
 .legal h1{font-size:34px}
 .legal h2{font-size:20px;margin-top:28px}
+
+/* ===== esteiras de doces e salgados ===== */
+.carousel-label{max-width:var(--container,1180px);margin:22px auto 4px;padding:0 20px;text-align:center;font-family:var(--font-hand);font-size:clamp(22px,4.6vw,28px);color:var(--gold-300)}
+.section-cream .carousel-label,.section-light .carousel-label{color:var(--wine-600)}
+.carousel-label span{font-family:initial;font-size:.85em;margin-right:4px}
+/* ===== por que agora (ângulos) ===== */
+.angle-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.angle{background:#fff;border-radius:var(--radius);padding:24px 20px;box-shadow:var(--shadow-sm);border-top:4px solid var(--gold-400);text-align:center}
+.angle b{display:block;font-size:38px;line-height:1;margin-bottom:10px}
+.angle h3{font-size:18px;margin:0 0 6px;color:var(--wine-700)}
+.angle p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+.angle-urgency{max-width:760px;margin:30px auto 0;text-align:center;font-size:17px;font-weight:600;color:var(--wine-700);background:#fff4d9;border:1px dashed var(--gold-500);border-radius:16px;padding:14px 18px}
+.angle-urgency b,.finaloffer-urgency b,.scarcity-days b{color:var(--wine-500);font-size:1.15em}
+@media (max-width:960px){.angle-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.angle-grid{grid-template-columns:1fr}.angle{padding:20px 18px}}
+.finaloffer-urgency{margin:16px 0 0;font-size:13.5px;line-height:1.45;text-align:center;color:var(--wine-700);background:#fff4d9;border-radius:12px;padding:10px 12px}
+.scarcity-days{margin:-6px 0 18px;font-size:17px;font-weight:600;color:var(--wine-800)}
+.scarcity-days b{color:var(--wine-500)}
