@@ -50,7 +50,21 @@ body{background:var(--cream-100)}
 .topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;position:sticky;top:0;z-index:40;background:rgba(245,235,224,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--cream-200)}
 .topnav .logo{visibility:hidden;color:var(--wine-800)}
 .topnav .logo-word em{color:var(--gold-600)}
-.top-user{font-size:14px;font-weight:600;color:var(--wine-700);background:#fff;padding:8px 14px;border-radius:999px;box-shadow:var(--shadow-sm)}
+.top-user{display:flex;align-items:center;gap:10px;max-width:min(260px,62vw);color:var(--wine-700);background:#fff;padding:5px 16px 5px 5px;border-radius:999px;box-shadow:var(--shadow-sm);line-height:1.15}
+.top-txt{display:flex;flex-direction:column;min-width:0}
+.top-txt strong{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-txt small{font-size:11.5px;font-weight:500;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.av{flex:none;width:36px;height:36px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,var(--wine-500),var(--wine-800));color:var(--gold-300);font-weight:700;font-size:16px;box-shadow:0 0 0 2px var(--gold-400)}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.av--lg{width:84px;height:84px;font-size:34px;box-shadow:0 0 0 3px var(--gold-400)}
+.p-foto{display:flex;align-items:center;gap:18px}
+.p-foto>div{flex:1;min-width:0}
+.p-foto strong{display:block;color:var(--wine-700);font-size:16px}
+.p-foto span:not(.av){display:block;font-size:13px;color:var(--ink-soft);margin:2px 0 10px;line-height:1.4}
+.p-foto .row-btns{margin:0}
+.p-foto label.btn{cursor:pointer}
+.p-foto{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--cream-200)}
+@media (max-width:520px){.av--lg{width:68px;height:68px;font-size:28px}.p-foto{gap:14px;align-items:flex-start}.p-foto .btn-sm{padding:8px 14px;font-size:13px}}
 .view{max-width:1120px;margin:0 auto;padding:28px 32px 80px;outline:none;animation:in .35s ease}
 @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .bottomnav{display:none}
@@ -443,7 +457,9 @@ body{background:var(--cream-100)}
 @media (max-width:520px){.install{display:grid;grid-template-columns:auto 1fr auto;align-items:start}.install .btn{grid-column:1/-1;width:100%}.install .x{grid-row:1;grid-column:3}}
 /* toque: sem atraso, sem destaque azul, alvos de pelo menos 44 px */
 html{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-body{overscroll-behavior-y:none}
+/* overscroll fica no html: no body ele travava a rolagem da roda do mouse e do dedo sobre o conteúdo */
+html{overscroll-behavior-y:none}
+body{overflow-x:clip}
 @media (max-width:900px){
   /* 16 px nos campos evita o zoom automático do iPhone ao digitar */
   .field input,.field select,.field textarea,.search,.crow input,.item-edit input,.sec-name,.mult select{font-size:16px}

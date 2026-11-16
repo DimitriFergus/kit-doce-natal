@@ -50,6 +50,25 @@
 
   /* ---------------- perfil ---------------- */
   function perfil() { return store.get("perfil", {}); }
+  /* foto do perfil: recortada em quadrado no centro e reduzida para 192 px (cabe com folga no navegador) */
+  function avatar(cls) {
+    var p = perfil(), f = store.get("foto", "");
+    if (f) return '<span class="' + cls + '"><img src="' + esc(f) + '" alt=""></span>';
+    var ini = (p.nome || "").trim().charAt(0).toUpperCase();
+    return '<span class="' + cls + ' ' + cls + '--vazio">' + (ini ? esc(ini) : "👤") + "</span>";
+  }
+  function lerFoto(arq, pronto) {
+    if (!arq || !/^image\//.test(arq.type)) { toast("Escolha uma imagem (JPG, PNG ou WEBP)"); return; }
+    var url = URL.createObjectURL(arq), img = new Image();
+    img.onload = function () {
+      var L = 192, lado = Math.min(img.naturalWidth, img.naturalHeight), c = document.createElement("canvas");
+      c.width = c.height = L;
+      c.getContext("2d").drawImage(img, (img.naturalWidth - lado) / 2, (img.naturalHeight - lado) / 2, lado, lado, 0, 0, L, L);
+      URL.revokeObjectURL(url); pronto(c.toDataURL("image/jpeg", 0.85));
+    };
+    img.onerror = function () { URL.revokeObjectURL(url); toast("Não consegui abrir essa imagem"); };
+    img.src = url;
+  }
   function preencher(txt) {
     var p = perfil();
     var m = { loja: p.loja || "[NOME DA SUA LOJA]", whats: p.whats || "[SEU WHATSAPP]", instagram: p.instagram || "[@SEUINSTAGRAM]", cidade: p.cidade ? slug(p.cidade).replace(/\s+/g, "") : "suacidade", pix: p.pix || "[SUA CHAVE PIX]", nome: p.nome || "[SEU NOME]" };
@@ -817,15 +836,22 @@
     var p = perfil(), u = store.get("usuario", {});
     var campos = [["nome", "Seu nome", "Maria"], ["loja", "Nome da loja", "Doces da Maria"], ["whats", "WhatsApp", "(11) 99999-9999"], ["instagram", "Instagram", "@docesdamaria"], ["cidade", "Cidade", "Campinas"], ["pix", "Chave Pix", "seu@email.com ou CPF"]];
     v.innerHTML = head("MEU PERFIL", "Seus dados <em>nos materiais</em>", "Essas informações entram automaticamente nas mensagens, legendas, cardápios, artes e etiquetas.") +
-      '<section class="card narrow"><form id="p-form">' + campos.map(function (c) { return '<label class="field">' + c[1] + '<input name="' + c[0] + '" value="' + esc(p[c[0]]) + '" placeholder="' + c[2] + '"></label>'; }).join("") +
+      '<section class="card narrow"><div class="p-foto">' + avatar("av av--lg") + '<div><strong>Foto do perfil</strong><span>Aparece no topo da área de membros, junto com o seu nome e o da sua loja.</span>' +
+      '<div class="row-btns"><label class="btn btn-sm">📷 ' + (store.get("foto", "") ? "Trocar foto" : "Escolher foto") + '<input type="file" id="p-arq" accept="image/*" hidden></label>' +
+      (store.get("foto", "") ? '<button type="button" class="btn btn-sm btn-ghost" id="p-tirar">Remover</button>' : "") + "</div></div></div>" +
+      '<form id="p-form">' + campos.map(function (c) { return '<label class="field">' + c[1] + '<input name="' + c[0] + '" value="' + esc(p[c[0]]) + '" placeholder="' + c[2] + '"></label>'; }).join("") +
       '<button class="btn btn-block" type="submit">Salvar perfil</button></form></section>' +
       '<section class="card narrow"><h2>Conta</h2><p>Acesso liberado para <strong>' + esc(u.email) + "</strong>.</p><p class=\"hint\">Seus dados (encomendas, preços, progresso) ficam salvos neste navegador. Para usar em outro aparelho, exporte as encomendas em CSV.</p>" +
       '<div class="row-btns"><button type="button" class="btn btn-sm btn-ghost" id="p-sair">Sair</button><button type="button" class="btn btn-sm btn-ghost" id="p-apagar">Apagar todos os meus dados</button></div></section>';
     $("#p-form").addEventListener("submit", function (e) {
       e.preventDefault(); var fd = new FormData(e.target), n = {};
       campos.forEach(function (c) { n[c[0]] = (fd.get(c[0]) || "").trim(); });
-      store.set("perfil", n); toast("Perfil salvo ✓"); atualizaTopo();
+      store.set("perfil", n); toast("Perfil salvo ✓"); atualizaTopo(); var a = $(".p-foto .av"); if (a) a.outerHTML = avatar("av av--lg");
     });
+    $("#p-arq").addEventListener("change", function (e) {
+      lerFoto(e.target.files[0], function (d) { store.set("foto", d); toast("Foto salva ✓"); atualizaTopo(); VIEWS.perfil(v); });
+    });
+    if ($("#p-tirar")) $("#p-tirar").addEventListener("click", function () { store.del("foto"); atualizaTopo(); VIEWS.perfil(v); });
     $("#p-sair").addEventListener("click", function () { store.del("usuario"); location.hash = ""; render(); });
     $("#p-apagar").addEventListener("click", function (e) {
       confirma(e.currentTarget, function () {
@@ -836,7 +862,12 @@
   };
 
   /* ---------------- início ---------------- */
-  function atualizaTopo() { var p = perfil(); $("#top-user").textContent = p.nome ? p.nome.split(" ")[0] : "Meu perfil"; }
+  function atualizaTopo() {
+    var p = perfil(), nome = (p.nome || "").trim(), loja = (p.loja || "").trim(), el = $("#top-user");
+    el.innerHTML = avatar("av") + '<span class="top-txt"><strong>' + esc(nome ? nome.split(/\s+/)[0] : "Meu perfil") + "</strong>" +
+      (loja ? "<small>" + esc(loja) + "</small>" : nome ? "" : "<small>Toque para personalizar</small>") + "</span>";
+    el.setAttribute("aria-label", "Meu perfil" + (nome ? ": " + nome : "") + (loja ? ", " + loja : ""));
+  }
   var montado = false;
   function iniciar() {
     var sp = $("#splash"); if (sp) sp.remove();

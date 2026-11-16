@@ -9,13 +9,11 @@ window.QUIZ = {
   marca: { nome: "Natalê", logo: "../assets/img/logo-natale.webp", link: "../" },
 
   abertura: {
-    imagem: "../assets/img/oferta2-hero.webp",
-    imagemAlt: "Confeiteira mostrando uma caixa de doces de Natal",
-    eyebrow: "Janeiro sem susto",
+    imagem: "../assets/img/quiz-contas.webp",
+    imagemAlt: "Bancada de confeitaria com calculadora, caderno e doces de Natal",
+    eyebrow: "🧾 Quiz Natalê · 1 minuto",
     titulo: "Janeiro chega com boleto. <span>E se dezembro chegasse com encomenda?</span>",
-    lead: "Responda 6 perguntas e descubra quantas encomendas de Natal pagam as contas do começo do ano.",
-    selos: ["⏱️ Leva 1 minuto", "🧾 Contas de janeiro", "🎄 Vendas de Natal"],
-    botao: "CALCULAR MINHA META"
+    lead: "O <strong>Natalê</strong> te entrega receitas de Natal, preços calculados e cardápios prontos para vender por encomenda. Responda 6 perguntas e veja quantas encomendas pagam as contas do começo do ano."
   },
 
   perguntas: [

@@ -21,10 +21,19 @@ body{min-height:100vh;display:flex;flex-direction:column;
 .qz-lead{text-align:center;color:var(--ink-soft);font-size:16px;margin:0 0 22px}
 
 /* abertura */
-.qz-hero{margin:-30px -24px 24px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;overflow:hidden;aspect-ratio:16/9;position:relative}
-@media (min-width:560px){.qz-hero{margin:-40px -40px 28px}}
-.qz-hero img{width:100%;height:100%;object-fit:cover;object-position:50% 22%}
-.qz-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(250,244,234,1),rgba(250,244,234,0) 45%)}
+/* a imagem já vem recortada em 3:2 (1200x800): o espaço tem a mesma proporção, então nada é cortado */
+.qz-hero{margin:-30px -24px 18px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;overflow:hidden;aspect-ratio:3/2;position:relative;background:var(--wine-800)}
+@media (min-width:560px){.qz-hero{margin:-40px -40px 22px}}
+.qz-hero img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.qz-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;background:linear-gradient(to top,var(--cream-50),rgba(250,244,234,0))}
+/* apresentação curta em cima da 1ª pergunta */
+.qz-intro{text-align:center;padding-bottom:18px;margin-bottom:20px;border-bottom:1px dashed var(--cream-300)}
+.qz-tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--wine-900);background:linear-gradient(135deg,var(--gold-300),var(--gold-500));padding:5px 12px;border-radius:999px;margin-bottom:10px}
+.qz-first .qz-intro h1{font-size:clamp(22px,5.6vw,30px);margin:0 0 8px;line-height:1.15}
+.qz-first .qz-intro .qz-lead{font-size:14.5px;margin:0 0 12px;line-height:1.5}
+.qz-first .qz-intro .qz-badges{margin:0}
+.qz-first .qz-intro .qz-badges li{font-size:12px;padding:5px 10px}
+.qz-first h2{font-size:clamp(19px,4.8vw,24px);margin-bottom:16px}
 .qz-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 0 22px;padding:0;list-style:none}
 .qz-badges li{font-size:13px;font-weight:600;color:var(--wine-600);background:rgba(139,36,32,.07);padding:6px 12px;border-radius:999px}
 .qz-field{display:block;font-weight:600;font-size:14px;color:var(--wine-700);margin-bottom:16px}
@@ -97,3 +106,5 @@ body{min-height:100vh;display:flex;flex-direction:column;
   background:linear-gradient(135deg,var(--gold-300),var(--gold-500));color:var(--wine-900)}
 .qz-guar b big{display:block;font-size:20px}
 .qz-more{display:block;text-align:center;margin-top:18px;font-size:14px;color:var(--wine-600);text-decoration:underline}
+.qz-first .qz-top{margin-bottom:12px}
+.qz-first .qz-eyebrow{font-size:20px;margin-bottom:0}

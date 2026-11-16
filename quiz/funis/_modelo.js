@@ -7,7 +7,7 @@
    (Arquivos que começam com "_" não abrem pelo link, por isso este modelo não aparece no site.)
 
    Textos aceitam HTML simples (<em>, <strong>, <span>) e estes tokens:
-   {nome}      primeiro nome da pessoa (vazio se ela não preencher)
+   {nome}      primeiro nome da pessoa (só existe depois do fim do quiz: use na análise e no resultado)
    {Nome}      primeiro nome, ou "Você" se estiver vazio
    {nome,}     "Ana, " (ou nada se não tiver nome), bom para começo de frase
    {meta} {ticket} {encomendas} {porSemana} {semanas} {dias} {prazo} {marca}
@@ -21,16 +21,18 @@ window.QUIZ = {
   // cores: { "wine-500": "#8b2420", "wine-600": "#6e1a17", "wine-800": "#3a0d0b", "wine-950": "#1a0504", "gold-400": "#e7c67e", "gold-500": "#d4af6a" },
   // neve: false,                        // desliga a neve (para ofertas fora do Natal)
 
+  /* A 1ª tela já mostra esta apresentação curta EM CIMA da 1ª pergunta (sem botão "começar").
+     O nome é pedido no fim, depois da última pergunta, e entra no resultado. */
   abertura: {
-    imagem: "../assets/img/oferta2-hero.webp",  // foto vertical ou quadrada; aparece no topo, cortada em 16:9
+    imagem: "../assets/img/quiz-natal.webp",  // use imagem 3:2 (ex.: 1200x800) para não cortar nada
     imagemAlt: "Descrição da foto",
-    eyebrow: "",                          // frase pequena em letra cursiva acima do título (opcional)
+    eyebrow: "🎯 Quiz Nome da Marca · 1 minuto",  // etiqueta dourada pequena (opcional)
     titulo: "Pergunta que gera curiosidade <span>com a promessa em destaque</span>",
-    lead: "Responda X perguntas rápidas e descubra ...",
-    selos: ["⏱️ Leva 1 minuto", "🎯 Benefício 2", "💰 Benefício 3"],
-    botao: "COMEÇAR",
-    pedirNome: true                       // false = não pergunta o nome
+    lead: "O <strong>Nome da Marca</strong> é ... (1 ou 2 frases). Responda X perguntas e descubra ...",
+    // selos: ["⏱️ Leva 1 minuto", "🎯 Benefício 2"],   // opcional: deixa a 1ª tela mais longa
+    pedirNome: true                        // false = não pergunta o nome no fim
   },
+  // nome: { titulo: "O seu resultado está pronto! <em>Como posso te chamar?</em>", botao: "VER MEU RESULTADO", pular: true },
 
   /* de 4 a 7 perguntas costuma ser o ideal. Cada opção tem: v (valor), ic (emoji), t (texto), s (subtexto opcional) */
   perguntas: [

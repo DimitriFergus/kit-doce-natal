@@ -8,13 +8,11 @@ window.QUIZ = {
   marca: { nome: "Natalê", logo: "../assets/img/logo-natale.webp", link: "../" },
 
   abertura: {
-    imagem: "../assets/img/oferta2-hero.webp",
-    imagemAlt: "Confeiteira mostrando uma caixa de doces de Natal",
-    eyebrow: "Férias pagas, sem cartão",
+    imagem: "../assets/img/quiz-ferias.webp",
+    imagemAlt: "Caixas de encomendas de Natal embrulhadas com laço vermelho",
+    eyebrow: "🏖️ Quiz Natalê · 1 minuto",
     titulo: "E se as suas férias de janeiro <span>saíssem da sua cozinha?</span>",
-    lead: "Responda 6 perguntas e descubra quantas encomendas de Natal pagam a sua viagem, com uma meta semana a semana.",
-    selos: ["⏱️ Leva 1 minuto", "🏖️ Meta para as férias", "🎄 Vendas de Natal"],
-    botao: "CALCULAR MINHAS FÉRIAS"
+    lead: "O <strong>Natalê</strong> te entrega receitas de Natal, preços calculados e cardápios prontos para vender por encomenda. Responda 6 perguntas e veja quantas encomendas pagam a sua viagem."
   },
 
   perguntas: [

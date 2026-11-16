@@ -3,6 +3,8 @@
    - Os textos, perguntas, resultado e oferta ficam em quiz/funis/<nome>.js
    - O funil é escolhido pelo link: /quiz/?f=ferias  (sem ?f= abre o "natal")
    - Para outra oferta: copie quiz/funis/_modelo.js, preencha e use ?f=<nome-do-arquivo>
+   Fluxo: apresentação curta + 1ª pergunta na mesma tela → demais perguntas →
+   nome (e contato, se ligado) → análise → resultado com a oferta.
    Não precisa mexer neste arquivo.
    =========================================================== */
 (function () {
@@ -27,8 +29,9 @@
   if (Q.neve === false) { var sn = document.getElementById("snow"); if (sn) sn.remove(); }
 
   /* ---------- estado (fica salvo se a pessoa recarregar a página) ---------- */
-  var st = { passo: -1, nome: "", contato: "", r: {} };
+  var st = { passo: 0, nome: "", contato: "", r: {} };
   try { var salvo = JSON.parse(sessionStorage.getItem(CHAVE)); if (salvo && salvo.r) st = salvo; } catch (e) {}
+  if (!(st.passo >= 0)) st.passo = 0;
   function guarda() { try { sessionStorage.setItem(CHAVE, JSON.stringify(st)); } catch (e) {} }
 
   /* ---------- utilidades ---------- */
@@ -80,42 +83,32 @@
       .replace(/^\s*([a-zà-ú])/, function (m, c) { return c.toUpperCase(); }); /* sem nome, a frase começa com maiúscula */
   }
 
-  /* ---------- abertura ---------- */
-  function abertura() {
-    var pedirNome = AB.pedirNome !== false;
-    render('<section class="qz-card">' +
-      (AB.imagem ? '<div class="qz-hero"><img src="' + esc(AB.imagem) + '" alt="' + esc(AB.imagemAlt || "") + '" width="800" height="1000" fetchpriority="high"></div>' : "") +
-      (AB.eyebrow ? '<span class="qz-eyebrow">' + AB.eyebrow + "</span>" : "") +
-      "<h1>" + preenche(AB.titulo) + "</h1>" +
-      '<p class="qz-lead">' + preenche(AB.lead) + "</p>" +
-      (AB.selos && AB.selos.length ? '<ul class="qz-badges">' + AB.selos.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ul>" : "") +
-      '<form id="qz-ini">' +
-      (pedirNome ? '<label class="qz-field">' + (AB.perguntaNome || "Como você se chama?") + '<input name="nome" autocomplete="given-name" placeholder="Seu primeiro nome" value="' + esc(st.nome) + '" maxlength="40"></label>' : "") +
-      '<button class="btn btn-lg btn-block btn-pulse" type="submit">' + (AB.botao || "COMEÇAR") + ' <span aria-hidden="true">→</span></button></form>' +
-      '<p class="qz-small">' + (AB.aviso || "🔒 Suas respostas não são compartilhadas.") + "</p></section>");
-    document.getElementById("qz-ini").addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (this.nome) st.nome = this.nome.value.trim().split(/\s+/)[0].slice(0, 20) || "";
-      st.passo = 0; guarda(); evento("quiz_inicio"); pergunta();
-    });
+  /* ---------- apresentação (aparece em cima da 1ª pergunta) ---------- */
+  function apresentacao() {
+    return (AB.imagem ? '<div class="qz-hero"><img src="' + esc(AB.imagem) + '" alt="' + esc(AB.imagemAlt || "") + '" width="1200" height="800" fetchpriority="high"></div>' : "") +
+      '<div class="qz-intro">' + (AB.eyebrow ? '<span class="qz-tag">' + AB.eyebrow + "</span>" : "") +
+      "<h1>" + preenche(AB.titulo) + "</h1>" + (AB.lead ? '<p class="qz-lead">' + preenche(AB.lead) + "</p>" : "") +
+      (AB.selos && AB.selos.length ? '<ul class="qz-badges">' + AB.selos.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>" : "") + "</div>";
   }
 
   /* ---------- perguntas ---------- */
   var P = Q.perguntas || [];
   var temLead = !!(Q.lead && Q.lead.pedir);
-  function total() { return P.length + (temLead ? 1 : 0); }
+  var temNome = AB.pedirNome !== false;
+  var temFinal = temLead || temNome;          /* tela de nome/contato depois da última pergunta */
+  function total() { return P.length + (temFinal ? 1 : 0); }
 
   function topo(i) {
     var n = total();
-    return '<div class="qz-top"><button class="qz-back" type="button" aria-label="Voltar">←</button><div class="qz-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + n + '" aria-valuenow="' + i + '"><i style="width:' + (i / n * 100) + '%"></i></div><span class="qz-step">' + (i + 1) + "/" + n + "</span></div>";
+    return '<div class="qz-top"><button class="qz-back" type="button" aria-label="Voltar"' + (i === 0 ? " disabled" : "") + '>←</button><div class="qz-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + n + '" aria-valuenow="' + i + '"><i style="width:' + (i / n * 100) + '%"></i></div><span class="qz-step">' + (i + 1) + "/" + n + "</span></div>";
   }
   function animaBarra(i) { requestAnimationFrame(function () { var b = root.querySelector(".qz-bar i"); if (b) b.style.width = ((i + 1) / total() * 100) + "%"; }); }
-  function voltar() { if (st.passo <= 0) { st.passo = -1; guarda(); abertura(); } else { st.passo--; guarda(); passo(); } }
+  function voltar() { if (st.passo > 0) { st.passo--; guarda(); passo(); } }
 
   function pergunta() {
     var i = st.passo, p = P[i];
-    var eyebrow = i === 0 && st.nome ? esc(st.nome) + ", " + (p.eyebrowNome || "para começar…") : (p.eyebrow || "");
-    render('<section class="qz-card">' + topo(i) +
+    var eyebrow = p.eyebrow || "";
+    render('<section class="qz-card' + (i === 0 ? " qz-first" : "") + '">' + (i === 0 ? apresentacao() : "") + topo(i) +
       '<span class="qz-eyebrow">' + eyebrow + "</span>" +
       "<h2>" + preenche(p.titulo) + "</h2>" + (p.sub ? '<p class="qz-lead">' + preenche(p.sub) + "</p>" : "") +
       '<div class="qz-opts">' +
@@ -128,45 +121,54 @@
       var b = e.target.closest(".qz-opt"); if (!b || root.dataset.lock) return;
       root.dataset.lock = "1";
       root.querySelectorAll(".qz-opt").forEach(function (x) { x.classList.toggle("on", x === b); });
+      if (i === 0 && !Object.keys(st.r).length) evento("quiz_inicio");
       st.r[p.id] = b.dataset.v;
       evento("quiz_resposta", { pergunta: i + 1, id: p.id, resposta: b.dataset.v });
       setTimeout(function () { delete root.dataset.lock; st.passo++; guarda(); passo(); }, 380);
     });
   }
 
-  /* contato opcional (WhatsApp ou e-mail) antes do resultado */
-  function captura() {
-    var L = Q.lead, i = P.length, zap = L.pedir === "whatsapp";
+  /* depois da última pergunta: nome (e contato, se o funil pedir) antes do resultado */
+  function final() {
+    var L = Q.lead || {}, N = Q.nome || {}, i = P.length, zap = L.pedir === "whatsapp", pular = temLead ? L.pular !== false : N.pular !== false;
     render('<section class="qz-card">' + topo(i) +
-      '<span class="qz-eyebrow">' + (L.eyebrow || "Último passo") + "</span><h2>" + preenche(L.titulo || "Para onde envio o seu plano?") + "</h2>" +
-      (L.sub ? '<p class="qz-lead">' + preenche(L.sub) + "</p>" : "") +
-      '<form id="qz-lead"><label class="qz-field">' + (zap ? "Seu WhatsApp com DDD" : "Seu melhor e-mail") +
-      '<input name="contato" required ' + (zap ? 'type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" pattern="[0-9 \\(\\)+\\-]{10,20}"' : 'type="email" autocomplete="email" placeholder="voce@email.com"') + ' value="' + esc(st.contato) + '" maxlength="80"></label>' +
-      '<button class="btn btn-lg btn-block" type="submit">' + (L.botao || "VER MEU RESULTADO") + ' <span aria-hidden="true">→</span></button></form>' +
-      (L.pular !== false ? '<p class="qz-small"><button type="button" class="qz-skip" style="all:unset;cursor:pointer;text-decoration:underline">Pular e ver o resultado</button></p>' : "") +
-      '<p class="qz-small">' + (L.aviso || "🔒 Sem spam. Você pode sair da lista quando quiser.") + "</p></section>");
+      '<span class="qz-eyebrow">' + (N.eyebrow || "Último passo") + "</span><h2>" + preenche(temLead ? (L.titulo || "Para onde envio o seu plano?") : (N.titulo || "O seu resultado está pronto! <em>Como posso te chamar?</em>")) + "</h2>" +
+      '<p class="qz-lead">' + preenche(temLead ? (L.sub || "Coloque o seu nome e o seu contato para ver o resultado.") : (N.sub || "Coloque o seu primeiro nome para eu montar o seu plano.")) + "</p>" +
+      '<form id="qz-fim">' +
+      (temNome ? '<label class="qz-field">Seu primeiro nome<input name="nome" autocomplete="given-name" placeholder="Ex.: Ana" value="' + esc(st.nome) + '" maxlength="40"' + (pular ? "" : " required") + "></label>" : "") +
+      (temLead ? '<label class="qz-field">' + (zap ? "Seu WhatsApp com DDD" : "Seu melhor e-mail") +
+        '<input name="contato" required ' + (zap ? 'type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" pattern="[0-9 \\(\\)+\\-]{10,20}"' : 'type="email" autocomplete="email" placeholder="voce@email.com"') + ' value="' + esc(st.contato) + '" maxlength="80"></label>' : "") +
+      '<button class="btn btn-lg btn-block btn-pulse" type="submit">' + ((temLead ? L.botao : N.botao) || "VER MEU RESULTADO") + ' <span aria-hidden="true">→</span></button></form>' +
+      (pular ? '<p class="qz-small"><button type="button" class="qz-skip" style="all:unset;cursor:pointer;text-decoration:underline">Ver o resultado sem preencher</button></p>' : "") +
+      '<p class="qz-small">' + ((temLead ? L.aviso : N.aviso) || (temLead ? "🔒 Sem spam. Você pode sair da lista quando quiser." : "🔒 Suas respostas não são compartilhadas.")) + "</p></section>");
     animaBarra(i);
     root.querySelector(".qz-back").addEventListener("click", voltar);
-    var pular = root.querySelector(".qz-skip");
-    if (pular) pular.addEventListener("click", function () { st.passo++; guarda(); passo(); });
-    document.getElementById("qz-lead").addEventListener("submit", function (e) {
+    var f = document.getElementById("qz-fim"), sk = root.querySelector(".qz-skip");
+    if (sk) sk.addEventListener("click", function () { st.passo++; guarda(); passo(); });
+    f.addEventListener("submit", function (e) {
       e.preventDefault();
-      st.contato = this.contato.value.trim(); st.passo++; guarda();
-      evento("quiz_lead", { tipo: L.pedir });
-      if (L.webhook) {
-        try {
-          fetch(L.webhook, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain" },
-            body: JSON.stringify({ funil: Q.id, nome: st.nome, contato: st.contato, tipo: L.pedir, respostas: st.r, origem: utms(), pagina: location.href, data: new Date().toISOString() }) });
-        } catch (er) {}
+      if (this.nome) {
+        st.nome = this.nome.value.trim().split(/\s+/)[0].slice(0, 20) || "";
+        if (st.nome) st.nome = st.nome.charAt(0).toUpperCase() + st.nome.slice(1);
+      }
+      if (this.contato) st.contato = this.contato.value.trim();
+      st.passo++; guarda();
+      if (temLead && st.contato) {
+        evento("quiz_lead", { tipo: L.pedir });
+        if (L.webhook) {
+          try {
+            fetch(L.webhook, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain" },
+              body: JSON.stringify({ funil: Q.id, nome: st.nome, contato: st.contato, tipo: L.pedir, respostas: st.r, origem: utms(), pagina: location.href, data: new Date().toISOString() }) });
+          } catch (er) {}
+        }
       }
       passo();
     });
   }
 
   function passo() {
-    if (st.passo < 0) return abertura();
     if (st.passo < P.length) return pergunta();
-    if (temLead && st.passo === P.length) return captura();
+    if (temFinal && st.passo === P.length) return final();
     if (st.passo === total()) return analise();
     return resultado();
   }
@@ -238,7 +240,7 @@
       } catch (e) { console.warn("[quiz] checkout inválido", e); }
     }
     buy.addEventListener("click", function () { evento("quiz_checkout", { meta: n.meta }); });
-    root.querySelector(".qz-redo").addEventListener("click", function () { st = { passo: -1, nome: st.nome, contato: st.contato, r: {} }; guarda(); abertura(); });
+    root.querySelector(".qz-redo").addEventListener("click", function () { st = { passo: 0, nome: st.nome, contato: st.contato, r: {} }; guarda(); passo(); });
   }
 
   /* ---------- início ---------- */

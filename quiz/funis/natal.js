@@ -10,12 +10,11 @@ window.QUIZ = {
   marca: { nome: "Natalê", logo: "../assets/img/logo-natale.webp", link: "../" },
 
   abertura: {
-    imagem: "../assets/img/oferta2-hero.webp",
-    imagemAlt: "Confeiteira mostrando uma caixa de doces de Natal",
-    titulo: "Quanto você pode faturar <span>vendendo doces e salgados neste Natal?</span>",
-    lead: "Responda 6 perguntas rápidas e receba a sua meta de encomendas até o dia 24, com um plano feito para o seu tempo e a sua cozinha.",
-    selos: ["⏱️ Leva 1 minuto", "🎄 Focado no Natal", "💰 Renda extra"],
-    botao: "COMEÇAR MEU DIAGNÓSTICO"
+    imagem: "../assets/img/quiz-natal.webp",
+    imagemAlt: "Confeiteira sorrindo e mostrando uma caixa de brigadeiros de Natal",
+    eyebrow: "🎄 Quiz Natalê · 1 minuto",
+    titulo: "Quanto você pode faturar <span>com doces e salgados neste Natal?</span>",
+    lead: "O <strong>Natalê</strong> é um método com receitas de Natal, preços calculados e cardápios prontos para você vender por encomenda. Responda 6 perguntas e descubra a sua meta até o dia 24."
   },
 
   perguntas: [
