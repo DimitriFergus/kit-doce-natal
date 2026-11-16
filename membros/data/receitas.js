@@ -3265,7 +3265,7 @@ window.RECEITAS = [
   "embalagem": "Travessa de alumínio retangular com tampa, tender inteiro ou fatiado com as rodelas de abacaxi por cima; etiqueta com data de produção, validade e instrução: \"conservar na geladeira, reaquecer coberto a 160 °C por 20 minutos\". Fita vinho na tampa.",
   "venda": "Venda inteiro (1,5 kg) para ceias de 10 a 12 pessoas e meio tender fatiado para famílias pequenas. Monte o \"Kit Ceia\" com tender + arroz natalino + farofa com preço fechado; cobre pelo menos 3 vezes o custo dos ingredientes.",
   "imgPrompt": "Food photography of a whole glazed Brazilian Christmas tender ham with diamond score marks studded with cloves, topped with caramelized pineapple rings and red cherries, glossy amber glaze dripping, served on a white oval porcelain platter with rosemary sprigs and orange slices, three-quarter angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "chester-assado-com-laranja",
@@ -3370,7 +3370,7 @@ window.RECEITAS = [
   "embalagem": "Assadeira de alumínio grande com tampa, chester inteiro sobre rodelas de laranja e ramos de alecrim; molho em pote de 250 ml com tampa. Etiqueta com data, validade e instrução: \"manter refrigerado, reaquecer coberto a 180 °C por 30 minutos\".",
   "venda": "Venda inteiro para ceias de 12 a 14 pessoas ou em meio chester porcionado (coxas, sobrecoxas e peito fatiado) para famílias menores. Cobre um valor de reserva antecipado, pois a ave é cara e precisa ser comprada com antecedência.",
   "imgPrompt": "Food photography of a whole roasted Christmas chester bird with glistening golden crispy skin, surrounded by roasted orange slices, rosemary and thyme sprigs on a large white porcelain platter, pan juices shining, wine glasses blurred in the background, three-quarter angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "lombo-recheado-com-farofa",
@@ -3475,7 +3475,7 @@ window.RECEITAS = [
   "embalagem": "Travessa de alumínio com tampa, lombo inteiro amarrado ou fatias em leque mostrando o recheio; caldo da assadeira em potinho de 150 ml. Etiqueta com data, validade e instrução: \"manter refrigerado, reaquecer coberto a 180 °C por 20 minutos\".",
   "venda": "Venda inteiro (cerca de 1,6 kg pronto) ou em meia peça fatiada. É mais barato que pernil e chester, então funciona como opção de entrada no cardápio para quem quer gastar menos.",
   "imgPrompt": "Food photography of a roasted stuffed pork loin sliced into thick rounds revealing a golden cassava flour and bacon farofa spiral with prunes, glossy browned crust, arranged on a rectangular cream ceramic platter with parsley and roasted garlic, close-up three-quarter angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "pernil-assado-ao-vinho",
@@ -3580,7 +3580,7 @@ window.RECEITAS = [
   "embalagem": "Assadeira de alumínio grande com tampa, pernil inteiro ou fatiado cercado pelas batatas; molho de vinho em pote de 300 ml à parte para não amolecer a crosta. Etiqueta com data, validade e instrução: \"manter refrigerado, reaquecer coberto a 180 °C por 30 minutos\".",
   "venda": "Venda a peça inteira para ceias grandes e o \"pernil fatiado por quilo\" com molho para quem quer porções menores. Ofereça a versão com batatas como combo completo, com preço um pouco maior.",
   "imgPrompt": "Food photography of a whole roasted Brazilian pork leg with dark caramelized crust glistening with red wine sauce, surrounded by golden roasted potato wedges, bay leaves and rosemary in a rustic oval ceramic dish, a gravy boat of wine sauce beside it, three-quarter angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "bacalhau-a-gomes-de-sa",
@@ -3670,7 +3670,7 @@ window.RECEITAS = [
   "embalagem": "Travessa de alumínio retangular com tampa, com ovos e azeitonas por cima; mini garrafinha ou pote de 50 ml de azeite extra para regar na hora. Etiqueta com data, validade e instrução: \"manter refrigerado, reaquecer a 180 °C por 15 minutos\".",
   "venda": "Venda em travessa de 8 porções e em marmitas individuais para quem passa a ceia sozinho ou em casal. Por ser prato premium, destaque o tipo de bacalhau usado e cobre de acordo.",
   "imgPrompt": "Food photography of Portuguese bacalhau à Gomes de Sá in a rustic terracotta baking dish, flaky salt cod with sliced potatoes and soft golden onions glistening in olive oil, topped with boiled egg slices, black olives and fresh parsley, overhead angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "arroz-natalino",
@@ -3769,7 +3769,7 @@ window.RECEITAS = [
   "embalagem": "Marmitas de alumínio nº 9 com tampa (cerca de 4 porções cada), com castanhas inteiras por cima para enfeitar; etiqueta com data, validade e instrução: \"manter refrigerado, reaquecer coberto no forno ou micro-ondas com 2 colheres de água\".",
   "venda": "Venda por marmita de 4 porções ou por quilo. É ótimo produto de complemento: ofereça para toda cliente que encomendar carne, com preço especial no combo.",
   "imgPrompt": "Food photography of fluffy Brazilian Christmas rice with golden and dark raisins, toasted cashew nuts, shredded carrot and chopped parsley in a white porcelain serving bowl, a gold spoon resting on the side, scattered cashews and a small pine branch nearby, three-quarter angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "farofa-natalina",
@@ -3863,7 +3863,7 @@ window.RECEITAS = [
   "embalagem": "Potes plásticos de 500 ml com tampa ou sacos kraft com visor e fecho zip; etiqueta natalina com nome, data, validade e \"manter refrigerado\".",
   "venda": "Venda em potes de 250 g e 500 g, com preço por quilo. É um item de custo baixo e alta margem: ofereça como \"leve junto\" em toda encomenda de tender, chester, pernil ou lombo.",
   "imgPrompt": "Food photography of golden Brazilian Christmas farofa with crispy bacon bits, chopped dried apricots, prunes, raisins and walnuts in a rustic wooden bowl, a wooden spoon and loose dried fruits scattered on a linen cloth, close-up three-quarter angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "salpicao-de-frango",
@@ -3983,7 +3983,7 @@ window.RECEITAS = [
   "embalagem": "Travessa plástica retangular de 1,5 litro com tampa bem fechada, batata palha em saquinho transparente com fecho preso na tampa. Etiqueta com data, validade e \"manter refrigerado; consumir em até 2 horas fora da geladeira\". Oriente a entregar em bolsa térmica com gelo reutilizável.",
   "venda": "Venda em travessas de 6 porções e em potes individuais de 250 g. Por ser barato de produzir e muito pedido, é ótimo para combos de ceia junto com arroz e farofa.",
   "imgPrompt": "Food photography of creamy Brazilian chicken salpicão with shredded chicken, carrot, corn, peas, raisins and green apple cubes, generously topped with golden crispy shoestring potatoes, in a white rectangular porcelain dish with parsley garnish, three-quarter angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "maionese-de-batata-com-maca",
@@ -4078,7 +4078,7 @@ window.RECEITAS = [
   "embalagem": "Travessa plástica retangular de 1,5 litro com tampa bem vedada, decorada com rodelas de ovo e cheiro-verde por cima. Etiqueta com data, validade e \"manter refrigerado\". Entregue em bolsa térmica com gelo reutilizável.",
   "venda": "Venda em travessas de 5 porções e por quilo. Tem custo bem baixo, então pode ter preço acessível e ainda dar boa margem; ofereça como acompanhamento obrigatório no combo de carnes.",
   "imgPrompt": "Food photography of Brazilian potato mayonnaise salad with tender potato and carrot cubes, crisp green apple pieces, chopped egg and parsley in a creamy dressing, served in a glass bowl decorated with egg slices on top, linen napkin and small Christmas ornaments around, three-quarter angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "fricasse-de-frango",
@@ -4188,7 +4188,7 @@ window.RECEITAS = [
   "embalagem": "Travessa de alumínio retangular com tampa (vai direto ao forno), batata palha em saquinho separado. Etiqueta com data, validade e instrução: \"manter refrigerado, levar ao forno a 200 °C sem a tampa por 25 minutos\".",
   "venda": "Venda em travessas de 10 porções e marmitas individuais. É um prato de custo médio que agrada crianças e adultos; ofereça como alternativa mais barata às carnes assadas para famílias que querem economizar.",
   "imgPrompt": "Food photography of Brazilian chicken fricassê gratin with bubbling golden melted mozzarella and parmesan crust, creamy shredded chicken and corn visible at the edges, topped with crispy shoestring potatoes, in a white rectangular ceramic baking dish, a serving spoon lifting a creamy portion, three-quarter angle, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "coxinha-de-frango-com-catupiry",
@@ -4308,7 +4308,7 @@ window.RECEITAS = [
   "embalagem": "Caixa de papelão para salgados forrada com papel-manteiga, com divisória ou forminhas de papel; feche com adesivo natalino e informe na etiqueta a data de produção e se é frita ou congelada para fritar.",
   "venda": "Venda no cento e no meio cento para festas e confraternizações, com opção frita na hora da retirada ou congelada para a cliente fritar em casa (com instruções escritas). Monte combos de salgados mistos com risole e croquete.",
   "imgPrompt": "Food photography of golden crispy Brazilian coxinhas shaped like little drops, one cut open showing shredded chicken filling and creamy catupiry cheese, arranged on a white platter lined with parchment, small bowl of sauce, pine branches and gold baubles in the background, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "empadinha-de-frango",
@@ -4438,7 +4438,7 @@ window.RECEITAS = [
   "embalagem": "Empadinhas na própria forminha de alumínio ou desenformadas em forminhas de papel, dentro de caixa de papelão para salgados com papel-manteiga; adesivo natalino e etiqueta com data e instruções para aquecer (forno a 180 °C por 8 minutos).",
   "venda": "Venda no cento e no meio cento para ceias e confraternizações, e em caixinhas com 6 unidades para presente. Ofereça a versão de palmito como segundo sabor para aumentar o ticket.",
   "imgPrompt": "Food photography of Brazilian mini chicken empadinhas with golden crumbly shortcrust and glossy egg-washed tops, one broken open showing creamy chicken filling with corn and olives, arranged on a wooden board with linen napkin, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "mini-quiche-de-alho-poro",
@@ -4548,7 +4548,7 @@ window.RECEITAS = [
   "embalagem": "Caixa de papelão com berço ou bandeja de plástico com tampa alta, cada quiche em forminha de papel dourada; adesivo natalino e etiqueta com data e modo de aquecer.",
   "venda": "Venda no cento e no meio cento para ceias mais sofisticadas e eventos de empresa, e em caixas com 12 unidades. É um salgado assado de aparência premium, então dá para cobrar mais do que os fritos.",
   "imgPrompt": "Food photography of mini leek quiches with golden buttery crust and set creamy filling topped with browned parmesan, some on a slate board and some in gold paper cups, fresh leek slices around, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "enroladinho-de-salsicha",
@@ -4618,7 +4618,7 @@ window.RECEITAS = [
   "embalagem": "Caixa de papelão para salgados forrada com papel-manteiga, enroladinhos lado a lado em fileiras; adesivo natalino e etiqueta com data e modo de aquecer.",
   "venda": "Venda no cento e no meio cento para festas infantis, amigo secreto e confraternizações. Como o custo é baixo, é ótimo para compor o cento misto e equilibrar a margem com salgados mais caros.",
   "imgPrompt": "Food photography of golden flaky puff pastry sausage rolls sprinkled with sesame seeds, glossy egg-washed tops, stacked on a white serving plate with a small bowl of ketchup and mustard, red ribbon and pine branches around, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "bolinho-de-bacalhau",
@@ -4708,7 +4708,7 @@ window.RECEITAS = [
   "embalagem": "Fritos: caixa de papelão para salgados forrada com papel-manteiga e um saquinho com gomos de limão. Congelados: saco plástico grosso fechado, com etiqueta de data, validade e instruções de fritura.",
   "venda": "Venda no cento e no meio cento, frito ou congelado para fritar, principalmente para a ceia de Natal e Ano-Novo. É um salgado de maior valor: cobre mais que os salgados de massa e destaque que leva bacalhau de verdade.",
   "imgPrompt": "Food photography of Portuguese style codfish fritters, oval golden crispy bolinhos de bacalhau with visible shredded cod and parsley inside one broken open, piled in a ceramic bowl with lemon wedges, olive oil bottle and pine branches in the background, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "risole-de-presunto-e-queijo",
@@ -4808,7 +4808,7 @@ window.RECEITAS = [
   "embalagem": "Caixa de papelão para salgados forrada com papel-manteiga; adesivo natalino e etiqueta com data. Para congelados, saco plástico grosso com instruções de fritura.",
   "venda": "Venda no cento e no meio cento, frito ou congelado para fritar. Combina muito bem no cento misto com coxinha e croquete, que usam a mesma lógica de produção.",
   "imgPrompt": "Food photography of golden breaded half-moon Brazilian risoles, one cut open with melted stretchy mozzarella and diced ham, arranged on a white platter lined with parchment paper, small red and gold ornaments around, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "esfiha-aberta-de-carne",
@@ -4922,7 +4922,7 @@ window.RECEITAS = [
   "embalagem": "Caixa de papelão para salgados forrada com papel-manteiga, esfihas lado a lado sem empilhar; adesivo natalino, etiqueta com data e saquinho com gomos de limão.",
   "venda": "Venda no cento e no meio cento para festas e confraternizações de empresa, quentinha na retirada ou congelada para aquecer. É um salgado assado, ótimo para quem procura opção sem fritura.",
   "imgPrompt": "Food photography of Brazilian open-faced mini esfihas with soft golden dough edges and juicy seasoned ground beef topping with tomato and fresh parsley, arranged on a large wooden board with lemon wedges and mint leaves, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "pastel-de-forno-de-palmito",
@@ -5046,7 +5046,7 @@ window.RECEITAS = [
   "embalagem": "Caixa de papelão para salgados forrada com papel-manteiga, pastéis em fileiras; adesivo natalino e etiqueta com data e modo de aquecer (forno a 180 °C por 8 minutos).",
   "venda": "Venda no cento e no meio cento, assado ou congelado cru para assar em casa. Combina com a empadinha e a mini quiche num cento de assados para quem não quer fritura.",
   "imgPrompt": "Food photography of golden baked Brazilian half-moon pastries with fork-crimped edges and glossy egg wash, one broken open showing creamy hearts of palm filling with olives, arranged on a rustic wooden tray with a cream linen napkin, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "mini-pizza-de-calabresa",
@@ -5140,7 +5140,7 @@ window.RECEITAS = [
   "embalagem": "Caixa de papelão para salgados forrada com papel-manteiga, mini pizzas lado a lado sem empilhar; adesivo natalino e etiqueta com data e modo de aquecer.",
   "venda": "Venda no cento e no meio cento para festas infantis, confraternizações e amigo secreto. Também vende bem congelada em pacotes de 10 unidades para lanche das férias.",
   "imgPrompt": "Food photography of Brazilian mini pizzas with golden crust, bubbling melted mozzarella, thin slices of smoked calabresa sausage, onion rings and oregano, arranged on a round wooden board, small tomato sauce bowl and gold baubles around, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "croquete-de-carne",
@@ -5255,7 +5255,7 @@ window.RECEITAS = [
   "embalagem": "Caixa de papelão para salgados forrada com papel-manteiga e um potinho de mostarda; adesivo natalino e etiqueta com data. Congelados em saco plástico grosso com instruções de fritura.",
   "venda": "Venda no cento e no meio cento, frito ou congelado para fritar, e no cento misto com coxinha e risole. Muito pedido para confraternizações de fim de ano com cerveja e para festas de família.",
   "imgPrompt": "Food photography of golden breaded Brazilian beef croquettes, cylindrical with rounded ends, one cut in half showing juicy seasoned ground beef inside, piled on a white plate with a small bowl of yellow mustard, pine branches and wine-red ribbon in the background, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "panetone-salgado",
@@ -5371,7 +5371,7 @@ window.RECEITAS = [
   "embalagem": "Na própria forma de papel, dentro de saco plástico transparente fechado com fita de cetim vinho e etiqueta com sabor e validade. Para presente, caixa kraft com visor.",
   "venda": "Venda a unidade de 500 g para ceia e café da manhã de Natal, e mini panetones de 100 g em kits de 4 para presente. Ofereça também os sabores frango com catupiry e presunto e queijo para ampliar o cardápio.",
   "imgPrompt": "Food photography of a Brazilian savory panettone in a brown paper mold, golden crust topped with grated parmesan and a cross cut, one slice cut out showing soft crumb studded with pepperoni-style calabresa sausage cubes, melted mozzarella and green olives, on a wooden board with rosemary sprigs, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "guirlanda-de-pao-recheada",
@@ -5482,7 +5482,7 @@ window.RECEITAS = [
   "embalagem": "Bandeja redonda laminada dourada envolvida em saco celofane transparente, fechada com laço de fita de cetim vinho e etiqueta com sabor, validade e instrução para aquecer.",
   "venda": "Venda como peça central da ceia por encomenda, em tamanho grande (30 cm) e mini guirlanda de 15 cm para presente. Ofereça kits com a guirlanda e um pote de patê para acompanhar.",
   "imgPrompt": "Food photography of a golden braided bread wreath sprinkled with sesame seeds, layers of ham and melted cheese visible in the twists, decorated with cherry tomatoes, rosemary sprigs and a wine-red satin bow, on a round gold board, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "torta-de-frango",
@@ -5608,7 +5608,7 @@ window.RECEITAS = [
   "embalagem": "Forma de alumínio descartável com tampa, etiqueta com sabor, data de produção, validade e o aviso \"manter refrigerado\". Fatias em embalagem de isopor ou plástico com tampa e filme.",
   "venda": "Venda inteira (26 cm) para ceias e confraternizações, e meia torta para famílias pequenas. Fatias individuais saem muito para almoço e lanche. Ofereça também a versão palmito para clientes que não comem carne.",
   "imgPrompt": "Food photography of a golden shortcrust Brazilian chicken pie with crimped edges, one slice removed showing creamy shredded chicken filling with corn and parsley, on a rustic wooden table with a linen napkin, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "pao-de-queijo",
@@ -5693,7 +5693,7 @@ window.RECEITAS = [
   "embalagem": "Congelado: saco plástico transparente de 500 g ou 1 kg com fecho, etiqueta com modo de preparo, data e validade. Assado: caixa kraft com papel manteiga ou saquinho de papel com visor.",
   "venda": "Venda pacotes congelados de 500 g e 1 kg (o mais pedido para ter em casa nas festas) e o cento assado em tamanho coquetel para festas. Kit café da manhã de Natal com pão de queijo e geleia é ótimo presente.",
   "imgPrompt": "Food photography of a basket of golden Brazilian pão de queijo cheese breads, one broken open showing stretchy cheesy interior with steam, on a checked linen cloth beside a cup of coffee and pine branches, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "torta-fria-de-pao-de-forma",
@@ -5808,7 +5808,7 @@ window.RECEITAS = [
   "embalagem": "Travessa de alumínio com tampa, etiqueta com data, validade e aviso \"manter refrigerado\", batata palha em saquinho à parte. Entregue sempre em bolsa ou caixa térmica com gelo reutilizável.",
   "venda": "Venda por encomenda em travessa grande (15 porções) e média (8 porções) para ceias e amigo secreto. Potes individuais para almoço. Combine entrega no dia e horário da festa para não ficar fora da geladeira.",
   "imgPrompt": "Food photography of a Brazilian cold sandwich bread layer cake in a rectangular dish, one square slice cut showing layers of white bread, creamy chicken and tuna carrot fillings, topped with mayonnaise frosting and crispy shoestring potatoes, decorated with cherry tomato halves and black olives in a Christmas tree shape, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "arvore-de-natal-de-frios",
@@ -5913,7 +5913,7 @@ window.RECEITAS = [
   "embalagem": "Bandeja descartável rígida com tampa transparente alta ou tábua de MDF coberta com filme plástico, laço de fita vinho no topo e etiqueta com validade e aviso \"manter refrigerado\". Entregue em caixa térmica.",
   "venda": "Venda por encomenda em três tamanhos (pequena, média e grande) para ceias, amigo secreto e confraternizações. Ofereça como upgrade a tábua em MDF que a cliente pode ficar, e kits com patê e torradinhas.",
   "imgPrompt": "Food photography of a charcuterie board arranged in the shape of a Christmas tree, rows of folded salami, ham roses, mozzarella and cheese cubes, green olives, cherry tomatoes and grapes, rosemary sprigs as pine branches and a star fruit slice on top, on a large wooden board, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "pate-de-ricota-com-ervas",
@@ -6012,7 +6012,7 @@ window.RECEITAS = [
   "embalagem": "Pote plástico transparente de 150 g com tampa, etiqueta com sabor, ingredientes, data de produção, validade e o aviso \"manter refrigerado\". Para presente, coloque em pote de vidro com tampa e paninho xadrez.",
   "venda": "Venda o pote de 150 g avulso, kit com 3 sabores de patê e kit ceia com patê e torradinhas temperadas. É um ótimo produto de entrada: preço baixo e alta margem.",
   "imgPrompt": "Food photography of a creamy white ricotta herb dip in a small glass jar, speckled with chopped chives, parsley and basil, drizzled with olive oil and garnished with a basil leaf, surrounded by golden toasted bread slices, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "dadinho-de-tapioca",
@@ -6086,7 +6086,7 @@ window.RECEITAS = [
   "embalagem": "Congelado: saco plástico com fecho de 30 unidades, com etiqueta de modo de preparo e validade. Frito: embalagem de papelão com tampa e papel manteiga, com potinho de geleia de pimenta de 50 g ao lado.",
   "venda": "Venda pacotes congelados de 30 unidades com geleia de pimenta (o mais prático para a ceia) e o cento frito para festas e confraternizações. Combo petisco com dadinho e bolinha de queijo aumenta o pedido.",
   "imgPrompt": "Food photography of golden crispy Brazilian tapioca and coalho cheese cubes stacked on a slate board with a small bowl of red pepper jelly, some cubes broken showing soft chewy white interior, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "bolinha-de-queijo",
@@ -6190,7 +6190,7 @@ window.RECEITAS = [
   "embalagem": "Crua congelada: saco plástico com fecho de 25 ou 50 unidades, etiqueta com modo de fritar e validade. Frita: caixa de papelão com tampa forrada de papel manteiga, com selo natalino.",
   "venda": "Venda o cento (frito ou congelado) para festas, confraternizações e ceias, e pacotes de 25 unidades congeladas para família. Monte combos de salgados com coxinha, risole e dadinho de tapioca.",
   "imgPrompt": "Food photography of a pile of golden breaded Brazilian cheese balls on a white platter, one broken in half with stretchy melted mozzarella pulling out, small bowl of dipping sauce beside, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1122, "h": 1402}
  },
  {
   "id": "torradinhas-temperadas",
@@ -6270,7 +6270,7 @@ window.RECEITAS = [
   "embalagem": "Saco celofane ou plástico transparente com fecho zip de 100 g, fechado com fita vinho e etiqueta com sabor e validade. Para presente, pote de vidro ou lata decorada.",
   "venda": "Venda pacotes de 100 g avulsos e kit com 3 sabores. Combina muito com o patê de ricota e com a árvore de frios: ofereça o kit petisco de Natal (torradinhas + patê) como presente barato e caprichado.",
   "imgPrompt": "Food photography of thin golden garlic and herb toasts made from baguette, sprinkled with parmesan and oregano, spilling from a clear cellophane bag tied with a wine-red ribbon next to a small bowl of herb dip, on a wooden board, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "brigadeiro-de-panetone",
@@ -6356,7 +6356,7 @@ window.RECEITAS = [
   "embalagem": "Forminha nº 4 dourada ou vermelha em caixa com berço de 4, 9 ou 16 cavidades, tampa de acetato e fita de cetim vinho com etiqueta \"Sabor de Natal\".",
   "venda": "Divulgue como o sabor exclusivo da temporada: venda em caixinhas de 4 como lembrancinha e no cento para ceias e amigo secreto. Funciona muito bem em caixa mista com o brigadeiro tradicional.",
   "imgPrompt": "Food photography of Brazilian panettone-flavored white brigadeiros rolled in golden toasted panettone crumbs, with tiny bits of red and green candied fruit visible, in gold paper cups inside an open gift box, a slice of panettone and orange zest beside it, pine branches and fairy lights in the background, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "brigadeiro-de-churros",
@@ -6431,7 +6431,7 @@ window.RECEITAS = [
   "embalagem": "Forminha nº 4 kraft ou dourada, em caixa com berço de 4, 9 ou 16 cavidades, tampa de acetato, fita vinho e etiqueta natalina.",
   "venda": "Ótimo para caixa mista de Natal e para o cento em festas de fim de ano. Ofereça kit \"Natal Doce\" com brigadeiro tradicional, churros e beijinho para aumentar o ticket.",
   "imgPrompt": "Food photography of Brazilian churros brigadeiros coated in sparkling cinnamon sugar, each topped with a small swirl of glossy dulce de leche, in kraft paper cups on a wooden board, cinnamon sticks and star anise around, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "brigadeiro-de-cafe",
@@ -6516,7 +6516,7 @@ window.RECEITAS = [
   "embalagem": "Forminha nº 4 marrom ou dourada em caixa com berço de 4, 9 ou 16 cavidades, tampa de acetato e fita vinho; para brinde corporativo, inclua um sachê de café na caixa.",
   "venda": "Venda em caixas para presentear chefes, colegas e clientes, e como opção sofisticada na caixa mista. Kit \"brigadeiro + sachê de café\" vende bem como lembrancinha de empresa.",
   "imgPrompt": "Food photography of Brazilian coffee brigadeiros covered in dark chocolate sprinkles dusted with fine ground coffee, each topped with a chocolate coffee bean, in gold paper cups next to a small espresso cup and scattered roasted coffee beans, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "bombom-de-cereja",
@@ -6591,7 +6591,7 @@ window.RECEITAS = [
   "embalagem": "Forminha nº 5 dourada ou vermelha em caixa com berço de 4, 6 ou 12 cavidades, tampa de acetato e fita de cetim vinho; para presente, use caixa rígida com laço.",
   "venda": "Posicione como bombom premium de presente: caixa de 6 para amigo secreto e de 12 para presentear a família. Cobre mais que o brigadeiro, porque leva fruta inteira e cobertura de chocolate.",
   "imgPrompt": "Food photography of glossy dark chocolate covered cherry bonbons with the cherry stems sticking out the top and thin white chocolate drizzle, one cut in half showing the whole red cherry inside creamy white filling, in gold paper cups inside an elegant gift box, fresh cherries and pine branches around, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "panetone-de-doce-de-leite",
@@ -6692,7 +6692,7 @@ window.RECEITAS = [
   "embalagem": "Saco de celofane ou saco próprio para panetone bem fechado, com laço de fita vinho e tag com o sabor e a validade; para presente, caixa de papelão sextavada ou lata natalina.",
   "venda": "Abra pré-venda com data de entrega e encomenda antecipada. Venda unidade para presente e kits para empresas; destaque o recheio generoso com foto do panetone cortado.",
   "imgPrompt": "Food photography of a homemade Brazilian chocolate chip panettone with glossy milk chocolate topping dripping down the sides, one slice cut out showing a fluffy golden crumb with a creamy dulce de leche center oozing out, in a brown paper mold on a wooden board, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "mini-chocotone-de-ninho",
@@ -6807,7 +6807,7 @@ window.RECEITAS = [
   "embalagem": "Saquinho de celofane individual fechado com fita vinho e tag \"Feliz Natal\"; para kits, caixa kraft com 2 ou 4 unidades e visor.",
   "venda": "Perfeito como lembrancinha: venda por unidade, em kits de 4 e em lotes para empresas, escolas e catequese. Ofereça personalização da tag com o nome de quem presenteia.",
   "imgPrompt": "Food photography of mini Brazilian chocolate panettones with white chocolate topping dusted with powdered milk, one cut open showing dark chocolate crumb with chocolate chips and a creamy white milk brigadeiro filling, in small brown paper molds, wrapped ones with wine-red ribbons behind, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "bolo-de-pote-de-churros",
@@ -6922,7 +6922,7 @@ window.RECEITAS = [
   "embalagem": "Pote redondo de 250 ml com tampa, colherzinha descartável presa com fita vinho na tampa e adesivo natalino com sabor e validade.",
   "venda": "Venda por unidade, em combos de 3 sabores e em lote para empresas e confraternizações. Ótimo para quem vende na rua, na escola ou no trabalho em caixa térmica.",
   "imgPrompt": "Food photography of Brazilian churros cake in a clear jar with visible layers of cinnamon sponge cake, glossy dulce de leche and white cream, topped with cinnamon sugar and a drizzle of dulce de leche, a cinnamon stick on top, wooden spoon and other jars behind, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "pave-de-pessego-no-pote",
@@ -7022,7 +7022,7 @@ window.RECEITAS = [
   "embalagem": "Pote de 200 ml transparente com tampa alta (para não amassar o chantili), colherzinha presa com fita vinho e adesivo natalino com sabor e validade.",
   "venda": "Venda por unidade e em kits para a ceia da família (6 ou 12 potes). Sobremesa clássica do Natal brasileiro, agrada principalmente o público mais velho e quem não quer montar travessa.",
   "imgPrompt": "Food photography of Brazilian peach pave in clear individual jars with visible layers of ladyfinger biscuits, pale yellow vanilla custard and diced peaches, topped with a whipped cream rosette, a glossy peach slice and a red cherry, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "pudim-de-pote",
@@ -7092,7 +7092,7 @@ window.RECEITAS = [
   "embalagem": "Pote de vidro com tampa ou potinho de alumínio com tampa, adesivo natalino com sabor e validade e colherzinha presa com fita vinho; caixa kraft com divisórias para kits de 4.",
   "venda": "Venda por unidade, em kits de 4 e 10 para a ceia e em lotes para empresas. Pote de vidro pode ser vendido como \"pudim presente\" com preço maior; ofereça desconto na devolução do vidro.",
   "imgPrompt": "Food photography of individual Brazilian condensed milk flans in small glass jars, smooth creamy yellow custard with no holes topped with a glossy amber caramel layer, one jar with a spoonful taken out, gold spoons and a linen napkin beside, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "biscoito-de-nata",
@@ -7182,7 +7182,7 @@ window.RECEITAS = [
   "embalagem": "Pote de acrílico de 300 g ou lata natalina com tampa, laço de fita vinho e etiqueta; para lembrancinha, saquinho de celofane com 100 g fechado com fita e tag.",
   "venda": "Venda em potes para presente, saquinhos de 100 g como lembrancinha e em quilo para cafés da tarde de família. Excelente margem de lucro: ingredientes simples e longa validade permitem produzir com antecedência.",
   "imgPrompt": "Food photography of Brazilian homemade cream cookies, pale golden round biscuits with fork marks and star-shaped ones sprinkled with sparkling crystal sugar, spilling from a glass jar tied with a wine-red ribbon, a small jug of cream and pine branches around, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "tronco-de-natal",
@@ -7288,7 +7288,7 @@ window.RECEITAS = [
   "embalagem": "Bandeja retangular de papelão laminado dourado com tampa alta de acetato ou caixa de papelão branca com visor, fita de cetim vinho e etiqueta com validade e 'manter refrigerado'.",
   "venda": "Venda inteiro por encomenda para a ceia, com prazo de pedido até dia 20 de dezembro. Ofereça também a versão mini (15 cm) para presentes e kits de amigo secreto.",
   "imgPrompt": "Food photography of a Christmas chocolate yule log roll cake covered in glossy chocolate ganache with bark-like fork texture, dusted with powdered sugar snow, meringue mushrooms and rosemary sprigs, one slice cut showing the chocolate spiral filling, on a gold board, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "torta-holandesa",
@@ -7389,7 +7389,7 @@ window.RECEITAS = [
   "embalagem": "Disco de papelão dourado dentro de caixa alta para torta com visor de acetato, fita de cetim vinho em volta e etiqueta com validade e 'manter refrigerado'. Transporte sempre em bolsa térmica.",
   "venda": "Venda inteira por encomenda para a ceia e almoço de Natal, e em fatias embaladas individualmente em caixinhas com visor. Combina muito com pedidos de empresas para confraternização.",
   "imgPrompt": "Food photography of a Dutch-style Brazilian torta holandesa with a ring of chocolate-covered round biscuits standing around the sides, smooth white vanilla cream filling, glossy dark chocolate ganache top, one slice removed showing biscuit crumb base and creamy layers, on a gold cake board, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "bolo-de-especiarias",
@@ -7514,7 +7514,7 @@ window.RECEITAS = [
   "embalagem": "Base de papelão dourada dentro de saco de celofane transparente fechado com fita de cetim vinho e raminho de canela, ou caixa de bolo com visor e etiqueta natalina com validade.",
   "venda": "Venda inteiro por encomenda e em mini bolos como presente. É um bolo que dura mais fora da geladeira, então é ótimo para entregar com antecedência e para vender em feirinhas de Natal.",
   "imgPrompt": "Food photography of a Brazilian Christmas spice bundt cake with dark golden crumb, thick white lemon glaze dripping down the sides, cinnamon sticks, star anise and cloves scattered around, one slice cut showing moist spiced interior, on a gold cake board, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "torta-de-nozes",
@@ -7624,7 +7624,7 @@ window.RECEITAS = [
   "embalagem": "Disco de papelão dourado dentro de caixa para torta com visor de acetato, fita de cetim vinho e etiqueta com validade e 'manter refrigerado'. Mini tortinhas em caixinha individual com berço.",
   "venda": "Venda inteira por encomenda para a ceia, com preço de produto premium por causa das nozes. As mini tortinhas são ótimas para kits de presente e cestas de Natal de empresas.",
   "imgPrompt": "Food photography of a golden walnut pie with buttery fluted crust, glossy dark caramel filling and walnut halves arranged in concentric circles on top, one slice cut showing gooey nutty filling, on a gold board with scattered walnuts, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "sequilhos",
@@ -7699,7 +7699,7 @@ window.RECEITAS = [
   "embalagem": "Potes de vidro ou acrílico de 300 ml com tampa, fita de cetim vinho e tag natalina, ou saquinhos de celofane com fecho e etiqueta com validade.",
   "venda": "Venda em potes como presente de Natal para professoras, vizinhas e funcionários, e em kits com outros biscoitos. Ótimo para quem está começando, porque o custo por pote é baixo e o lucro é alto.",
   "imgPrompt": "Food photography of small round Brazilian sequilhos butter cookies with fork-pressed stripes, pale cream color, piled inside a glass jar tied with a wine-red satin ribbon and gold tag, some cookies scattered on a linen cloth with pine branches, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "biscoito-de-canela",
@@ -7794,7 +7794,7 @@ window.RECEITAS = [
   "embalagem": "Saquinhos de celofane com 6 biscoitos fechados com fita de cetim vinho e tag natalina, ou latas e potes com 12 unidades separadas por papel-manteiga.",
   "venda": "Venda em saquinhos como lembrancinha e em latas como presente. Ofereça para pedidos em quantidade (a partir de 20 saquinhos) para escolas, igrejas e empresas, com desconto progressivo.",
   "imgPrompt": "Food photography of thick round cinnamon sugar cookies with crackled sparkling tops, stacked on a rustic plate with cinnamon sticks and star anise, a cellophane bag of cookies tied with wine-red ribbon and gold tag beside, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "pudim-de-leite",
@@ -7864,7 +7864,7 @@ window.RECEITAS = [
   "embalagem": "Embalagem própria para pudim com base dourada e tampa alta de plástico, fita de cetim vinho e etiqueta com validade e 'manter refrigerado'. Mini pudins em potinhos com tampa. Transporte em bolsa térmica.",
   "venda": "Venda inteiro por encomenda para a ceia e o almoço de Natal e em mini pudins individuais. É um campeão de vendas porque agrada todas as idades e tem custo baixo.",
   "imgPrompt": "Food photography of a smooth Brazilian condensed milk flan pudding with a center hole, glossy amber caramel sauce dripping down the sides and pooling on a gold plate, one slice removed showing silky texture without bubbles, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "manjar-de-coco",
@@ -7964,7 +7964,7 @@ window.RECEITAS = [
   "embalagem": "Embalagem para pudim com base dourada e tampa alta de plástico, com pote de 250 ml com tampa para a calda ao lado, fita de cetim vinho e etiqueta com validade e 'manter refrigerado'. Transporte em bolsa térmica.",
   "venda": "Venda por encomenda para a ceia e o almoço de Natal, sozinho ou em combo com pudim. Os potinhos individuais funcionam muito bem para vender pronta-entrega na semana do Natal.",
   "imgPrompt": "Food photography of a snow-white Brazilian coconut manjar pudding ring unmolded on a gold plate, covered with glossy dark wine-colored prune syrup and whole plums cascading down the sides, grated coconut sprinkled around, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "pave-de-abacaxi",
@@ -8068,7 +8068,7 @@ window.RECEITAS = [
   "embalagem": "Travessa de alumínio com tampa ou travessa descartável de plástico transparente, fita de cetim vinho e etiqueta com validade e 'manter refrigerado'. Potes individuais de 250 ml com tampa. Transporte em bolsa térmica.",
   "venda": "Venda em travessas por encomenda para a ceia e o almoço do dia 25 e em potes individuais. É uma opção refrescante e mais barata que pavês de chocolate, ótima para atrair clientes que querem economizar.",
   "imgPrompt": "Food photography of a Brazilian pineapple pavê trifle in a rectangular glass dish, visible layers of vanilla custard, soaked biscuits and golden caramelized pineapple, topped with whipped cream, shredded coconut and glossy pineapple cubes, one portion scooped out, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  },
  {
   "id": "delicia-de-uva",
@@ -8153,6 +8153,6 @@ window.RECEITAS = [
   "embalagem": "Travessa de alumínio com tampa ou travessa descartável de plástico transparente, fita de cetim vinho e etiqueta com validade e 'manter refrigerado'. Potes individuais de 250 ml com tampa. Transporte em bolsa térmica.",
   "venda": "Venda em travessas por encomenda para a ceia e confraternizações e em potes individuais. Ofereça junto com o pavê de abacaxi como combo de sobremesas frescas de verão.",
   "imgPrompt": "Food photography of a Brazilian delícia de uva dessert in a rectangular glass dish, smooth white condensed milk custard layer studded with halved green grapes and topped with glossy dark chocolate ganache, one square portion cut out showing the layers, fresh green grapes beside, Christmas styling, warm natural light, cream and wine-red palette with gold accents, 4:3, photorealistic, no text, no logos, no hands",
-  "foto": false
+  "foto": {"w": 1448, "h": 1086}
  }
 ];

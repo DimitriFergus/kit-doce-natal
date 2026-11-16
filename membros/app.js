@@ -252,9 +252,20 @@
   function capaReceita(r, grande) {
     return '<div class="rcapa' + (grande ? " rcapa--g" : "") + (ehSalgado(r) ? " rcapa--sal" : "") + '" role="img" aria-label="' + esc(r.nome) + '"><div class="rcapa-in"><span class="rcapa-ic" aria-hidden="true">' + (ICONE_CAT[r.categoria] || "🎄") + '</span><small>' + esc(r.categoria) + "</small><strong>" + esc(r.nome) + '</strong><i aria-hidden="true">✦ ❄ ✦</i></div></div>';
   }
+  /* tamanho real da foto ("foto": {"w","h"} na receita; as antigas são 1200x900) */
+  function dimFoto(r) { return r.foto && r.foto.w ? r.foto : { w: 1200, h: 900 }; }
   function fotoCard(r) {
     if (r.foto === false) return capaReceita(r);
-    return '<img src="' + IMG + "receitas/mini/" + r.id + '.webp" alt="' + esc(r.nome) + '" width="720" height="540" loading="lazy" decoding="async">';
+    var d = dimFoto(r), mini = IMG + "receitas/mini/" + r.id + ".webp", hMini = Math.round(720 * d.h / d.w);
+    /* foto em pé (4:5) aparece inteira no cartão 4:3, com a própria foto desfocada preenchendo as laterais */
+    if (d.h > d.w * 0.76) return '<span class="foto-fundo" style="background-image:url(\'' + mini + '\')" aria-hidden="true"></span><img class="foto-inteira" src="' + mini + '" alt="' + esc(r.nome) + '" width="720" height="' + hMini + '" loading="lazy" decoding="async">';
+    return '<img src="' + mini + '" alt="' + esc(r.nome) + '" width="720" height="' + hMini + '" loading="lazy" decoding="async">';
+  }
+  /* foto grande da receita: inteira, na proporção original, sem cortar nada */
+  function fotoHero(r) {
+    var d = dimFoto(r), mini = IMG + "receitas/mini/" + r.id + ".webp", full = IMG + "receitas/" + r.id + ".webp";
+    return '<div class="recipe-hero recipe-hero--foto' + (d.h > d.w ? " recipe-hero--alta" : "") + '" style="--ar:' + d.w + "/" + d.h + '"><span class="foto-fundo" style="background-image:url(\'' + mini + '\')" aria-hidden="true"></span>' +
+      '<img src="' + full + '" srcset="' + mini + " 720w, " + full + " " + d.w + 'w" sizes="(max-width:860px) 100vw, 900px" alt="' + esc(r.nome) + '" width="' + d.w + '" height="' + d.h + '" decoding="async" fetchpriority="high"></div>';
   }
   var filtroRec = { q: "", cat: "Todas", fav: false, tipo: "todos" };
   VIEWS.receitas = function (v) {
@@ -308,7 +319,7 @@
     if (!rec) { v.innerHTML = head("RECEITAS", "Receita não encontrada", "", "#/receitas"); return; }
     var mult = 1;
     v.innerHTML = '<a class="back" href="#/receitas">← Todas as receitas</a>' +
-      '<article class="recipe"><div class="recipe-hero">' + (rec.foto === false ? capaReceita(rec, true) : '<img src="' + IMG + "receitas/" + rec.id + '.webp" srcset="' + IMG + "receitas/mini/" + rec.id + '.webp 720w, ' + IMG + "receitas/" + rec.id + '.webp 1200w" sizes="(max-width:860px) 100vw, 900px" alt="' + esc(rec.nome) + '" width="1200" height="900" decoding="async">') + "</div>" +
+      '<article class="recipe">' + (rec.foto === false ? '<div class="recipe-hero">' + capaReceita(rec, true) + "</div>" : fotoHero(rec)) +
       '<div class="recipe-head"><span class="eyebrow">' + esc(rec.categoria.toUpperCase()) + "</span><h1>" + esc(rec.nome) + "</h1><p>" + esc(rec.resumo) + "</p>" +
       '<div class="rmeta big"><span>⏱ ' + esc(rec.tempo) + "</span><span>📊 " + esc(rec.dificuldade) + "</span><span>🗓 " + esc(rec.validade) + "</span></div>" +
       '<div class="recipe-actions"><button type="button" class="btn btn-sm" id="r-calc">🧮 Calcular o preço</button><button type="button" class="btn btn-sm btn-ghost" id="r-fav"></button><button type="button" class="btn btn-sm btn-ghost" id="r-done"></button><button type="button" class="btn btn-sm btn-ghost" id="r-print">🖨 Imprimir</button></div></div>' +
@@ -887,7 +898,7 @@
   }
   /* depois que a pessoa entra, guarda o resto das imagens para usar offline — só no Wi-Fi/4G e sem "economia de dados" */
   function aquecerCache() {
-    if (!sw || store.get("aquecido", "") === "v4") return;
+    if (!sw || store.get("aquecido", "") === "v5") return;
     var con = navigator.connection || {};
     if (con.saveData || /2g/.test(con.effectiveType || "")) return;
     setTimeout(function () {
@@ -900,7 +911,7 @@
         (C.cardapios || []).forEach(function (t) { urls.push(IMG + "fundo-cardapio-" + t.id + ".webp"); });
         (C.artes || []).forEach(function (a) { urls.push(IMG + "artes-mini/" + a.id + ".webp"); });
         reg.active.postMessage({ tipo: "aquecer", urls: urls });
-        store.set("aquecido", "v4");
+        store.set("aquecido", "v5");
       });
     }, 6000);
   }

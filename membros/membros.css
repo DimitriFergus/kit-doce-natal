@@ -193,6 +193,13 @@ body{background:var(--cream-100)}
 .tip ul{padding-left:18px;margin:0}
 .tip li,.tip p{font-size:14.5px;color:var(--ink-soft);margin:0 0 6px}
 @media (max-width:860px){.recipe-grid,.recipe-grid.three{grid-template-columns:1fr}.recipe-hero{aspect-ratio:4/3}}
+/* fotos sempre inteiras: o quadro tem a proporção da própria foto; se a foto em pé ficar alta demais, as laterais recebem a mesma foto desfocada */
+.recipe-hero--foto,.recipe-hero.recipe-hero--foto{position:relative;width:100%;aspect-ratio:var(--ar);max-height:none;background:var(--wine-900)}
+/* foto em pé no computador: altura limitada e a foto centralizada, com o fundo desfocado nas laterais */
+@media (min-width:861px){.recipe-hero.recipe-hero--alta{aspect-ratio:auto;height:min(80vh,720px)}}
+.recipe-hero--foto img{position:relative;z-index:1;object-fit:contain}
+.foto-fundo{position:absolute;inset:-30px;background-size:cover;background-position:center;filter:blur(26px) saturate(1.15) brightness(.82);transform:translateZ(0)}
+.rcard-img .foto-inteira{position:relative;z-index:1;object-fit:contain}
 
 /* ============ CALCULADORA ============ */
 .calc{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
@@ -493,6 +500,7 @@ body{overflow-x:clip}
   .sheet{box-shadow:none;max-height:none;overflow:visible;padding:0;justify-content:flex-start}
   .lbl{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .recipe-hero{aspect-ratio:auto;max-height:8cm;box-shadow:none}
+  .foto-fundo{display:none}
 }
 
 @media (max-width:400px){.seg button small{display:none}}
