@@ -4,3 +4,13 @@ assets/img/IMAGENS/
 
 # roteiros de anúncio (privados, não vão para o GitHub público)
 marketing/
+
+# segredos e arquivos locais do Supabase (NUNCA vão para o GitHub)
+.env
+.env.*
+*.env
+supabase/.temp/
+supabase/.branches/
+supabase/functions/.env
+supabase/.env
+segredos*.txt

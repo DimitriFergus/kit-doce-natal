@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://*.supabase.co wss://*.supabase.co; manifest-src 'self'; worker-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#2a0908">
   <meta name="color-scheme" content="light">
@@ -23,6 +23,8 @@
   <script src="../assets/js/kit.js"></script>
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="membros.css">
+  <script defer src="vendor/supabase.js"></script>
+  <script defer src="conta.js"></script>
   <script defer src="data/receitas.js"></script>
   <script defer src="data/conteudo.js"></script>
   <script defer src="app.js"></script>
@@ -35,12 +37,30 @@
     <div class="login-card">
       <a class="logo logo--login" href="../"><img class="logo-ic" src="../assets/img/icone-natale.webp" alt="Natalê" width="256" height="256"></a>
       <h1>Área de <em>Membros</em></h1>
-      <p>Entre com o e-mail da compra e o código de acesso que você recebeu.</p>
+      <p id="lg-intro">Entre com o e-mail da compra e o código de acesso que você recebeu.</p>
       <form id="login-form" novalidate>
         <label class="field">E-mail da compra<input id="lg-email" type="email" autocomplete="email" required placeholder="voce@email.com"></label>
         <label class="field" id="lg-codigo-wrap">Código de acesso<input id="lg-codigo" autocomplete="one-time-code" placeholder="Está no e-mail de boas-vindas"></label>
+        <label class="field" id="lg-senha-wrap" hidden>Senha<input id="lg-senha" type="password" autocomplete="current-password" maxlength="72" placeholder="Sua senha"></label>
         <p class="lg-erro" id="lg-erro" role="alert"></p>
         <button class="btn btn-block btn-lg" type="submit">ENTRAR NO KIT →</button>
+      </form>
+      <p class="lg-links" id="lg-links" hidden><button type="button" class="lg-link" id="lg-primeiro">Primeiro acesso ou esqueceu a senha?</button></p>
+      <!-- primeiro acesso / esqueci a senha -->
+      <form id="link-form" class="lg-painel" hidden novalidate>
+        <p class="lg-txt">Digite o e-mail da compra. Vamos mandar um link para você criar a sua senha.</p>
+        <label class="field">E-mail da compra<input id="lk-email" type="email" autocomplete="email" required placeholder="voce@email.com"></label>
+        <p class="lg-erro" id="lk-erro" role="alert"></p>
+        <button class="btn btn-block btn-lg" type="submit">ENVIAR LINK →</button>
+        <button type="button" class="lg-link" data-voltar>← Voltar para o login</button>
+      </form>
+      <!-- criar senha (chegou pelo link do e-mail) -->
+      <form id="senha-form" class="lg-painel" hidden novalidate>
+        <p class="lg-txt">Crie a sua senha para entrar na área de membros.</p>
+        <label class="field">Nova senha<input id="nv-senha" type="password" autocomplete="new-password" minlength="8" maxlength="72" required placeholder="Pelo menos 8 caracteres"></label>
+        <label class="field">Repita a senha<input id="nv-senha2" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label>
+        <p class="lg-erro" id="nv-erro" role="alert"></p>
+        <button class="btn btn-block btn-lg" type="submit">CRIAR SENHA E ENTRAR →</button>
       </form>
       <p class="hint">Não encontrou o e-mail? Olhe na caixa de spam ou promoções.</p>
     </div>

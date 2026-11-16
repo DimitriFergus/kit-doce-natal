@@ -504,3 +504,10 @@ body{overflow-x:clip}
 }
 
 @media (max-width:400px){.seg button small{display:none}}
+/* ============ LOGIN COM CONTA ============ */
+.lg-links{margin:12px 0 0;text-align:center}
+.lg-link{background:none;border:0;padding:6px;color:var(--wine-600);font:inherit;font-size:14px;font-weight:600;text-decoration:underline;cursor:pointer}
+.lg-painel{margin-top:6px;text-align:left}
+.lg-painel .lg-link{display:block;margin:10px auto 0}
+.lg-txt{font-size:14.5px;color:var(--ink-soft);text-align:center;margin:4px 0 14px}
+.lg-ok{color:var(--green);font-size:14px;font-weight:600;margin:0 0 10px}

@@ -10,12 +10,14 @@
   var RECEITAS = window.RECEITAS || [];
   var C = window.CONTEUDO || {};
   var IMG = "../assets/img/membros/";
+  /* conta na nuvem (membros/conta.js). Sem Supabase configurado, CONTA.ativo = false e vale o login por código. */
+  var CONTA = window.CONTA || { ativo: false };
 
   /* ---------------- utilidades ---------------- */
   var store = {
     get: function (k, d) { try { var v = localStorage.getItem("kdn:" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-    set: function (k, v) { try { localStorage.setItem("kdn:" + k, JSON.stringify(v)); } catch (e) {} },
-    del: function (k) { try { localStorage.removeItem("kdn:" + k); } catch (e) {} }
+    set: function (k, v) { try { localStorage.setItem("kdn:" + k, JSON.stringify(v)); } catch (e) {} if (CONTA.ativo) CONTA.agendar(k, v); },
+    del: function (k) { try { localStorage.removeItem("kdn:" + k); } catch (e) {} if (CONTA.ativo) CONTA.agendar(k, null); }
   };
   function $(s, el) { return (el || document).querySelector(s); }
   function $$(s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); }
@@ -116,6 +118,8 @@
   function logado() {
     var u = store.get("usuario", null);
     if (!u || !u.email) return false;
+    if (CONTA.ativo) return u.modo === "conta";
+    if (u.modo === "conta") { store.del("usuario"); return false; }
     if (HASH && u.k !== HASH.slice(0, 16)) { store.del("usuario"); return false; }
     return true;
   }
@@ -133,6 +137,53 @@
     if (q.get("codigo")) $("#lg-codigo").value = q.get("codigo");
     if (q.has("codigo") || q.has("email")) history.replaceState(null, "", location.pathname + location.hash); // tira o código da barra de endereço e do histórico
     if (!HASH) $("#lg-codigo-wrap").hidden = true;
+    if (CONTA.ativo) {
+      $("#lg-codigo-wrap").hidden = true; $("#lg-senha-wrap").hidden = false; $("#lg-links").hidden = false; $("#lg-intro").textContent = "Entre com o e-mail da compra e a sua senha.";
+      if (CONTA.link.pedeSenha && !senhaDefinida) painel("senha");
+      else if (CONTA.link.erro) { painel("link"); $("#lk-erro").textContent = "O link do e-mail venceu ou já foi usado. Peça um novo abaixo."; }
+    }
+  }
+  /* troca entre: login, "primeiro acesso / esqueci a senha" e "criar senha" */
+  var senhaDefinida = false;
+  function painel(qual) {
+    $("#login-form").hidden = qual !== "login"; $("#lg-links").hidden = qual !== "login" || !CONTA.ativo;
+    $("#link-form").hidden = qual !== "link"; $("#senha-form").hidden = qual !== "senha";
+    if (qual === "link" && $("#lg-email").value) $("#lk-email").value = $("#lg-email").value;
+  }
+  function entrouNaConta(email) {
+    store.del("tentativas");
+    store.set("usuario", { email: email, desde: hoje(), modo: "conta" });
+    return CONTA.puxar().then(function () {
+      history.replaceState(null, "", location.pathname + "#/inicio");
+      painel("login"); iniciar();
+    });
+  }
+  function mensagemConta(e) {
+    if (e && e.message === "SEM_COMPRA") return "Não encontramos uma compra aprovada para este e-mail. Use o e-mail da compra ou fale com o suporte.";
+    return CONTA.erro(e);
+  }
+  if (CONTA.ativo) {
+    $("#lg-primeiro").addEventListener("click", function () { painel("link"); $("#lk-email").focus(); });
+    $$("[data-voltar]").forEach(function (b) { b.addEventListener("click", function () { painel("login"); }); });
+    $("#link-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = $("#lk-email").value.trim().toLowerCase(), err = $("#lk-erro"), btn = e.target.querySelector("button[type=submit]");
+      if (email.length > 120 || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = "Digite um e-mail válido."; return; }
+      btn.disabled = true; err.textContent = "";
+      CONTA.enviarLink(email).then(function () {
+        btn.disabled = false;
+        err.className = "lg-ok"; err.textContent = "Pronto! Se este e-mail tiver uma compra, o link chega em alguns minutos. Olhe também no spam.";
+      }, function (er) { btn.disabled = false; err.className = "lg-erro"; err.textContent = CONTA.erro(er); });
+    });
+    $("#senha-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var a = $("#nv-senha").value, b = $("#nv-senha2").value, err = $("#nv-erro"), btn = e.target.querySelector("button[type=submit]");
+      if (a.length < 8 || !/[a-zA-Z]/.test(a) || !/[0-9]/.test(a)) { err.textContent = "Use pelo menos 8 caracteres, com letras e números."; return; }
+      if (a !== b) { err.textContent = "As duas senhas não são iguais."; return; }
+      btn.disabled = true; err.textContent = "";
+      CONTA.definirSenha(a).then(function (r) { senhaDefinida = true; return entrouNaConta(r.email); })
+        .then(function () { btn.disabled = false; toast("Senha criada ✓"); }, function (er) { btn.disabled = false; err.textContent = mensagemConta(er); });
+    });
   }
   $("#login-form").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -141,6 +192,14 @@
     var t = bloqueio();
     if (t.ate > Date.now()) { err.textContent = "Muitas tentativas. Aguarde " + Math.ceil((t.ate - Date.now()) / 60000) + " min e tente de novo."; return; }
     if (email.length > 120 || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = "Digite um e-mail válido."; return; }
+    if (CONTA.ativo) {
+      var senha = $("#lg-senha").value;
+      if (!senha || senha.length > 72) { err.textContent = "Digite a sua senha."; return; }
+      btn.disabled = true; err.textContent = "";
+      CONTA.entrar(email, senha).then(function (r) { return entrouNaConta(r.email); })
+        .then(function () { btn.disabled = false; $("#lg-senha").value = ""; }, function (er) { btn.disabled = false; err.textContent = mensagemConta(er); });
+      return;
+    }
     if (HASH && (!cod || cod.length > 40)) { err.textContent = "Digite o código de acesso."; return; }
     btn.disabled = true;
     (HASH ? sha256("kdn:" + cod) : Promise.resolve("")).then(function (h) {
@@ -852,7 +911,7 @@
       (store.get("foto", "") ? '<button type="button" class="btn btn-sm btn-ghost" id="p-tirar">Remover</button>' : "") + "</div></div></div>" +
       '<form id="p-form">' + campos.map(function (c) { return '<label class="field">' + c[1] + '<input name="' + c[0] + '" value="' + esc(p[c[0]]) + '" placeholder="' + c[2] + '"></label>'; }).join("") +
       '<button class="btn btn-block" type="submit">Salvar perfil</button></form></section>' +
-      '<section class="card narrow"><h2>Conta</h2><p>Acesso liberado para <strong>' + esc(u.email) + "</strong>.</p><p class=\"hint\">Seus dados (encomendas, preços, progresso) ficam salvos neste navegador. Para usar em outro aparelho, exporte as encomendas em CSV.</p>" +
+      '<section class="card narrow"><h2>Conta</h2><p>Acesso liberado para <strong>' + esc(u.email) + "</strong>.</p><p class=\"hint\">" + (CONTA.ativo ? "Seus dados (perfil, encomendas, preços e progresso) ficam salvos na sua conta: entre com o mesmo e-mail e senha em qualquer aparelho." : "Seus dados (encomendas, preços, progresso) ficam salvos neste navegador. Para usar em outro aparelho, exporte as encomendas em CSV.") + "</p>" +
       '<div class="row-btns"><button type="button" class="btn btn-sm btn-ghost" id="p-sair">Sair</button><button type="button" class="btn btn-sm btn-ghost" id="p-apagar">Apagar todos os meus dados</button></div></section>';
     $("#p-form").addEventListener("submit", function (e) {
       e.preventDefault(); var fd = new FormData(e.target), n = {};
@@ -863,11 +922,15 @@
       lerFoto(e.target.files[0], function (d) { store.set("foto", d); toast("Foto salva ✓"); atualizaTopo(); VIEWS.perfil(v); });
     });
     if ($("#p-tirar")) $("#p-tirar").addEventListener("click", function () { store.del("foto"); atualizaTopo(); VIEWS.perfil(v); });
-    $("#p-sair").addEventListener("click", function () { store.del("usuario"); location.hash = ""; render(); });
+    $("#p-sair").addEventListener("click", function () {
+      (CONTA.ativo ? CONTA.sair() : Promise.resolve()).then(function () { store.del("usuario"); location.hash = ""; iniciar(); }, function () { store.del("usuario"); location.hash = ""; iniciar(); });
+    });
     $("#p-apagar").addEventListener("click", function (e) {
       confirma(e.currentTarget, function () {
-        try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf("kdn:") === 0) localStorage.removeItem(k); }); } catch (err) {}
-        location.hash = ""; render();
+        (CONTA.ativo ? CONTA.apagarTudo() : Promise.resolve()).then(null, function () {}).then(function () {
+          try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf("kdn:") === 0) localStorage.removeItem(k); }); } catch (err) {}
+          location.hash = ""; iniciar();
+        });
       });
     });
   };
@@ -880,9 +943,18 @@
     el.setAttribute("aria-label", "Meu perfil" + (nome ? ": " + nome : "") + (loja ? ", " + loja : ""));
   }
   var montado = false;
+  var verificado = false;
   function iniciar() {
     var sp = $("#splash"); if (sp) sp.remove();
+    if (CONTA.ativo && CONTA.link.pedeSenha && !senhaDefinida) { telaLogin(); return; }
     if (!logado()) { telaLogin(); return; }
+    if (CONTA.ativo && !verificado) {
+      verificado = true;
+      CONTA.verificar().then(function (r) {
+        if (r === "sair") { store.del("usuario"); CONTA.sair().then(null, function () {}); toast("Sua sessão terminou. Entre de novo."); iniciar(); return; }
+        if (r === "ok") CONTA.puxar().then(function (mudou) { if (mudou && !$("#app").hidden) { atualizaTopo(); render(); } });
+      });
+    }
     $("#login").hidden = true; $("#app").hidden = false;
     if (!montado) { montarNav(); addEventListener("hashchange", render); montado = true; }
     atualizaTopo(); render();

@@ -3,13 +3,13 @@
    Troque VERSAO sempre que publicar mudanças na área de membros:
    o celular baixa os arquivos novos e apaga o cache antigo.
    =========================================================== */
-var VERSAO = "kdn-2026-11-16b";
+var VERSAO = "kdn-2026-11-16c";
 var CACHE = VERSAO + "-app", CACHE_IMG = "kdn-img-v4";
 
 /* o mínimo para o app abrir offline (cerca de 300 KB) */
 var ESSENCIAL = [
   "./", "./index.html", "./app.js", "./membros.css", "./manifest.webmanifest",
-  "./data/receitas.js", "./data/conteudo.js",
+  "./data/receitas.js", "./data/conteudo.js", "./conta.js", "./vendor/supabase.js",
   "./icons/icon-192.png", "./icons/apple-touch-icon.png",
   "../assets/js/kit.js", "../assets/css/base.css", "../assets/fonts/fonts.css",
   "../assets/fonts/poppins-400.woff2", "../assets/fonts/poppins-500.woff2", "../assets/fonts/poppins-600.woff2",
