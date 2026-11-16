@@ -7,9 +7,9 @@ window.KIT = {
   nome: "Natalê",
 
   // Preços exibidos nas páginas
-  preco: "R$ 47",
-  precoCompleto: "R$ 47,00",
-  precoDe: "R$ 197",
+  preco: "R$ 27,90",          // Black Friday (preço normal: R$ 47)
+  precoCompleto: "R$ 27,90",
+  precoDe: "R$ 47",            // aparece riscado: "De R$ 47 por R$ 27,90"
   parcelas: "ou em até 5x no cartão",
 
   // Link do checkout (Kiwify, Hotmart, PerfectPay, Eduzz...). As UTMs da visita são repassadas automaticamente.

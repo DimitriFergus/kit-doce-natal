@@ -99,9 +99,9 @@
 .shot span{font-size:14px;color:var(--cream-200)}
 .swipe-hint{display:none;text-align:center;margin-top:14px;font-family:var(--font-hand);font-size:22px;color:var(--gold-300)}
 @media (max-width:860px){
-  .showcase-grid,.bonus-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding-bottom:10px;margin-inline:-20px;padding-inline:20px;scrollbar-width:none}
-  .showcase-grid::-webkit-scrollbar,.bonus-grid::-webkit-scrollbar{display:none}
-  .shot,.bonus-card{flex:0 0 78%;scroll-snap-align:center}
+  .showcase-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding-bottom:10px;margin-inline:-20px;padding-inline:20px;scrollbar-width:none}
+  .showcase-grid::-webkit-scrollbar{display:none}
+  .shot{flex:0 0 78%;scroll-snap-align:center}
   .swipe-hint{display:block}
 }
 
@@ -222,3 +222,49 @@
 .finaloffer-urgency{margin:16px 0 0;font-size:13.5px;line-height:1.45;text-align:center;color:var(--wine-700);background:#fff4d9;border-radius:12px;padding:10px 12px}
 .scarcity-days{margin:-6px 0 18px;font-size:17px;font-weight:600;color:var(--wine-800)}
 .scarcity-days b{color:var(--wine-500)}
+
+/* ===== BLACK FRIDAY ===== */
+.topbar--bf{background:#000;color:var(--gold-300);border-bottom:1px solid rgba(212,175,106,.45)}
+.bf-badge{display:inline-flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:6px;margin:0 auto 14px;padding:7px 14px;border-radius:999px;background:#000;color:#fff;font-size:13px;font-weight:600;border:1px solid var(--gold-400);box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.bf-badge b{background:linear-gradient(135deg,var(--gold-300),var(--gold-500));color:#000;font-weight:800;letter-spacing:.08em;padding:2px 8px;border-radius:999px;font-size:11.5px}
+.bf-badge s{opacity:.7}
+.bf-badge strong{color:var(--gold-300);font-size:15px}
+.hero-direct .bf-badge{display:flex;width:max-content;max-width:100%}
+.finaloffer-ribbon{background:#000!important;color:var(--gold-300)!important;border:1px solid var(--gold-400)}
+/* celular: sem a barra do topo (logo + menu); fica só a faixa da Black Friday e a barra de compra que aparece ao rolar */
+@media (max-width:860px){.header{display:none}}
+
+/* ===== BÔNUS: todos à vista, sem arrastar ===== */
+.bonus-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;counter-reset:bn}
+.bonus-card{counter-increment:bn;display:flex;flex-direction:column;padding:0;overflow:hidden;text-align:left;color:var(--cream-100);
+  background:linear-gradient(180deg,var(--wine-700),var(--wine-900));border:1px solid rgba(236,212,154,.35);box-shadow:0 14px 30px rgba(0,0,0,.3)}
+.bonus-card::before{content:"BÔNUS " counter(bn);top:10px;left:10px;transform:none;background:linear-gradient(135deg,var(--gold-300),var(--gold-500));color:var(--wine-900);font-size:10px;letter-spacing:.12em}
+.bonus-media{margin:0;border-radius:0;background:var(--wine-800)}
+.bonus-card h3{font-size:17px;line-height:1.2;margin:0;padding:14px 16px 0;color:#fff!important}
+.bonus-card p{flex:1;font-size:13.5px;line-height:1.45;color:var(--cream-200);margin:0;padding:6px 16px 0}
+.bonus-val{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 16px 16px;padding-top:12px;border-top:1px dashed rgba(236,212,154,.3);font-size:14px}
+.bonus-val s{color:var(--cream-300)}
+.bonus-val strong{margin:0;background:var(--gold-400);color:var(--wine-900);font-size:12px;font-weight:800;letter-spacing:.08em;padding:4px 10px;border-radius:999px}
+@media (max-width:1100px) and (min-width:861px){.bonus-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:860px){
+  .bonus-grid{grid-template-columns:1fr;gap:12px}
+  .bonus-card{display:grid;grid-template-columns:96px 1fr;grid-template-areas:"m t" "m p" "m v";column-gap:14px;padding:12px;border-radius:20px;align-items:start}
+  .bonus-card::before{top:6px;left:6px;font-size:9px;padding:3px 7px}
+  .bonus-media{grid-area:m;width:96px;height:96px;border-radius:14px;overflow:hidden;align-self:center}
+  .bonus-card h3{grid-area:t;padding:2px 0 0;font-size:16px}
+  .bonus-card p{grid-area:p;padding:4px 0 0;font-size:13px}
+  .bonus-val{grid-area:v;margin:8px 0 0;padding-top:8px;font-size:13px}
+}
+.bonus-total{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 16px;max-width:620px;margin:22px auto 0;padding:14px 18px;border-radius:16px;border:1px dashed var(--gold-400);background:rgba(0,0,0,.2);color:var(--cream-100);text-align:center}
+.bonus-total s{color:var(--cream-300)}
+.bonus-total strong{color:var(--gold-300);font-size:17px}
+.bonus-cta{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:22px;text-align:center}
+.bonus-cta .btn{max-width:100%;white-space:normal;line-height:1.25}
+.bonus-cta-note{font-size:13px;color:var(--cream-200)}
+.bonus-cta-note b{color:var(--gold-300)}
+/* botões com preço: o preço nunca quebra no meio e o texto quebra em linhas centralizadas */
+.btn-lg{flex-wrap:wrap;justify-content:center;text-align:center;row-gap:2px}
+.btn [data-preco]{white-space:nowrap}
+.bf-badge{flex-wrap:nowrap;white-space:nowrap}
+@media (max-width:380px){.bf-badge{font-size:12px;gap:5px;padding:6px 11px}.bf-badge strong{font-size:14px}}
+@media (max-width:480px){.btn-lg{font-size:16px;padding:17px 22px}.btn-lg>span[aria-hidden="true"]{display:none}}
