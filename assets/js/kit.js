@@ -36,8 +36,8 @@ window.KIT = {
   // Preenchidos → login com e-mail + senha e dados salvos na nuvem. Vazios → login antigo por código.
   // Aqui vai SÓ a chave PÚBLICA (publishable, começa com "sb_publishable_" ou a "anon"). Ela pode ficar no site:
   // quem protege os dados são as regras do banco. A chave SECRETA (sb_secret_/service_role) NUNCA entra aqui.
-  supabaseUrl: "",              // ex.: https://abcdefghijklmnop.supabase.co
-  supabaseChavePublica: ""
+  supabaseUrl: "https://ifslsvpkfhkqplunkgau.supabase.co",              // ex.: https://abcdefghijklmnop.supabase.co
+  supabaseChavePublica: "sb_publishable_wRiQX6bfg_4vp6nWGjqwow_dpEL9lyn"
 };
 
 /* Imagem ainda não enviada? Mostra um aviso com o nome do arquivo esperado no lugar dela. */

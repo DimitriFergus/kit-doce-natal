@@ -3,7 +3,7 @@
    Troque VERSAO sempre que publicar mudanças na área de membros:
    o celular baixa os arquivos novos e apaga o cache antigo.
    =========================================================== */
-var VERSAO = "kdn-2026-11-16c";
+var VERSAO = "kdn-2026-11-17a";
 var CACHE = VERSAO + "-app", CACHE_IMG = "kdn-img-v4";
 
 /* o mínimo para o app abrir offline (cerca de 300 KB) */
