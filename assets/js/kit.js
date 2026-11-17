@@ -30,7 +30,7 @@ window.KIT = {
   //   node -e "console.log(require('crypto').createHash('sha256').update('kdn:' + 'NOVOCODIGO'.toUpperCase()).digest('hex'))"
   // Deixe "" para liberar a entrada só com o e-mail.
   codigoAcessoHash: "bb679b88f1fb6c3d1c2d8d79fbf0bac5d978080c1fb20dd358eaab7dd3109990",
-  urlAreaMembros: "membros/",
+  urlAreaMembros: "https://dimitrifergus.github.io/area-de-membros-natale/",
 
   // Banco de dados da área de membros (Supabase). Veja BANCO-DE-DADOS.md.
   // Preenchidos → login com e-mail + senha e dados salvos na nuvem. Vazios → login antigo por código.
