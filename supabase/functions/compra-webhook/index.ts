@@ -9,8 +9,9 @@
 //
 // Segredos (NUNCA no código, só em "supabase secrets set"):
 //   WEBHOOK_SEGREDO  chave secreta do webhook da Cakto, token da Kiwify ou hottok da Hotmart (mín. 16 caracteres)
-//   RESEND_API_KEY   chave da Resend (envio do e-mail com a senha)
-//   EMAIL_REMETENTE  ex.: Natalê <acesso@seudominio.com.br> (domínio verificado na Resend)
+//   BREVO_API_KEY    chave de API da Brevo (envio do e-mail com a senha), ou
+//   RESEND_API_KEY   chave da Resend (usada só se não houver a da Brevo; exige domínio próprio)
+//   EMAIL_REMETENTE  ex.: Natalê <seuemail@gmail.com> (verificado em Brevo → Senders)
 //   SITE_URL         ex.: https://dimitrifergus.github.io/kit-doce-natal
 // O Supabase injeta sozinho SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY (a chave
 // secreta fica só no servidor e nunca chega ao navegador).
@@ -22,7 +23,7 @@ import { emailBoasVindas, enviarEmail } from "./email.ts";
 const SEGREDO = Deno.env.get("WEBHOOK_SEGREDO") ?? "";
 const SITE_URL = (Deno.env.get("SITE_URL") ?? "").replace(/\/+$/, "");
 const LINK_MEMBROS = SITE_URL + "/membros/";
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
+const CHAVES_EMAIL = { brevo: Deno.env.get("BREVO_API_KEY") ?? "", resend: Deno.env.get("RESEND_API_KEY") ?? "" };
 const EMAIL_REMETENTE = Deno.env.get("EMAIL_REMETENTE") ?? "";
 const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
   auth: { persistSession: false, autoRefreshToken: false },
@@ -34,7 +35,7 @@ const resposta = (status: number, msg: string) =>
 Deno.serve(async (req) => {
   if (req.method !== "POST") return resposta(405, "use POST");
   if (SEGREDO.length < 16) return resposta(500, "WEBHOOK_SEGREDO não configurado");
-  if (!SITE_URL || !RESEND_API_KEY || !EMAIL_REMETENTE) return resposta(500, "SITE_URL, RESEND_API_KEY ou EMAIL_REMETENTE não configurado");
+  if (!SITE_URL || !(CHAVES_EMAIL.brevo || CHAVES_EMAIL.resend) || !EMAIL_REMETENTE) return resposta(500, "SITE_URL, BREVO_API_KEY/RESEND_API_KEY ou EMAIL_REMETENTE não configurado");
 
   const tamanho = Number(req.headers.get("content-length") ?? "0");
   if (tamanho > 200_000) return resposta(413, "corpo grande demais");
@@ -65,7 +66,7 @@ Deno.serve(async (req) => {
       if (!/already|registered|exists/i.test(e2.message)) { console.error("criar conta", e2.message); return resposta(500, "compra registrada, conta falhou"); }
     } else {
       try {
-        await enviarEmail(RESEND_API_KEY, EMAIL_REMETENTE, ev.email, emailBoasVindas(ev.email, senha, LINK_MEMBROS));
+        await enviarEmail(CHAVES_EMAIL, EMAIL_REMETENTE, ev.email, emailBoasVindas(ev.email, senha, LINK_MEMBROS));
       } catch (e3) {
         // sem o e-mail a cliente não teria a senha: desfaz a conta para a plataforma reenviar o aviso e tudo recomeçar
         console.error("email", String((e3 as Error).message));

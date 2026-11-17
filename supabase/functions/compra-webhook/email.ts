@@ -1,5 +1,7 @@
-// E-mail de boas-vindas com a senha de acesso (enviado pela Resend: https://resend.com).
-// Segredos: RESEND_API_KEY e EMAIL_REMETENTE (ex.: "Natalê <acesso@seudominio.com.br>").
+// E-mail de boas-vindas com a senha de acesso.
+// Envia pela Brevo (BREVO_API_KEY; remetente verificado em Senders, pode ser um Gmail)
+// ou, se não houver chave da Brevo, pela Resend (RESEND_API_KEY; exige domínio próprio).
+// EMAIL_REMETENTE: ex.: "Natalê <seuemail@gmail.com>".
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
@@ -22,11 +24,30 @@ export function emailBoasVindas(email: string, senha: string, linkMembros: strin
   return { assunto: "Natalê: seu acesso à área de membros chegou 🎄", html, texto };
 }
 
-/** Envia pela API da Resend. Lança erro se não conseguir (o webhook então desfaz a conta e a plataforma tenta de novo). */
-export async function enviarEmail(chave: string, remetente: string, para: string, m: { assunto: string; html: string; texto: string }) {
+/** "Natalê <a@b.com>" → { nome: "Natalê", email: "a@b.com" } */
+export function separarRemetente(r: string): { nome: string; email: string } {
+  const m = /^\s*(.*?)\s*<([^>]+)>\s*$/.exec(r);
+  return m ? { nome: m[1] || "Natalê", email: m[2].trim() } : { nome: "Natalê", email: r.trim() };
+}
+
+type Mensagem = { assunto: string; html: string; texto: string };
+
+/** Envia pela Brevo (se houver BREVO_API_KEY) ou pela Resend. Lança erro se não conseguir
+ *  (o webhook então desfaz a conta e a plataforma tenta de novo). */
+export async function enviarEmail(c: { brevo?: string; resend?: string }, remetente: string, para: string, m: Mensagem) {
+  if (c.brevo) {
+    const r = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: { "api-key": c.brevo, "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ sender: separarRemetente(remetente), to: [{ email: para }], subject: m.assunto, htmlContent: m.html, textContent: m.texto }),
+    });
+    if (!r.ok) throw new Error(`brevo ${r.status}: ${(await r.text()).slice(0, 300)}`);
+    return;
+  }
+  if (!c.resend) throw new Error("nenhuma chave de e-mail (BREVO_API_KEY ou RESEND_API_KEY)");
   const r = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { Authorization: `Bearer ${chave}`, "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${c.resend}`, "Content-Type": "application/json" },
     body: JSON.stringify({ from: remetente, to: [para], subject: m.assunto, html: m.html, text: m.texto }),
   });
   if (!r.ok) throw new Error(`resend ${r.status}: ${(await r.text()).slice(0, 300)}`);
