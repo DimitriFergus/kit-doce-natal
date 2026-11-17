@@ -92,12 +92,21 @@
 .showcase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .shot{margin:0;background:rgba(255,255,255,.05);border:1px solid rgba(236,212,154,.18);border-radius:var(--radius-lg);overflow:hidden;transition:transform .3s,border-color .3s}
 .shot:hover{transform:translateY(-6px);border-color:rgba(236,212,154,.5)}
-.shot-media{aspect-ratio:1/1;overflow:hidden}
+.shot-media{aspect-ratio:4/5;overflow:hidden}
 .shot img{width:100%;height:100%;object-fit:cover}
 .shot figcaption{padding:16px 18px 20px}
 .shot strong{display:block;font-size:17px;color:#fff}
 .shot span{font-size:14px;color:var(--cream-200)}
 .swipe-hint{display:none;text-align:center;margin-top:14px;font-family:var(--font-hand);font-size:22px;color:var(--gold-300)}
+/* depoimentos: esteira infinita com prints grandes e inteiros (sem corte) */
+.carousel--testi{padding:14px 0 24px}
+.testi-track{gap:26px;align-items:flex-start;animation-duration:60s}
+.testi{margin:0;flex:none;width:360px;background:#fff;border:7px solid #fff;border-radius:26px;overflow:hidden;box-shadow:var(--shadow)}
+.testi img{display:block;width:100%;height:auto;border-radius:19px}
+@media (max-width:600px){
+  .testi-track{gap:16px;animation-duration:45s}
+  .testi{width:78vw;max-width:330px}
+}
 @media (max-width:860px){
   .showcase-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding-bottom:10px;margin-inline:-20px;padding-inline:20px;scrollbar-width:none}
   .showcase-grid::-webkit-scrollbar{display:none}
