@@ -1,8 +1,8 @@
 // Regras puras do webhook (sem rede, sem banco): fáceis de testar.
-// Reconhece Kiwify, Hotmart e um formato próprio ("manual").
+// Reconhece Cakto, Kiwify, Hotmart e um formato próprio ("manual").
 
 export type Status = "aprovada" | "reembolsada" | "chargeback" | "cancelada";
-export interface Evento { email: string; status: Status; plataforma: "kiwify" | "hotmart" | "manual"; transacao: string; produto: string | null; }
+export interface Evento { email: string; status: Status; plataforma: "cakto" | "kiwify" | "hotmart" | "manual"; transacao: string; produto: string | null; }
 
 const EMAIL = /^[^\s@<>()[\]\\,;:"]{1,64}@[a-z0-9.-]{1,180}\.[a-z]{2,24}$/;
 
@@ -37,9 +37,36 @@ export async function autenticado(segredo: string, corpo: string, assinaturaKiwi
   if (assinaturaKiwify) return iguais((await hmacHex("SHA-1", segredo, corpo)).toLowerCase(), assinaturaKiwify.toLowerCase());
   if (hottok) return iguais(hottok, segredo);
   if (cabecalho) return iguais(cabecalho, segredo);
+  const noCorpo = segredoNoCorpo(corpo);
+  if (noCorpo) return iguais(noCorpo, segredo);
   return false;
 }
 
+/** A Cakto manda a "chave secreta" do webhook dentro do próprio corpo, no campo "secret". */
+export function segredoNoCorpo(corpo: string): string | null {
+  try { const c = JSON.parse(corpo); return c && typeof c.secret === "string" ? c.secret : null; } catch { return null; }
+}
+
+// Senha aleatória: sem 0/O e 1/l/I (para a cliente não confundir ao digitar), sempre com letra e número.
+const LETRAS = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
+const NUMEROS = "23456789";
+function sorteia(alfabeto: string): string {
+  const limite = 256 - (256 % alfabeto.length); // descarta bytes que dariam viés
+  const b = new Uint8Array(1);
+  do { crypto.getRandomValues(b); } while (b[0] >= limite);
+  return alfabeto[b[0] % alfabeto.length];
+}
+/** Senha aleatória (10 caracteres, ~58 bits) que cumpre a regra do Supabase: letras e números. */
+export function gerarSenha(tamanho = 10): string {
+  const todos = LETRAS + NUMEROS;
+  for (;;) {
+    let s = "";
+    for (let i = 0; i < tamanho; i++) s += sorteia(todos);
+    if (/[a-zA-Z]/.test(s) && /[0-9]/.test(s)) return s;
+  }
+}
+
+const CAKTO: Record<string, Status> = { purchase_approved: "aprovada", refund: "reembolsada", chargeback: "chargeback", subscription_canceled: "cancelada" };
 const KIWIFY: Record<string, Status> = { paid: "aprovada", approved: "aprovada", refunded: "reembolsada", chargedback: "chargeback", chargeback: "chargeback", canceled: "cancelada", cancelled: "cancelada" };
 const HOTMART: Record<string, Status> = { PURCHASE_APPROVED: "aprovada", PURCHASE_COMPLETE: "aprovada", PURCHASE_REFUNDED: "reembolsada", PURCHASE_CHARGEBACK: "chargeback", PURCHASE_PROTEST: "chargeback", PURCHASE_CANCELED: "cancelada" };
 const MANUAL: Status[] = ["aprovada", "reembolsada", "chargeback", "cancelada"];
@@ -47,6 +74,14 @@ const MANUAL: Status[] = ["aprovada", "reembolsada", "chargeback", "cancelada"];
 /** Transforma o corpo do webhook num evento. Devolve null quando não interessa (boleto gerado, pix pendente, recusado...). */
 export function interpretar(c: any): Evento | null {
   if (!c || typeof c !== "object") return null;
+  // Cakto (manda "secret" no corpo; vem antes da Hotmart porque também tem event + data)
+  if (typeof c.secret === "string" && typeof c.event === "string" && c.data && typeof c.data === "object") {
+    const st = CAKTO[c.event]; if (!st) return null; // purchase_refused, boleto/pix gerado... ignorados
+    const email = String(c.data.customer?.email ?? "").trim().toLowerCase();
+    const tr = texto(c.data.id ?? c.data.refId, 120);
+    if (!emailValido(email) || !tr) return null;
+    return { email, status: st, plataforma: "cakto", transacao: tr, produto: texto(c.data.product?.name, 200) };
+  }
   // Hotmart (webhook 2.0)
   if (typeof c.event === "string" && c.data && typeof c.data === "object") {
     const st = HOTMART[c.event]; if (!st) return null;

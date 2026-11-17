@@ -1,10 +1,13 @@
 # Banco de dados da área de membros (Supabase)
 
 ## Como funciona
-1. A pessoa compra na **Kiwify** ou na **Hotmart**.
+1. A pessoa compra na **Cakto**, na **Kiwify** ou na **Hotmart**.
 2. A plataforma avisa o **webhook** `compra-webhook`, que roda no servidor do Supabase.
-3. O webhook registra a compra e manda o e-mail **"Crie a sua senha"**.
-4. A aluna cria a senha e entra com **e-mail e senha**.
+3. O webhook registra a compra, cria a conta com uma **senha aleatória** (10 letras e números, sem 0/O e 1/l/I) e manda a senha para o **e-mail usado na compra**, pela **Resend**.
+4. A aluna entra com **e-mail e senha** pelo botão do e-mail. Se esquecer, cria outra em "Primeiro acesso ou esqueceu a senha?".
+   - Quem já tem conta e compra de novo não recebe senha nova (a antiga continua valendo).
+   - Se o e-mail falhar, a conta é desfeita e o webhook responde erro, para a plataforma reenviar o aviso e a cliente receber a senha.
+   - A senha não fica salva em lugar nenhum além do e-mail da cliente e do Supabase Auth (criptografada).
 5. Perfil, foto, encomendas, preços, favoritos e progresso ficam salvos na conta dela, em qualquer aparelho.
 6. **Reembolso ou chargeback:** o acesso aos dados salvos é cortado na hora, e ela não consegue entrar de novo.
 
@@ -35,6 +38,7 @@ Se a chave secreta vazar um dia: Supabase → **Project Settings → API Keys** 
 ### 2. Criar as tabelas e as regras de segurança
 1. No Supabase, abra **SQL Editor → New query**.
 2. Cole todo o conteúdo de `supabase/migrations/20261116000000_area_de_membros.sql` e clique em **Run**.
+   - Se você já tinha rodado esse arquivo antes, rode também `supabase/migrations/20261116190000_cakto_e_senha_aleatoria.sql` (libera a Cakto na tabela `compras`).
 3. Abra **Database → Tables** e confira que `compras` e `dados_aluno` aparecem com o selo **RLS enabled**.
 
 ### 3. Configurar o login (Authentication)
@@ -46,27 +50,36 @@ Se a chave secreta vazar um dia: Supabase → **Project Settings → API Keys** 
 2. **URL Configuration**:
    - **Site URL:** `https://dimitrifergus.github.io/kit-doce-natal/membros/`
    - **Redirect URLs:** adicione a mesma e também `http://localhost:5500/membros/`
-3. **Emails → SMTP Settings: obrigatório antes de vender.**
-   - O e-mail padrão do Supabase manda só uns 2 a 4 e-mails por hora, o que não dá para muitas vendas.
-   - Crie uma conta grátis na **Resend** (3.000 e-mails por mês) ou na **Brevo** (300 por dia).
-   - Cole os dados de SMTP aqui e depois aumente o limite em **Rate Limits → emails**.
-4. **Emails → Templates**:
-   - Em **Invite user**, cole `supabase/templates/convite.html`.
-   - Em **Reset password**, cole `supabase/templates/recuperar-senha.html`.
-   - Os assuntos estão em `supabase/config.toml`.
+3. **Resend (manda o e-mail com a senha): obrigatório antes de vender.**
+   - Crie uma conta grátis em https://resend.com (3.000 e-mails por mês).
+   - **Domains → Add domain:** cadastre o seu domínio e copie os registros DNS que ela mostrar para o painel do domínio (Registro.br, Hostinger...). Sem domínio verificado, a Resend só manda e-mail para você mesmo.
+   - **API Keys → Create:** copie a chave `re_...`. Ela é o `RESEND_API_KEY` do passo 4.
+4. **Emails → SMTP Settings** (para o e-mail de "esqueci a senha"):
+   - O e-mail padrão do Supabase manda só uns 2 a 4 e-mails por hora.
+   - Use o SMTP da própria Resend: host `smtp.resend.com`, porta `465`, usuário `resend`, senha = a chave `re_...`, remetente com o seu domínio.
+   - Depois aumente o limite em **Rate Limits → emails**.
+5. **Emails → Templates → Reset password:** cole `supabase/templates/recuperar-senha.html` (o assunto está em `supabase/config.toml`).
+   - O template `convite.html` não é mais usado: a senha agora vai no e-mail que o webhook manda.
 
 ### 4. Publicar o webhook de compra
 No terminal, dentro da pasta do projeto:
 ```
 npx supabase login
 npx supabase link --project-ref SEU_PROJECT_REF
-npx supabase secrets set WEBHOOK_SEGREDO="TOKEN_DA_KIWIFY_OU_HOTTOK_DA_HOTMART" SITE_URL="https://dimitrifergus.github.io/kit-doce-natal"
+npx supabase secrets set WEBHOOK_SEGREDO="CHAVE_SECRETA_DA_CAKTO_OU_TOKEN_KIWIFY_OU_HOTTOK" SITE_URL="https://dimitrifergus.github.io/kit-doce-natal"
+npx supabase secrets set RESEND_API_KEY="re_..." EMAIL_REMETENTE="Natalê <acesso@SEUDOMINIO.com.br>"
 npx supabase functions deploy compra-webhook --no-verify-jwt
 ```
+- O `EMAIL_REMETENTE` precisa ser de um domínio verificado na Resend.
+- Sem `RESEND_API_KEY`, `EMAIL_REMETENTE` ou `SITE_URL`, o webhook recusa tudo com erro 500 (melhor do que criar conta sem mandar a senha).
 - `SEU_PROJECT_REF` são as letras do endereço do projeto (`https://SEU_PROJECT_REF.supabase.co`).
 - O endereço do webhook fica `https://SEU_PROJECT_REF.supabase.co/functions/v1/compra-webhook`.
 
 ### 5. Ligar na plataforma de pagamento
+- **Cakto:** no painel, Integrações → Webhooks → adicionar.
+  - Cole o endereço acima e marque **Compra aprovada**, **Reembolso** e **Chargeback**.
+  - A Cakto mostra uma **chave secreta**: ela é o `WEBHOOK_SEGREDO` (mín. 16 caracteres). A Cakto manda essa chave em cada aviso, e o webhook confere.
+  - Use o botão de **enviar teste** da Cakto e confira em Supabase → Edge Functions → compra-webhook → Logs que apareceu `compra cakto aprovada`. Se aparecer "evento ignorado", me mande o corpo do teste para ajustar os nomes dos campos.
 - **Kiwify:** Apps → Webhooks → criar.
   - Cole o endereço acima e marque **Compra aprovada**, **Reembolso** e **Chargeback**.
   - O **token** que a Kiwify mostra é o `WEBHOOK_SEGREDO`. A Kiwify assina cada aviso com ele, e o webhook confere.
@@ -83,20 +96,14 @@ supabaseChavePublica: "sb_publishable_..."   // Project Settings → API Keys �
 A partir daí, o login por código (NATAL2026) deixa de valer e entra o login com e-mail e senha.
 
 ### 7. Quem comprou antes do banco existir
-No **SQL Editor**, para cada pessoa:
-```sql
-insert into public.compras (email, status, plataforma, transacao) values ('cliente@email.com', 'aprovada', 'manual', 'antiga-1');
+Para liberar alguém na mão (comprou antes, ou fora da plataforma), mande ao webhook um POST com o cabeçalho `x-webhook-segredo: SEU_SEGREDO`. A conta é criada e a senha aleatória vai para o e-mail da pessoa, igual a uma compra:
 ```
-Depois, peça para ela abrir a área de membros e tocar em **"Primeiro acesso ou esqueceu a senha?"**.
-
-Para liberar alguém fora da Kiwify ou da Hotmart, mande ao webhook um POST com o cabeçalho `x-webhook-segredo: SEU_SEGREDO` e o corpo:
-```json
-{ "email": "cliente@email.com", "status": "aprovada" }
+curl -X POST "https://SEU_PROJECT_REF.supabase.co/functions/v1/compra-webhook" -H "Content-Type: application/json" -H "x-webhook-segredo: SEU_SEGREDO" -d "{\"email\":\"cliente@email.com\",\"status\":\"aprovada\",\"transacao\":\"antiga-1\"}"
 ```
 
 ### 8. Teste final (5 minutos)
-1. Faça uma compra de teste (ou use o "Testar webhook" da plataforma). O e-mail "Crie a sua senha" tem que chegar.
-2. Crie a senha. Você entra direto no app.
+1. Faça uma compra de teste com um e-mail seu. O e-mail **"seu acesso à área de membros chegou"**, com a senha, tem que chegar (olhe o spam também).
+2. Entre na área de membros com esse e-mail e a senha recebida.
 3. Preencha o Meu perfil. Abra em outro celular, entre com a mesma conta, e o perfil tem que aparecer.
 4. Reembolse a compra de teste. Ao abrir o app de novo, a pessoa tem que ser desconectada.
 

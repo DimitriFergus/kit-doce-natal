@@ -20,7 +20,7 @@ create table if not exists public.compras (
   id            bigint generated always as identity primary key,
   email         text        not null check (email = lower(email) and length(email) between 5 and 254),
   status        text        not null check (status in ('aprovada', 'reembolsada', 'chargeback', 'cancelada')),
-  plataforma    text        not null check (plataforma in ('kiwify', 'hotmart', 'manual', 'outra')),
+  plataforma    text        not null check (plataforma in ('cakto', 'kiwify', 'hotmart', 'manual', 'outra')),
   transacao     text        not null check (length(transacao) between 1 and 120),
   produto       text        check (produto is null or length(produto) <= 200),
   criado_em     timestamptz not null default now(),
