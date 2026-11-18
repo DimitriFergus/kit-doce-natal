@@ -223,7 +223,7 @@
       '<ul class="qz-stack">' + (OF.itens || []).map(function (it) { return "<li" + (destaque.indexOf(it) >= 0 ? ' class="hl"' : "") + ">" + it + "</li>"; }).join("") + "</ul>" +
       '<div class="qz-offer"><p class="from">De <s>' + esc(OF.precoDe || KIT.precoDe || "") + "</s> por apenas</p><span class=\"price\">" + esc(OF.preco || KIT.precoCompleto || KIT.preco || "") + "</span>" +
       '<p class="inst">' + esc(OF.parcelas || KIT.parcelas || "") + " · pagamento único</p>" +
-      '<a class="btn btn-lg btn-block btn-pulse" id="qz-buy" href="' + esc(OF.linkReserva || "../#oferta-final") + '">' + preenche(OF.botao || "QUERO COMEÇAR AGORA", n) + ' <span aria-hidden="true">→</span></a>' +
+      '<a class="btn btn-lg btn-block btn-pulse" id="qz-buy" data-checkout href="' + esc(OF.linkReserva || "../#oferta-final") + '">' + preenche(OF.botao || "QUERO COMEÇAR AGORA", n) + ' <span aria-hidden="true">→</span></a>' +
       '<p class="qz-secure">🔒 Compra segura · acesso imediato por e-mail</p></div>' +
       '<div class="qz-guar"><b><span><big>' + garantia + "</big>DIAS</span></b><span>" + (OF.garantiaTexto || "Garantia incondicional: se não for para você, devolvemos 100% do seu dinheiro.") + "</span></div>" +
       (OF.linkVerMais ? '<a class="qz-more" href="' + esc(OF.linkVerMais) + '">' + (OF.linkVerMaisTexto || "Quero ver tudo que vem") + "</a>" : "") +

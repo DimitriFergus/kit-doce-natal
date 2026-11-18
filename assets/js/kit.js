@@ -17,6 +17,9 @@ window.KIT = {
   checkoutOferta2: "https://pay.cakto.com.br/3becfa3_1333847",
   checkoutQuiz: "",          // se ficar vazio, o quiz usa o checkout da Oferta 1
 
+  // Meta Pixel (Facebook/Instagram Ads). Vazio = sem pixel.
+  pixelMeta: "1186166813747911",
+
   // Vídeo de demonstração: cole a URL de embed (ex.: https://www.youtube.com/embed/ID ou player do VTurb/Panda)
   videoEmbed: "",
 
