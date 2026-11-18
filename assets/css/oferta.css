@@ -277,3 +277,10 @@
 .bf-badge{flex-wrap:nowrap;white-space:nowrap}
 @media (max-width:380px){.bf-badge{font-size:12px;gap:5px;padding:6px 11px}.bf-badge strong{font-size:14px}}
 @media (max-width:480px){.btn-lg{font-size:16px;padding:17px 22px}.btn-lg>span[aria-hidden="true"]{display:none}}
+
+/* barra fixa: botão em cima, texto embaixo à esquerda (o selo "Powered by Netlify" fica no canto direito de baixo) */
+@media (max-width:760px){
+  .sticky-buy{flex-wrap:wrap;gap:8px}
+  .sticky-buy .btn{order:-1;flex:1 1 100%;text-align:center;justify-content:center}
+  .sticky-buy p{flex:1 1 100%;padding-right:200px;min-height:40px}
+}
