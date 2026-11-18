@@ -13,8 +13,8 @@ window.KIT = {
   parcelas: "ou em até 5x no cartão",
 
   // Link do checkout (Kiwify, Hotmart, PerfectPay, Eduzz...). As UTMs da visita são repassadas automaticamente.
-  checkoutOferta1: "",
-  checkoutOferta2: "",
+  checkoutOferta1: "https://pay.cakto.com.br/3becfa3_1333847",
+  checkoutOferta2: "https://pay.cakto.com.br/3becfa3_1333847",
   checkoutQuiz: "",          // se ficar vazio, o quiz usa o checkout da Oferta 1
 
   // Vídeo de demonstração: cole a URL de embed (ex.: https://www.youtube.com/embed/ID ou player do VTurb/Panda)
